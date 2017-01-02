@@ -80,6 +80,7 @@ public abstract class SentenceCodec {
 				//indexed starting at 1!
 				tokens.add(token.withIndex(i + 1));
 			} catch (IllegalArgumentException e) {
+				System.out.println(sentenceStr);
 				throw new IllegalArgumentException(tokenStrs[i], e);
 			}
 		}

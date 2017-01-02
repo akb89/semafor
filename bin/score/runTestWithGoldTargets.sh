@@ -4,7 +4,8 @@ set -e # fail fast
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../training/config.sh"
 
-cv="dev" # "test" # "${1}"
+#cv="dev" # "test" # "${1}" //TODO alex I changed this
+cv="test"
 
 echo "results directory: ${results_dir}"
 mkdir -p "${results_dir}"
@@ -16,7 +17,7 @@ mkdir -p "${results_dir}"
 scala -classpath ${CLASSPATH} -J-Xmx3g "${SEMAFOR_HOME}/scripts/scoring/runWithGoldTargets.scala" \
     "${model_dir}" \
     "${training_dir}/cv.${cv}.sentences.frames" \
-    "${training_dir}/cv.${cv}.sentences.maltparsed.conll" \
+    "${training_dir}/cv.${cv}.sentences.maltparsed.conll"\
     "${results_dir}/${cv}.autoframe.predicted.xml"
 
 scala -classpath ${CLASSPATH} -J-Xmx3g "${SEMAFOR_HOME}/scripts/scoring/runWithGoldTargets.scala" \
@@ -49,7 +50,7 @@ ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx1g \
 
 #********************************** Evaluation ********************************************#
 
-fn_1_5_dir="${datadir}/framenet15/"
+fn_1_5_dir="${datadir}/framenet15"
 frames_single_file="${fn_1_5_dir}/framesSingleFile.xml"
 relation_modified_file="${fn_1_5_dir}/frRelationModified.xml"
 

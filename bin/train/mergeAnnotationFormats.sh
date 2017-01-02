@@ -14,7 +14,7 @@ prefixes="dev test train"
 for prefix in $prefixes
 do
     tmp_parse_file="${training_dir}/cv.${prefix}.sentences.tmp_parse_file"
-    ${JAVA_HOME_BIN}/java -classpath ${classpath} -Xms1g -Xmx1g \
+    ${JAVA_HOME_BIN}/java -classpath ${classpath} -Xms1g -Xmx${max_ram} \
         edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
           ${training_dir}/cv.${prefix}.sentences.tokenized \
           ${training_dir}/cv.${prefix}.sentences.turboparsed.conll \

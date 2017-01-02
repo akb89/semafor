@@ -187,7 +187,7 @@ You can test that it's working with the following:
 Retraining SEMAFOR
 ==================
 
-Please see the [training README](training/README.md).
+Please see the [training README](bin/train/README.md).
 
 
 

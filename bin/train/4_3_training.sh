@@ -6,7 +6,7 @@ set -e # fail fast
 
 source "$(dirname ${0})/config.sh"
 
-${JAVA_HOME_BIN}/java -classpath ${classpath} -Xms8000m -Xmx8000m \
+${JAVA_HOME_BIN}/java -classpath ${classpath} -Xms4g -Xmx${max_ram} \
   edu.cmu.cs.lti.ark.fn.parsing.TrainingBatchMain \
   model:${datadir}/argmodel.dat \
   alphabetfile:${SCAN_DIR}/parser.conf.unlabeled \

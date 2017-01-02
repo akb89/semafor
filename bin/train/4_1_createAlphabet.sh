@@ -6,12 +6,12 @@ echo
 echo "step 4i: create the alphabet file for the argument identification model."
 echo
 
-source "$(dirname ${0})/config.sh"
+source "$(dirname ${0})/../../config/training.sh"
 
 mkdir -p ${SCAN_DIR}
 
 
-${JAVA_HOME_BIN}/java -classpath ${classpath} -Xms4g -Xmx4g \
+${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms4g -Xmx${max_ram} \
    edu.cmu.cs.lti.ark.fn.parsing.CreateAlphabet \
    ${fe_file} \
    ${parsed_file} \
