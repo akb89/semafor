@@ -13,12 +13,12 @@ source "$(dirname ${0})/config.sh"
 prefixes="dev test train"
 for prefix in $prefixes
 do
-    tmp_parse_file="${training_dir}/cv.${prefix}.sentences.tmp_parse_file"
-    ${JAVA_HOME_BIN}/java -classpath ${classpath} -Xms1g -Xmx${max_ram} \
+    tmp_parse_file="${TRAINING_DIR}/cv.${prefix}.sentences.tmp_parse_file"
+    ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms1g -Xmx${max_ram} \
         edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
-          ${training_dir}/cv.${prefix}.sentences.tokenized \
-          ${training_dir}/cv.${prefix}.sentences.turboparsed.conll \
+          ${TRAINING_DIR}/cv.${prefix}.sentences.tokenized \
+          ${TRAINING_DIR}/cv.${prefix}.sentences.turboparsed.conll \
           ${tmp_parse_file} \
-          ${training_dir}/cv.${prefix}.sentences.all.lemma.tags
+          ${TRAINING_DIR}/cv.${prefix}.sentences.all.lemma.tags
     rm "${tmp_parse_file}"
 done
