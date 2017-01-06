@@ -3,19 +3,19 @@
  * Language Technologies Institute, 
  * Carnegie Mellon University, 
  * All Rights Reserved.
- * 
+ *
  * PrepareFullAnnotationXML.java is part of SEMAFOR 2.0.
- * 
+ *
  * SEMAFOR 2.0 is free software: you can redistribute it and/or modify  it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or 
  * (at your option) any later version.
- * 
+ *
  * SEMAFOR 2.0 is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details. 
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with SEMAFOR 2.0.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -55,7 +55,7 @@ public class PrepareFullAnnotationXML {
 	/**
 	 * Generates the XML representation of a set of predicted semantic parses so evaluation 
 	 * can be performed (with SemEval Perl scripts)
-	 * 
+	 *
 	 * @param args Options to specify:
 	 *   testFEPredictionsFile
 	 *   startIndex
@@ -75,18 +75,18 @@ public class PrepareFullAnnotationXML {
 				options.testTokenizedFile,
 				options.outputFile);
 	}
-	
+
 	/**
 	 * Generates the XML representation of a set of predicted semantic parses so evaluation 
 	 * can be performed (with SemEval Perl scripts)
-	 * 
+	 *
 	 * @param testFEPredictionsFile Path to MapReduce output of the parser, formatted as frame elements lines
 	 * @param sentenceNums Range of sentences to include (0-based)
 	 * @param testParseFile Dependency parses for each sentence in the data
 	 * @param testTokenizedFile File Original form of each sentence in the data
 	 * @param outputFile Where to store the resulting XML
 	 */
-	public static void generateXMLForPrediction(String testFEPredictionsFile, Range sentenceNums, 
+	public static void generateXMLForPrediction(String testFEPredictionsFile, Range sentenceNums,
 			String testParseFile, String testTokenizedFile, String outputFile) throws Exception {
 		ArrayList<String> parses = new ArrayList<String>();
 		List<String> predictedFELines = new ArrayList<String>();
@@ -131,8 +131,8 @@ public class PrepareFullAnnotationXML {
 
 		Document doc = createXMLDoc(predictedFELines, sentenceNums, parses, orgSentenceLines);
 		XmlUtils.writeXML(outputFile, doc);
-	}	
-	
+	}
+
 	/**
 	 * Given several parallel lists of predicted frame instances, including their frame elements, create an XML file 
 	 * for the full-text annotation predicted by the model.
@@ -142,7 +142,7 @@ public class PrepareFullAnnotationXML {
 	 * @param origLines The original sentences, untokenized
 	 * @return
 	 */
-	private static Document createXMLDoc(List<String> predictedFELines,
+	public static Document createXMLDoc(List<String> predictedFELines,
 										 Range sentenceNums,
 										 List<String> parses,
 										 List<String> origLines) {
@@ -204,7 +204,7 @@ public class PrepareFullAnnotationXML {
 			sentence.appendChild(tokensElt);
 
 			final Element annotationSets = doc.createElement("annotationSets");
-			
+
 			int frameIndex = 0;	// index of the predicted frame within the sentence
 			final Set<String> feLines = predictions.get(sent);
 
@@ -234,7 +234,7 @@ public class PrepareFullAnnotationXML {
 			}
 			sentence.appendChild(annotationSets);
 			sentences.appendChild(sentence);
-		}			
+		}
 		paragraph.appendChild(sentences);
 		doc.appendChild(corpus);
 		return doc;

@@ -4,7 +4,7 @@ set -e # fail fast
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/scoring.sh"
 
-cv="train"
+cv="test"
 
 echo "results directory: ${RESULTS_DIR}"
 mkdir -p "${RESULTS_DIR}"
