@@ -21,8 +21,10 @@
  ******************************************************************************/
 package edu.cmu.cs.lti.ark.fn.identification;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Set;
 
 import edu.cmu.cs.lti.ark.fn.data.prep.ParsePreparation;
 import edu.cmu.cs.lti.ark.util.ds.Pair;
@@ -32,11 +34,11 @@ import gnu.trove.TObjectIntHashMap;
 
 public class NormalizeLinDekNeighbors {
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		String inFile = "/home/dipanjan/work/fall2010/SSL/FNData/lindekneighbors.dat";
 		String outFile = "/home/dipanjan/work/fall2010/SSL/FNData/lindekneighbors.normalized.dat";
 		
-		List<String> lines = ParsePreparation.readLines(inFile);
+		ArrayList<String> lines = ParsePreparation.readSentencesFromFile(inFile);
 		System.out.println("Size of units:" + lines.size());
 		int size = lines.size();
 		ArrayList<TObjectDoubleHashMap<String>> rnList = 

@@ -23,14 +23,18 @@ package edu.cmu.cs.lti.ark.fn.parsing;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.collect.*;
-import com.google.common.io.Files;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.common.io.InputSupplier;
 import edu.cmu.cs.lti.ark.fn.data.prep.formats.AllLemmaTags;
 import edu.cmu.cs.lti.ark.fn.data.prep.formats.Sentence;
 import edu.cmu.cs.lti.ark.fn.utils.DataPointWithFrameElements;
 import edu.cmu.cs.lti.ark.util.FileUtil;
-import edu.cmu.cs.lti.ark.util.ds.*;
+import edu.cmu.cs.lti.ark.util.ds.Pair;
+import edu.cmu.cs.lti.ark.util.ds.Range0Based;
+import edu.cmu.cs.lti.ark.util.ds.Range1Based;
 import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParse;
 import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParses;
 
@@ -83,16 +87,14 @@ public class DataPrep {
 		}
 	}
 
-	public DataPrep(List<String> tagLines, List<String> feLines) throws IOException {
-		new FileOutputStream(new File(FEFileName.spanfilename), false).close(); // clobber spans file. this is gross
+	public DataPrep(List<String> tagLines,
+					List<String> feLines,
+					String spanFilename,
+					int kBestParse) throws IOException {
+		new FileOutputStream(new File(spanFilename), false).close(); // clobber spans file. this is gross
 		this.feLines = feLines;
 		this.tagLines = tagLines;
-		final File candidateFile = new File(FEFileName.candidateFilename);
-		if (candidateFile.exists()) {
-			candidateLines = loadFromCandidateFile(feLines, Files.newInputStreamSupplier(candidateFile));
-		} else {
-			candidateLines = load(tagLines, feLines);
-		}
+		candidateLines = load(tagLines, feLines, kBestParse);
 	}
 
 	/** Finds a set of candidate spans based on a dependency parse */
@@ -135,13 +137,15 @@ public class DataPrep {
 	}
 
 	/** loads data needed for feature extraction */
-	private List<List<SpanAndParseIdx>> load(List<String> tagLines, List<String> frameElementLines) {
+	private List<List<SpanAndParseIdx>> load(List<String> tagLines,
+											 List<String> frameElementLines,
+											 int kBestParse) {
 		final ArrayList<List<SpanAndParseIdx>> candidateLines = Lists.newArrayList();
 		for (String feline : frameElementLines) {
 			final int sentNum = parseInt(feline.split("\t")[7]);
 			final String tagLine = tagLines.get(sentNum);
 			final DataPointWithFrameElements dp = new DataPointWithFrameElements(tagLine, feline);
-			final List<SpanAndParseIdx> spanList = findSpans(dp, FEFileName.KBestParse);
+			final List<SpanAndParseIdx> spanList = findSpans(dp, kBestParse);
 			candidateLines.add(spanList);
 		}
 		return candidateLines;
@@ -198,48 +202,49 @@ public class DataPrep {
 		}
 	}
 
-	public int[][][] getNextTrainData() throws IOException {
+	public int[][][] getNextTrainData(String spanFilename) throws IOException {
 		final String feline = feLines.get(feIndex);
 		final List<SpanAndParseIdx> candidateTokens = candidateLines.get(feIndex);
 		final int sentNum = parseInt(feline.split("\t")[7]);
+		//System.out.print("\n>> SENT: "+sentNum); // meghanak
 		final String parseLine = tagLines.get(sentNum);
 		final Sentence sentence = Sentence.fromAllLemmaTagsArray(AllLemmaTags.readLine(parseLine));
-		final List<int[][]> allData = getTrainData(feline, candidateTokens, sentence);
+		final List<int[][]> allData = getTrainData(feline, candidateTokens, sentence, spanFilename);
 		feIndex++;
 		return allData.toArray(new int[allData.size()][][]);
 	}
 
-	public List<int[][]> getTrainData(String feline, List<SpanAndParseIdx> candidateTokens, Sentence sentence)
+	public List<int[][]> getTrainData(String feline,
+									  List<SpanAndParseIdx> candidateSpans,
+									  Sentence sentence,
+									  String spanFilename)
 			throws IOException {
 		final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(sentence, feline);
 		final String frame = dataPoint.getFrameName();
-		final String[] frameElements = FEDict.getInstance().lookupFrameElements(frame);
+		final String[] allFrameElements = FEDict.getInstance().lookupFrameElements(frame);
 		final List<int[][]> featuresList = new ArrayList<int[][]>();
 
 		final List<Pair<List<int[]>, List<String>>> allFeaturesAndSpanLines = Lists.newArrayList();
 		//add realized frame elements
 		final List<Range0Based> spans = dataPoint.getOvertFrameElementFillerSpans();
-		final List<String> frameElementNames = dataPoint.getOvertFilledFrameElementNames();
-		final Set<String> realizedFes = Sets.newHashSet();
+		final List<String> filledFrameElements = dataPoint.getOvertFilledFrameElementNames();
 		for (int i = 0; i < dataPoint.getNumOvertFrameElementFillers(); i++) {
-			final String frameElement = frameElementNames.get(i);
-			if (!realizedFes.contains(frameElement)) {
-				realizedFes.add(frameElement);
-				final Range0Based span = spans.get(i);
-				allFeaturesAndSpanLines.add(
-						getFeaturesForOneArgument(dataPoint, frame, frameElement, span, candidateTokens));
-			}
+			final String frameElement = filledFrameElements.get(i);
+			final Range0Based goldSpan = spans.get(i);
+			allFeaturesAndSpanLines.add(
+					getFeaturesForOneArgument(dataPoint, frame, frameElement, goldSpan, candidateSpans));
 		}
 		//add null frame elements
-		for (String frameElement : frameElements) {
+		final Set<String> realizedFes = Sets.newHashSet(filledFrameElements);
+		for (String frameElement : allFrameElements) {
 			if (!realizedFes.contains(frameElement)) {
-				final Range0Based span = EMPTY_SPAN;
+				final Range0Based goldSpan = EMPTY_SPAN;
 				allFeaturesAndSpanLines.add(
-						getFeaturesForOneArgument(dataPoint, frame, frameElement, span, candidateTokens));
+						getFeaturesForOneArgument(dataPoint, frame, frameElement, goldSpan, candidateSpans));
 			}
 		}
 		//prints .spans file, which is later used to recover frame parse after prediction
-		final PrintWriter ps = new PrintWriter(new FileWriter(FEFileName.spanfilename, true));
+		final PrintWriter ps = new PrintWriter(new FileWriter(spanFilename, true));
 		try {
 			for (Pair<List<int[]>, List<String>> featuresAndSpanLines : allFeaturesAndSpanLines) {
 				final List<int[]> features = featuresAndSpanLines.first;
@@ -253,22 +258,20 @@ public class DataPrep {
 		return featuresList;
 	}
 
-	/**
-	 * @param candidateSpanAndParseIdxs are of the form [start, end, dependencyParseIdx]
-	 */
 	Pair<List<int[]>, List<String>> getFeaturesForOneArgument(DataPointWithFrameElements dp,
 															  String frame,
 															  String fe,
 															  Range0Based goldSpan,
-															  List<SpanAndParseIdx> candidateSpanAndParseIdxs) {
+															  List<SpanAndParseIdx> candidateSpans) {
 		final List<int[]> features = Lists.newArrayList();
 		final List<String> spanLines = Lists.newArrayList();
 		spanLines.add(Joiner.on("\t").join(
 				dp.getSentenceNum(), fe, frame, dp.getTargetTokenIdxs()[0],
 				dp.getTargetTokenIdxs()[dp.getTargetTokenIdxs().length-1], feIndex));
 		// put gold span first
-		final List<SpanAndParseIdx> goldFirst = Lists.newArrayList();
-		for (SpanAndParseIdx candidateSpanAndParseIdx : candidateSpanAndParseIdxs) {
+		final List<SpanAndParseIdx> goldFirst =
+				Lists.newArrayListWithCapacity(candidateSpans.size());
+		for (SpanAndParseIdx candidateSpanAndParseIdx : candidateSpans) {
 			if (candidateSpanAndParseIdx.span.equals(goldSpan)) {
 				goldFirst.add(0, candidateSpanAndParseIdx);
 			} else {
@@ -280,18 +283,19 @@ public class DataPrep {
 		for (SpanAndParseIdx candidateSpanAndParseIdx : goldFirst) {
 			final Range0Based candidateSpan = candidateSpanAndParseIdx.span;
 			final DependencyParse parse = parses.get(candidateSpanAndParseIdx.parseIdx);
-			features.add(getFeaturesByIndex(dp, frame, fe, candidateSpan, parse));
+			features.add(getFeatureIndexes(dp, frame, fe, candidateSpan, parse));
 			spanLines.add(candidateSpan.start + "\t" + candidateSpan.end);
 		}
 		spanLines.add("");
 		return Pair.of(features, spanLines);
 	}
 
-	int[] getFeaturesByIndex(DataPointWithFrameElements dataPoint,
-							 String frame,
-							 String fe,
-							 Range0Based span,
-							 DependencyParse parse) {
+	/** Gets the indexes of all features that fire */
+	int[] getFeatureIndexes(DataPointWithFrameElements dataPoint,
+							String frame,
+							String fe,
+							Range0Based span,
+							DependencyParse parse) {
 		final Set<String> featureSet =
 				new FeatureExtractor().extractFeatures(dataPoint, frame, fe, span, parse).elementSet();
 		final int[] featArray = new int[featureSet.size()];

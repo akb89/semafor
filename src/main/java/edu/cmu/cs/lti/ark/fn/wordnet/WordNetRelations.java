@@ -32,7 +32,7 @@ import com.google.common.io.InputSupplier;
 import com.google.common.io.Resources;
 import edu.cmu.cs.lti.ark.fn.wordnet.WordNetAPI.RelationType;
 import edu.cmu.cs.lti.ark.util.ds.Pair;
-import edu.cmu.cs.lti.ark.util.nlp.MorphaLemmatizer;
+import edu.washington.cs.knowitall.morpha.MorphaStemmer;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 
@@ -52,7 +52,6 @@ public class WordNetRelations {
 	public static final String NO_RELATION = "no-relation";
 	private static Pattern PUNCTUATION_PATTERN = Pattern.compile("\\p{Punct}");
 	private static final int NUM_THRESHOLD = 4;
-	private static final MorphaLemmatizer lemmatizer = new MorphaLemmatizer();
 
 	private static class SingletonHolder {
 		public static final WordNetRelations INSTANCE;
@@ -84,7 +83,7 @@ public class WordNetRelations {
 						@Override public String load(Pair<String, String> lemmaAndPostag) throws Exception {
 							final String lemma = lemmaAndPostag.first;
 							final String postag = lemmaAndPostag.second;
-							return lemmatizer.getLemma(lemma, postag).toLowerCase();
+							return MorphaStemmer.stemToken(lemma, postag).toLowerCase();
 						}
 					});
 

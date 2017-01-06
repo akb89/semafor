@@ -29,14 +29,13 @@ import gnu.trove.TObjectIntHashMap;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class LinDekNeighbors {
 
 	public static final int MAX_NEIGHBORS = 20;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		Pair<TObjectIntHashMap<String>, TObjectIntHashMap<String>> p = 
 			readAdjectivesAndAdverbs();
 		TObjectIntHashMap<String> adjectives = p.first;
@@ -216,13 +215,13 @@ public class LinDekNeighbors {
 		String outFile = "/home/dipanjan/work/fall2010/SSL/FNData/lindekneighbors.dat";
 		BufferedWriter bWriter = new BufferedWriter(new FileWriter(outFile));
 		String line;
-		List<String> mAdjectives = ParsePreparation.readLines(lindekdirectory + "/mult.word.j");
+		ArrayList<String> mAdjectives = ParsePreparation.readSentencesFromFile(lindekdirectory + "/mult.word.j");
 		THashSet<String> adjSet = new THashSet<String>();
 		for (int i = 0; i < mAdjectives.size(); i++) {
 			String w = mAdjectives.get(i).toLowerCase();
 			adjSet.add(w);
 		}
-		List<String> mAdverbs = ParsePreparation.readLines(lindekdirectory + "/mult.word.r");
+		ArrayList<String> mAdverbs = ParsePreparation.readSentencesFromFile(lindekdirectory + "/mult.word.r");
 		THashSet<String> advSet = new THashSet<String>();
 		for (int i = 0; i < mAdverbs.size(); i++) {
 			String w = mAdverbs.get(i).toLowerCase();
@@ -372,13 +371,13 @@ public class LinDekNeighbors {
 
 
 	public static Pair<TObjectIntHashMap<String>, TObjectIntHashMap<String>> 
-	readAdjectivesAndAdverbs() throws IOException {
+	readAdjectivesAndAdverbs() {
 		String adjFile = "/home/dipanjan/work/fall2010/SSL/FNData/gw.a";
 		String advFile = "/home/dipanjan/work/fall2010/SSL/FNData/gw.adv";
-		List<String> adjectives =
-			ParsePreparation.readLines(adjFile);
-		List<String> adverbs =
-			ParsePreparation.readLines(advFile);
+		ArrayList<String> adjectives = 
+			ParsePreparation.readSentencesFromFile(adjFile);
+		ArrayList<String> adverbs = 
+			ParsePreparation.readSentencesFromFile(advFile);
 		TObjectIntHashMap<String> adjMap = 
 			new TObjectIntHashMap<String>();
 		TObjectIntHashMap<String> advMap = 

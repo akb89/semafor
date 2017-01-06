@@ -12,14 +12,11 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URISyntaxException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static com.google.common.io.Closeables.closeQuietly;
 import static edu.cmu.cs.lti.ark.fn.data.prep.formats.SentenceCodec.ConllCodec;
 
 public class SemaforSocketServer {
-	private static final ObjectMapper jsonMapper = new ObjectMapper();
-
 	/**
 	 * required flags:
 	 * model-dir
@@ -37,7 +34,7 @@ public class SemaforSocketServer {
 		final Semafor semafor = Semafor.getSemaforInstance(modelDirectory);
 		// Set up socket server
 		final ServerSocket serverSocket = new ServerSocket(port);
-		System.err.println("Listening on port: " + serverSocket.getLocalPort());
+		System.err.println("Listening on port: " + port);
 		while (true) {
 			try {
 				final Socket clientSocket = serverSocket.accept();
@@ -46,7 +43,12 @@ public class SemaforSocketServer {
 				final PrintWriter output =
 						new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), Charsets.UTF_8));
 				while (sentences.hasNext()) {
-					processSentence(semafor, sentences.next(), output);
+					final Sentence sentence = sentences.next();
+					final long start = System.currentTimeMillis();
+					output.println(semafor.parseSentence(sentence).toJson());
+					output.flush();
+					final long end = System.currentTimeMillis();
+					System.err.printf("parsed sentence with %d tokens in %d millis.%n", sentence.size(), end - start);
 				}
 				closeQuietly(sentences);
 				closeQuietly(output);
@@ -55,20 +57,4 @@ public class SemaforSocketServer {
 			}
 		}
 	}
-
-	public static void processSentence(Semafor semafor, Sentence sentence, PrintWriter output)
-		throws IOException {
-		final long start = System.currentTimeMillis();
-		try {
-			output.println(semafor.parseSentence(sentence).toJson());
-		} catch (Exception e) {
-			System.err.println("Error on parsing sentence:" + e);
-			e.printStackTrace(System.err);
-			String message = jsonMapper.writeValueAsString(e.toString());
-			output.println("{\"error\": "+message+"}");
-		}
-		output.flush();
-		final long end = System.currentTimeMillis();
-		System.err.printf("parsed sentence with %d tokens in %d millis.%n", sentence.size(), end - start);
-    }
 }
