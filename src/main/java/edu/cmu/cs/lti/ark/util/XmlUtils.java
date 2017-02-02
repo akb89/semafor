@@ -44,7 +44,7 @@ import com.sun.org.apache.xpath.internal.XPathAPI;
 
 public class XmlUtils {
 
-	//Parses an XML file and returns a DOM document.
+	// Parses an XML file and returns a DOM document.
 	// If validating is true, the contents is validated against the DTD
 	// specified in the file.
 	public static Document parseXmlFile(String filename, boolean validating) {
@@ -54,9 +54,8 @@ public class XmlUtils {
 			.newInstance();
 			factory.setValidating(validating);
 			// Create the builder and parse the file
-			Document doc = factory.newDocumentBuilder().parse(
+			return factory.newDocumentBuilder().parse(
 					new File(filename));
-			return doc;
 		} catch (SAXException e) {
 			// A parsing error occurred; the xml input is not valid
 			System.err.println("SAXException in parsing XML File:" + filename

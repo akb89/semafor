@@ -20,7 +20,7 @@ export gc_threads=2
 export max_ram=6g #max RAM allocated to the JVM in GB. Corresponds to the -Xmx argument
 
 # choose a name for the model to train
-export model_name="acl2015_fn_with_exemplars"
+export model_name="acl2015_exemplars"
 
 export EXPERIMENTS_DIR="${SEMAFOR_HOME}/experiments/${model_name}"
 
