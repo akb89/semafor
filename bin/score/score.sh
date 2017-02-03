@@ -9,7 +9,7 @@ mkdir -p "${RESULTS_DIR}"
 
 #***************** Run SEMAFOR with Gold Targets, Gold Frames, Auto Arg-id ***********************#
 
-scala -classpath ${CLASSPATH} -J-Xmx${max_ram} "${SEMAFOR_HOME}/bin/score/runWithGoldTargets.scala" \
+scala -classpath ${CLASSPATH} -J-Xmx${max_ram} "${SEMAFOR_HOME}/bin/score/score.scala" \
     "${MODEL_DIR}" \
     "${sentences_frames}" \
     "${sentences_maltparsed}" \
@@ -34,7 +34,7 @@ ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
 #********************************** Evaluation ********************************************#
 
 echo "Exact Arg Results"
-${SEMAFOR_HOME}/bin/score/fnSemScore_modified.pl \
+${SEMAFOR_HOME}/bin/score/score.pl \
     -c "${RESULTS_DIR}" \
     -l \
     -n \

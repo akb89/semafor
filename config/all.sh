@@ -9,7 +9,7 @@ export BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." > /dev/null && p
 # path to the absolute path where you decompressed SEMAFOR.
 export SEMAFOR_HOME="${BASE_DIR}/semafor"
 
-export CLASSPATH=".:${SEMAFOR_HOME}/target/Semafor-3.0-alpha-05-adadelta.jar"
+export CLASSPATH="${SEMAFOR_HOME}/target/Semafor-3.0-alpha-05-adadelta.jar"
 
 # Change the following to the bin directory of your $JAVA_HOME
 export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"

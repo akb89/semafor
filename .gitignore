@@ -13,4 +13,5 @@
 /models
 /experiments
 /data
-/config
+/config/all.sh
+/config/preprocessing.sh
