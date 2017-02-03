@@ -14,8 +14,8 @@ scala -cp ${CLASSPATH} -J-Xmx3g scripts/scoring/runWithGoldTargets.scala \
 import java.io.File
 import java.util
 
-import com.google.common.base.Charsets.UTF_8
-import com.google.common.io.Files
+import _root_.com.google.common.base.Charsets.UTF_8
+import _root_.com.google.common.io.Files
 import edu.cmu.cs.lti.ark.fn.Semafor
 import edu.cmu.cs.lti.ark.fn.data.prep.formats.SentenceCodec.{ConllCodec, SentenceIterator}
 import edu.cmu.cs.lti.ark.fn.data.prep.formats.{AllLemmaTags, Sentence}
