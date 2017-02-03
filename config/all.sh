@@ -17,7 +17,7 @@ export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents
 # should set to roughly the number of cores available
 export num_threads=8
 export gc_threads=2
-export max_ram=6g #max RAM allocated to the JVM in GB. Corresponds to the -Xmx argument
+export max_ram=16g #max RAM allocated to the JVM in GB. Corresponds to the -Xmx argument
 
 # choose a name for the model to train
 export model_name="acl2015_exemplars"
