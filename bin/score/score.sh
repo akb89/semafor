@@ -28,7 +28,7 @@ ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
     endIndex:${end} \
     testParseFile:"${processed_file}" \
     testTokenizedFile:"${tokenized_file}" \
-    outputFile:"${RESULTS_DIR}/${cv}.gold.xml"
+    outputFile:"${RESULTS_DIR}/test.gold.xml"
 
 
 #********************************** Evaluation ********************************************#
