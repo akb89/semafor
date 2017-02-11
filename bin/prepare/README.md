@@ -3,8 +3,8 @@ Process a standard set of FrameNet data and generate all files required by
 Semafor
 
 ## .xml files
-1. frameSingleFile.xml
-2. frRelationModified.xml
+1. frames.xml
+2. frRelations.xml
 3. framenet.frame.element.map
 4. reqData.jobj
 5. sparsegraph.gz

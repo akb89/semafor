@@ -21,7 +21,6 @@
  ******************************************************************************/
 package edu.cmu.cs.lti.ark.util;
 
-
 import com.google.common.io.InputSupplier;
 
 import java.io.*;
