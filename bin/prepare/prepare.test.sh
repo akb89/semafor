@@ -13,27 +13,26 @@ echo
 #rm -rf ${EXPERIMENT_DATA_DIR}
 #mkdir ${EXPERIMENT_DATA_DIR}
 
-# TODO: fix pos_tagged.conll
 # Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.conll splits
 echo "**********************************************************************"
 echo "Running MaltParser on conll training splits...."
-pushd ${SEMAFOR_HOME}/scripts/maltparser-1.7.2
-time ${JAVA_HOME_BIN}/java -Xmx2g \
+pushd ${MALT_PARSER_HOME}
+time ${JAVA_HOME_BIN}/java -Xmx${max_ram} \
     -jar maltparser-1.7.2.jar \
     -w ${RESOURCES_DIR} \
-    -c engmalt.linear-1.7 \
-    -i ${postagged_training_splits}.conll \
+    -c ${malt_parser_model} \
+    -i ${malt_conll_input_training_splits} \
     -o ${maltparsed_training_splits}
-echo "Finished running MaltParser."
+echo "Finished Malt dependency parsing"
 echo
 echo "**********************************************************************"
 echo "Running MaltParser on conll testing splits...."
-pushd ${SEMAFOR_HOME}/scripts/maltparser-1.7.2
-time ${JAVA_HOME_BIN}/java -Xmx2g \
+pushd ${MALT_PARSER_HOME}
+time ${JAVA_HOME_BIN}/java -Xmx${max_ram} \
     -jar maltparser-1.7.2.jar \
     -w ${RESOURCES_DIR} \
-    -c engmalt.linear-1.7 \
-    -i ${postagged_testing_splits}.conll \
+    -c ${malt_parser_model} \
+    -i ${matl_conll_input_testing_splits} \
     -o ${maltparsed_testing_splits}
-echo "Finished running MaltParser."
+echo "Finished Malt dependency parsing"
 echo
