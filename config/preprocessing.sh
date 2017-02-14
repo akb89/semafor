@@ -18,6 +18,8 @@ export malt_parser_model="engmalt.linear-1.7"
 
 export test_set_documents_names="${RESOURCES_DIR}/fn.fulltext.test.set.documents"
 
+export tmp_file="${EXPERIMENT_DATA_DIR}/tmp"
+
 export training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences"
 export testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences"
 
@@ -38,6 +40,9 @@ export mst_conll_input_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.
 
 export mstparsed_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.mstparsed.conll"
 export mstparsed_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.mstparsed.conll"
+
+export all_lemma_tags_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.all.lemma.tags"
+export all_lemma_tags_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.all.lemma.tags"
 
 export framenet_map_file="${MODEL_DIR}/framenet.original.map"
 

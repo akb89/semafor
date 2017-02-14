@@ -13,26 +13,27 @@ echo
 #rm -rf ${EXPERIMENT_DATA_DIR}
 #mkdir ${EXPERIMENT_DATA_DIR}
 
-# Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.conll splits
+# Generate cv.***.sentences.all.lemma.tags
 echo "**********************************************************************"
-echo "Running MaltParser on conll training splits...."
-pushd ${MALT_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java -Xmx${max_ram} \
-    -jar maltparser-1.7.2.jar \
-    -w ${RESOURCES_DIR} \
-    -c ${malt_parser_model} \
-    -i ${malt_conll_input_training_splits} \
-    -o ${maltparsed_training_splits}
-echo "Finished Malt dependency parsing"
+echo "Merging POS tags, dependency parses, and lemmatized version of each training sentence into one line...."
+time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms1g -Xmx${max_ram} \
+        edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
+          ${tokenized_training_splits} \
+          ${maltparsed_training_splits} \
+          ${tmp_file} \
+          ${all_lemma_tags_training_splits}
+rm "${tmp_file}"
+echo "Finished merging"
 echo
 echo "**********************************************************************"
-echo "Running MaltParser on conll testing splits...."
+echo "Merging POS tags, dependency parses, and lemmatized version of each testing sentence into one line...."
 pushd ${MALT_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java -Xmx${max_ram} \
-    -jar maltparser-1.7.2.jar \
-    -w ${RESOURCES_DIR} \
-    -c ${malt_parser_model} \
-    -i ${matl_conll_input_testing_splits} \
-    -o ${maltparsed_testing_splits}
-echo "Finished Malt dependency parsing"
+time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms1g -Xmx${max_ram} \
+        edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
+          ${tokenized_testing_splits} \
+          ${maltparsed_testing_splits} \
+          ${tmp_file} \
+          ${all_lemma_tags_testing_splits}
+rm "${tmp_file}"
+echo "Finished merging"
 echo

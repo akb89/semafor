@@ -86,6 +86,7 @@ echo "Converting postagged testing splits to MST conll input..."
 time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} \
 	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
 	${postagged_testing_splits} ${mst_conll_input_testing_splits}
+echo
 
 # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
 echo "**********************************************************************"
@@ -137,6 +138,31 @@ time ${JAVA_HOME_BIN}/java -Xmx${max_ram} \
     -i ${matl_conll_input_testing_splits} \
     -o ${maltparsed_testing_splits}
 echo "Finished Malt dependency parsing"
+echo
+
+# Generate cv.***.sentences.all.lemma.tags
+echo "**********************************************************************"
+echo "Merging POS tags, dependency parses, and lemmatized version of each training sentence into one line...."
+time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms1g -Xmx${max_ram} \
+        edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
+          ${tokenized_training_splits} \
+          ${mstparsed_training_splits} \
+          ${tmp_file} \
+          ${all_lemma_tags_training_splits}
+rm "${tmp_file}"
+echo "Finished merging"
+echo
+echo "**********************************************************************"
+echo "Merging POS tags, dependency parses, and lemmatized version of each testing sentence into one line...."
+pushd ${MALT_PARSER_HOME}
+time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms1g -Xmx${max_ram} \
+        edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
+          ${tokenized_testing_splits} \
+          ${mstparsed_testing_splits} \
+          ${tmp_file} \
+          ${all_lemma_tags_testing_splits}
+rm "${tmp_file}"
+echo "Finished merging"
 echo
 
 # Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory
