@@ -7,6 +7,20 @@ export RESOURCES_DIR="${SEMAFOR_HOME}/resources"
 
 export LEXUNIT_DIR="${FRAMENET_DATA_DIR}/lu"
 
+export test_set_documents_names="${RESOURCES_DIR}/fn.fulltext.test.set.documents"
+
+export training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences"
+export testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences"
+
+export tokenized_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.tokenized"
+export tokenized_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.tokenized"
+
+export postagged_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.pos.tagged"
+export postagged_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.pos.tagged"
+
+export maltparsed_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.maltparsed.conll"
+export maltparsed_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.maltparsed.conll"
+
 export framenet_map_file="${MODEL_DIR}/framenet.original.map"
 
 export wordnet_config_file="${RESOURCES_DIR}/file_properties.xml"

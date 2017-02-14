@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Generate frRelations.xml file and frames.xml file used by the bin/score/score.pl script
  * @author Alex Kabbach
  */
 public class ScoringRequiredDataCreation {

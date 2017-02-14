@@ -46,7 +46,6 @@ INPUT_FILE="${1}"
 # where to write the output
 OUTPUT_DIR="${2}"
 
-
 TOKENIZED="${OUTPUT_DIR}/tokenized"
 POS_TAGGED="${OUTPUT_DIR}/pos.tagged"
 
