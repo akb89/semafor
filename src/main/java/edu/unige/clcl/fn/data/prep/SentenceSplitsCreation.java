@@ -1,4 +1,4 @@
-package edu.clcl.fn.data.prep;
+package edu.unige.clcl.fn.data.prep;
 
 import edu.cmu.cs.lti.ark.util.XmlUtils;
 import org.w3c.dom.Document;
@@ -14,25 +14,25 @@ import java.util.stream.Collectors;
 
 /**
  * Generate cv.***.sentences splits from FrameNet XML data
- * for training and testing with the Semafor parser
+ * for training and testing with Semafor
  *
  * Process fulltext and exemplars separately
- * Remove sentences with no annotation
+ * Remove sentences with no FrameNet annotation
  * @author Alex Kabbach
  */
 public class SentenceSplitsCreation {
 
 	public static void main(String[] args) throws IOException {
-		/*final String frameNetDataDir = args[0];
+		final String frameNetDataDir = args[0];
 		final String trainSentenceSplits = args[1];
 		final String testSentenceSplits = args[2];
-		final String testSetDocsFile = args[3];*/
+		final String testSetDocsFile = args[3];
 
-		final String frameNetDataDir = "/Users/AKB/Dropbox/FrameNetData/fndata-1.5";
+		/*final String frameNetDataDir = "/Users/AKB/Dropbox/FrameNetData/fndata-1.5";
 		final String resourcesDir = "/Users/AKB/Dropbox/GitHub/semafor/data";
 		final String testSentenceSplits = resourcesDir + "/cv.test.sentences"; // TODO: use global variable?
 		final String trainSentenceSplits = resourcesDir + "/cv.train.sentences"; // TODO: use global variable?
-		final String testSetDocsFile = "/Users/AKB/Dropbox/GitHub/semafor/resources/fn.fulltext.test.set.documents";
+		final String testSetDocsFile = "/Users/AKB/Dropbox/GitHub/semafor/resources/fn.fulltext.test.set.documents";*/
 
 		final String fullTextDir = frameNetDataDir + "/fulltext";
 		final String lexUnitDir = frameNetDataDir + "/lu";
@@ -75,7 +75,7 @@ public class SentenceSplitsCreation {
 					for(int i=0; i<sentences.getLength(); i++){
 						Element sentence = (Element)sentences.item(i);
 						if(containsFrameNetAnnotation(sentence)){
-							String text = sentence.getElementsByTagName("text").item(0).getTextContent().trim();
+							String text = sentence.getElementsByTagName("text").item(0).getTextContent().replaceAll("\\s+$", "");;
 							if(!testSentenceSet.contains(text)){
 								trainSentenceSet.add(text);
 							}
@@ -98,7 +98,7 @@ public class SentenceSplitsCreation {
 					for(int j=0; j<sentences.getLength(); j++){
 						Element sentence = (Element)sentences.item(j);
 						if(containsFrameNetAnnotation(sentence)){
-							String text = sentence.getElementsByTagName("text").item(0).getTextContent().trim();
+							String text = sentence.getElementsByTagName("text").item(0).getTextContent().replaceAll("\\s+$", "");;
 							if(!testSentenceSet.contains(text)){
 								trainSentenceSet.add(text);
 							}
@@ -113,7 +113,7 @@ public class SentenceSplitsCreation {
 			throws IOException {
 		Set<String> trainSentenceSet = new HashSet<>();
 		addFullTextSentences(fullTextDir, testSetDocNameSet, testSentenceSet, trainSentenceSet);
-		//addExemplarSentences(lexUnitDir, testSentenceSet, trainSentenceSet);
+		addExemplarSentences(lexUnitDir, testSentenceSet, trainSentenceSet);
 		return trainSentenceSet;
 	}
 
@@ -129,7 +129,7 @@ public class SentenceSplitsCreation {
 					for(int i=0; i<sentences.getLength(); i++){
 						Element sentence = (Element)sentences.item(i);
 						if(containsFrameNetAnnotation(sentence)){
-							String text = sentence.getElementsByTagName("text").item(0).getTextContent().trim();
+							String text = sentence.getElementsByTagName("text").item(0).getTextContent().replaceAll("\\s+$", "");
 							testSentenceSet.add(text);
 						}
 					}

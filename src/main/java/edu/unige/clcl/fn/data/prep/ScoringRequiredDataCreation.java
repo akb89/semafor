@@ -1,23 +1,16 @@
-package edu.clcl.fn.data.prep;
+package edu.unige.clcl.fn.data.prep;
 
-import edu.cmu.cs.lti.ark.util.SerializedObjects;
 import edu.cmu.cs.lti.ark.util.XmlUtils;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import scala.xml.Null;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Generate frRelations.xml file and frames.xml file used by the bin/score/score.pl script

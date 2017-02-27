@@ -50,7 +50,7 @@ public class LemmatizeStuff {
 		while(sc.hasNextLine()) {
 			String line = sc.nextLine();
 			ps.print(line + "\t");
-			String[] tokens = line.trim().split("\\s");
+			String[] tokens = line.trim().split("\\s+");
 			int sentLen = Integer.parseInt(tokens[0]);
 			for(int i = 0; i < sentLen; i++) {
 				String lemma = lemmatizer.getLemma(tokens[i + 1], tokens[i + 1 + sentLen]);

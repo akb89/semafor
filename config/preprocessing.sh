@@ -20,29 +20,32 @@ export test_set_documents_names="${RESOURCES_DIR}/fn.fulltext.test.set.documents
 
 export tmp_file="${EXPERIMENT_DATA_DIR}/tmp"
 
-export training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences"
-export testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences"
+export training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences"
+export testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences"
 
-export tokenized_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.tokenized"
-export tokenized_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.tokenized"
+export training_fe_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frame.elements"
+export testing_fe_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frame.elements"
 
-export postagged_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.pos.tagged"
-export postagged_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.pos.tagged"
+export tokenized_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.tokenized"
+export tokenized_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.tokenized"
 
-export malt_conll_input_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.malt.input.conll"
+export postagged_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.pos.tagged"
+export postagged_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.pos.tagged"
+
+export malt_conll_input_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.malt.input.conll"
 export matl_conll_input_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.malt.input.conll"
 
-export maltparsed_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.maltparsed.conll"
-export maltparsed_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.maltparsed.conll"
+export maltparsed_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.maltparsed.conll"
+export maltparsed_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.maltparsed.conll"
 
-export mst_conll_input_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.mst.input.conll"
-export mst_conll_input_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.mst.input.conll"
+export mst_conll_input_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.mst.input.conll"
+export mst_conll_input_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.mst.input.conll"
 
-export mstparsed_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.mstparsed.conll"
-export mstparsed_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.mstparsed.conll"
+export mstparsed_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.mstparsed.conll"
+export mstparsed_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.mstparsed.conll"
 
-export all_lemma_tags_training_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.all.lemma.tags"
-export all_lemma_tags_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.all.lemma.tags"
+export all_lemma_tags_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.all.lemma.tags"
+export all_lemma_tags_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.all.lemma.tags"
 
 export framenet_map_file="${MODEL_DIR}/framenet.original.map"
 
