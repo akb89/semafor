@@ -55,7 +55,7 @@ public class LinDekNeighbors {
 	public static void createNeighborsForVerbs() 
 	throws IOException {
 		String stopfile = "lrdata/stopwords.txt";
-		String wnConfigFile = "file_properties.xml";
+		String wnConfigFile = "data/file_properties.xml";
 		WordNetRelations wnr = new WordNetRelations(stopfile, wnConfigFile);
 		if (true)
 			System.exit(-1);
@@ -134,7 +134,7 @@ public class LinDekNeighbors {
 	public static void createNeighborsForNouns() 
 	throws IOException {
 		String stopfile = "lrdata/stopwords.txt";
-		String wnConfigFile = "file_properties.xml";
+		String wnConfigFile = "data/file_properties.xml";
 		WordNetRelations wnr = new WordNetRelations(stopfile, wnConfigFile);
 
 		String lindekdirectory = "/home/dipanjan/work/fall2010/SSL/FNData";

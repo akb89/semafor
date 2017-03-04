@@ -33,7 +33,7 @@ import java.util.Map;
  * A map from frames to their frame elements
  */
 public class FEDict {
-	public static final String DEFAULT_FILENAME = "framenet.frame.element.map";
+	public static final String DEFAULT_FILENAME = "data/framenet.frame.element.map";
 
 	private Map<String, THashSet<String>> frameElementsForFrame;
 

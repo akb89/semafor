@@ -1,4 +1,4 @@
-package edu.unige.clcl.fn.data.prep.utils;
+package edu.unige.clcl.fn.data.prep.models;
 
 /**
  * @author Alex Kabbach

@@ -18,7 +18,7 @@ import static edu.cmu.cs.lti.ark.util.IntRanges.xrange;
  * @author sthomson@cs.cmu.edu
  */
 public class FrameCosts {
-	public static final String DEFAULT_COSTS_FILE = "frame_costs.csv";
+	public static final String DEFAULT_COSTS_FILE = "data/frame_costs.csv";
 	private static InputSupplier<InputStream> DEFAULT_INPUT_SUPPLIER = new InputSupplier<InputStream>() {
 		@Override public InputStream getInput() throws IOException {
 			return getClass().getClassLoader().getResourceAsStream(DEFAULT_COSTS_FILE);

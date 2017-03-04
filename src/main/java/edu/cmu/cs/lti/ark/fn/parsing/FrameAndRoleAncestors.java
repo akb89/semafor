@@ -18,9 +18,9 @@ import java.util.Map;
  * @author mkshirsa@cs.cmu.edu
  */
 public class FrameAndRoleAncestors {
-	private static final String DEFAULT_ANCESTORS_FILE = "ancestors.csv";
-	private static final String DEFAULT_PARENTS_FILE = "frame_parents.csv";
-	private static final String DEFAULT_ROLES_FILE = "frame_parent_rolemappings.csv";
+	private static final String DEFAULT_ANCESTORS_FILE = "data/ancestors.csv";
+	private static final String DEFAULT_PARENTS_FILE = "data/frame_parents.csv";
+	private static final String DEFAULT_ROLES_FILE = "data/frame_parent_rolemappings.csv";
 	public static final int PARENT = 1, ANCESTOR = 2; // mk: ancestors
 
 	private static InputSupplier<InputStream> DEFAULT_ANCESTOR_SUPPLIER = new InputSupplier<InputStream>() {

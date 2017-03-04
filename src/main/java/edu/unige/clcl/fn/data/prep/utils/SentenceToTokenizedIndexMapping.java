@@ -1,5 +1,7 @@
 package edu.unige.clcl.fn.data.prep.utils;
 
+import edu.unige.clcl.fn.data.prep.models.TokenIndex;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
