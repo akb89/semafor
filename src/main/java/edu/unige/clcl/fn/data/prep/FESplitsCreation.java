@@ -13,7 +13,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -86,12 +85,12 @@ public class FESplitsCreation {
 		}
 	}
 
-	private List<String> splitString(String text, String regex){
+	private List<String> splitBy(String text, String regex){
 		return Arrays.asList(text.split(regex));
 	}
 
 	private List<String> splitByWhiteSpace(String text){
-		return splitString(text, "\\s+");
+		return splitBy(text, "\\s+");
 	}
 
 	private Set<String> getTestSetDocNameSet(String testSetDocsFile)
@@ -175,9 +174,9 @@ public class FESplitsCreation {
 	private String getTargetIndex(String text, String targetWithIndex,
 			Map<TokenIndex, TokenIndex> tokenIndexMap){
 		int targetStartChar = Integer.parseInt(
-				splitString(targetWithIndex, "#").get(1));
+				splitBy(targetWithIndex, "#").get(1));
 		int targetEndChar = targetStartChar +
-				splitString(targetWithIndex, "#").get(0).length() - 1;
+				splitBy(targetWithIndex, "#").get(0).length() - 1;
 		TokenIndex tokenIndex =
 				toTokenIndex(text, targetStartChar, targetEndChar);
 		if(tokenIndex == null){
@@ -397,9 +396,9 @@ public class FESplitsCreation {
 		String tokenizedText = tokenizedSentences.get(sentenceIndex);
 		Map<TokenIndex, TokenIndex> tokenIndexMap = SentenceToTokenizedIndexMapping
 				.getTokenIndexMap(text, tokenizedText);
-		String target = splitString(targetWithStartCharIndex, "#").get(0);
+		String target = splitBy(targetWithStartCharIndex, "#").get(0);
 		int startChar = Integer.parseInt(
-				splitString(targetWithStartCharIndex, "#").get(1));
+				splitBy(targetWithStartCharIndex, "#").get(1));
 		String targetIndex = getTargetIndex(text, target, startChar, tokenIndexMap);
 		if(targetIndex.isEmpty()){
 			logger.warn("Could not retrieve target index for "

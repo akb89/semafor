@@ -60,7 +60,9 @@ There are in total *** sentences than cannot be parsed due to failed mapping.
  
  ### Targets
  targets need be extracted "as is" and be continuous. 
- Ex: there be.v in `There have also been`. Target is `there have also been` although it is annotated in FrameNet as `there been`
+ Ex: there be.v in `There have also been`. Target is `there have also been` although it is annotated in FrameNet as `there been`.
+ 
+ The training Maps of Das are using american spelling, while FN sentences are based on the BNC and therefore using British spelling. 
 
 ## .xml files
 1. frames.xml

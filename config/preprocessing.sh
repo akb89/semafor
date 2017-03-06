@@ -47,7 +47,8 @@ export mstparsed_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentenc
 export all_lemma_tags_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.all.lemma.tags"
 export all_lemma_tags_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.all.lemma.tags"
 
-export framenet_map_file="${MODEL_DIR}/framenet.original.map"
+export framenet_lu_map_file="${MODEL_DIR}/framenet.original.map"
+export framenet_fe_map_file="${MODEL_DIR}/framenet.frame.element.map"
 
 export wordnet_config_file="${RESOURCES_DIR}/file_properties.xml"
 export stopwords_file="${RESOURCES_DIR}/stopwords.txt"

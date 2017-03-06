@@ -184,8 +184,10 @@ echo "**********************************************************************"
 echo "Creating framenet.original.map and framenet.frame.element.map..."
 time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.TrainingRequiredDataCreation \
-    "${FRAMENET_DATA_DIR}" \
-    "${EXPERIMENT_DATA_DIR}"
+    "${training_fe_splits}" \
+    "${postagged_training_sentence_splits}" \
+    "${framenet_lu_map_file}" \
+    "${framenet_fe_map_file}"
 echo "Finished maps creation"
 echo
 
@@ -196,7 +198,7 @@ time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} -XX:ParallelGC
     edu.cmu.cs.lti.ark.fn.identification.RequiredDataCreation \
     stopwords-file:${stopwords_file} \
     wordnet-configfile:${wordnet_config_file} \
-    framenet-mapfile:${framenet_map_file} \
+    framenet-mapfile:${framenet_lu_map_file} \
     luxmldir:${LEXUNIT_DIR} \
     allrelatedwordsfile:${all_related_words_file} \
     hvcorrespondencefile:${hv_correspondence_file} \
