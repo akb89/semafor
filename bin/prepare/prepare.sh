@@ -21,7 +21,7 @@ time ${JAVA_HOME_BIN}/java \
     "${training_sentence_splits}" \
     "${testing_sentence_splits}" \
     "${test_set_documents_names}" \
-    "${with_exemplars} \
+    "${with_exemplars}" \
 
 # Generate cv.***.sentences.tokenized splits from cv.***.sentences splits
 echo "Tokenizing training splits: ${training_sentence_splits} ..."
