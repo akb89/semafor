@@ -131,6 +131,7 @@ public class SentenceSplitsCreation {
 						Element sentence = (Element)sentences.item(i);
 						if(containsFrameNetAnnotation(sentence)){
 							String text = sentence.getElementsByTagName("text").item(0).getTextContent().replaceAll("\\s+$", "");
+							System.out.println(text);
 							testSentenceSet.add(text);
 						}
 					}
