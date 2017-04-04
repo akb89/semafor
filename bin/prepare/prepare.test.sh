@@ -13,17 +13,19 @@ echo
 #rm -rf ${EXPERIMENT_DATA_DIR}
 #mkdir ${EXPERIMENT_DATA_DIR}
 
-# Generate cv.***.sentences.frame.elements from cv.***.sentences splits
+# Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
-    -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.FESplitsCreation \
-    "${FRAMENET_DATA_DIR}" \
-    "${testing_sentence_splits}" \
-    "${tokenized_testing_sentence_splits}" \
-    "${training_sentence_splits}" \
-    "${tokenized_training_sentence_splits}" \
-    "${test_set_documents_names}"\
-    "${training_fe_splits}"\
-    "${testing_fe_splits}" \
-    "${with_exemplars}"
+    edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
+    --input ${postagged_training_sentence_splits} \
+    --inputFormat pos \
+    --output ${malt_conll_input_training_sentence_splits} \
+    --outputFormat conll
+
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
+    --input ${postagged_testing_sentence_splits} \
+    --inputFormat pos \
+    --output ${malt_conll_input_testing_sentence_splits} \
+    --outputFormat conll

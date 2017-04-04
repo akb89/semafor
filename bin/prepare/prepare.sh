@@ -74,7 +74,7 @@ time ${JAVA_HOME_BIN}/java \
     edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
     --input ${postagged_testing_sentence_splits} \
     --inputFormat pos \
-    --output ${matl_conll_input_testing_sentence_splits} \
+    --output ${malt_conll_input_testing_sentence_splits} \
     --outputFormat conll
 
 # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
