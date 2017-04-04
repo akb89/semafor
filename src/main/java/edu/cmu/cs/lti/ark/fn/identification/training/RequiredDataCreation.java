@@ -30,6 +30,8 @@ import edu.cmu.cs.lti.ark.util.XmlUtils;
 import edu.cmu.cs.lti.ark.util.ds.Pair;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -39,6 +41,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class RequiredDataCreation {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	// map from FrameNet postags to PTB postags
 	public static final Map<String, String> conversionMap =
 		new ImmutableMap.Builder<String, String>().
@@ -54,6 +57,8 @@ public class RequiredDataCreation {
 			put("SCON", "IN").build();
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		RequiredDataCreation reqDC = new RequiredDataCreation();
+		reqDC.logger.info("Creating reData.jobj...");
 		FNModelOptions options = new FNModelOptions(args);
 		Map<String, String> hvLemmas = getHVLemmas(options);
 		THashSet<String> relWords = getRelatedWords(options);
@@ -71,6 +76,7 @@ public class RequiredDataCreation {
 						cMap, revisedMap,
 						hvLemmas);
 		SerializedObjects.writeSerializedObject(req, options.fnIdReqDataFile.get());
+		reqDC.logger.info("Done creating reqData.jobj");
 	}
 
 	public static Map<String, String> getHVLemmas(FNModelOptions options) throws IOException, ClassNotFoundException {

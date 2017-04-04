@@ -29,37 +29,27 @@ public class FESplitsCreation {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public static void main(String[] args) throws IOException {
-		/*final String frameNetDataDir = args[0];
-		final String trainSentenceSplits = args[1];
-		final String testSentenceSplits = args[2];
-		final String testSetDocsFile = args[3];
-		final String trainFESplits = args[4];
-		final String testFESplits = args[5];*/
-
-		/*
-		List<String> sentences = Files.lines(Paths.get(sentenceSplits)).collect(
-				Collectors.toList());
-				*/
-
-		final String frameNetDataDir = "/Users/AKB/Dropbox/FrameNetData/fndata-1.5";
-		final String resourcesDir = "/Users/AKB/Dropbox/GitHub/semafor/data";
-		final String testSentenceSplits = resourcesDir + "/cv.test.sentences"; // TODO: use global variable?
-		final String trainSentenceSplits = resourcesDir + "/cv.train.sentences"; // TODO: use global variable?
-		final String testTokenizedSentenceSplits = resourcesDir + "/cv.test.sentences.tokenized";
-		final String trainTokenizedSentenceSplits = resourcesDir + "/cv.train.sentences.tokenized";
-		final String testSetDocsFile = "/Users/AKB/Dropbox/GitHub/semafor/resources/fn.fulltext.test.set.documents";
-		final String testFESplits = resourcesDir + "/cv.test.sentences.frame.elements";
-		final String trainFESplits = resourcesDir + "/cv.train.sentences.frame.elements";
+		final String frameNetDataDir = args[0];
+		final String testSentenceSplits = args[1];
+		final String testTokenizedSentenceSplits = args[2];
+		final String trainSentenceSplits = args[3];
+		final String trainTokenizedSentenceSplits = args[4];
+		final String testSetDocsFile = args[5];
+		final String trainFESplits = args[6];
+		final String testFESplits = args[7];
 
 		final String fullTextDir = frameNetDataDir + "/fulltext";
 		final String lexUnitDir = frameNetDataDir + "/lu";
 
 		FESplitsCreation feSplitsCreation = new FESplitsCreation();
+		feSplitsCreation.logger.info("Generating training and testing frame elements splits from sentences splits...");
 
 		Set<String> testSetDocNameSet = feSplitsCreation.getTestSetDocNameSet(testSetDocsFile);
-		feSplitsCreation.createFESplits(lexUnitDir, fullTextDir, testSetDocNameSet, testSentenceSplits, testTokenizedSentenceSplits, trainSentenceSplits, trainTokenizedSentenceSplits, testFESplits, trainFESplits);
-		//test(trainSentenceSplits, trainTokenizedSentenceSplits);
-		//testTokenIndex("There 's some stuff that we could doin'tonight .", 0, 0);
+		feSplitsCreation.createFESplits(lexUnitDir, fullTextDir, testSetDocNameSet,
+				testSentenceSplits, testTokenizedSentenceSplits,
+				trainSentenceSplits, trainTokenizedSentenceSplits, testFESplits, trainFESplits);
+
+		feSplitsCreation.logger.info("Done generating training and testing frame elements splits from sentences splits");
 	}
 
 	private void testTokenIndex(String test, int start, int end){
@@ -423,7 +413,6 @@ public class FESplitsCreation {
 			testFESet.add(line.trim());
 			feMap.put(sentenceIndex, testFESet);
 		}
-		//System.out.println(line);
 	}
 
 

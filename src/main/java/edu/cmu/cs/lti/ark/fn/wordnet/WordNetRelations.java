@@ -46,8 +46,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 public class WordNetRelations {
-	public static final String DEFAULT_FILE_PROPERTIES_FILE = "data/file_properties.xml";
-	public static final String DEFAULT_STOPWORDS_FILE = "data/stopwords.txt";
+	public static final String DEFAULT_FILE_PROPERTIES_FILE = "resources/file_properties.xml";
+	public static final String DEFAULT_STOPWORDS_FILE = "resources/stopwords.txt";
 	private static final int LEMMA_CACHE_SIZE = 100000;
 	public static final String NO_RELATION = "no-relation";
 	private static Pattern PUNCTUATION_PATTERN = Pattern.compile("\\p{Punct}");

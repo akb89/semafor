@@ -23,6 +23,8 @@ package edu.cmu.cs.lti.ark.fn.data.prep;
 
 import com.google.common.collect.Lists;
 import edu.cmu.cs.lti.ark.fn.utils.LemmatizeStuff;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -33,14 +35,17 @@ import java.util.StringTokenizer;
  * Script to merge the POS tags, dependency parse, and lemmatized version of each sentence into one line
  */
 public class AllAnnotationsMergingWithoutNE {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	public static void main(String[] args) throws FileNotFoundException {
-		// parse args
+		AllAnnotationsMergingWithoutNE allMerge = new AllAnnotationsMergingWithoutNE();
+		allMerge.logger.info("Merging POS tags, dependency parses, and lemmatized version of each sentence into one line...");
 		final String tokenizedFile = args[0];
 		final String conllParseFile = args[1];
 		final String tmpParseFile = args[2];
 		final String outfile = args[3];
 		// merge all annotations into one combined file (*.all.lemma.tags)
 		mergeAllAnnotations(tokenizedFile, conllParseFile, tmpParseFile, outfile);
+		allMerge.logger.info("Done merging POS tags, dependency parses, and lemmatized version of each sentence into one line");
 	}
 
 	/**

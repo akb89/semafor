@@ -2,6 +2,8 @@
 
 source "$(dirname "${BASH_SOURCE[0]}")/../config/all.sh"
 
+export with_exemplars=false;
+
 # You should not need to change anything here
 
 export RESOURCES_DIR="${SEMAFOR_HOME}/resources"
@@ -33,7 +35,7 @@ export postagged_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sente
 export postagged_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.pos.tagged"
 
 export malt_conll_input_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.malt.input.conll"
-export matl_conll_input_testing_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.malt.input.conll"
+export malt_conll_input_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.malt.input.conll"
 
 export maltparsed_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.maltparsed.conll"
 export maltparsed_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.maltparsed.conll"
@@ -48,7 +50,10 @@ export all_lemma_tags_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.
 export all_lemma_tags_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.all.lemma.tags"
 
 export framenet_lu_map_file="${MODEL_DIR}/framenet.original.map"
+export old_framenet_lu_map_file="${RESOURCES_DIR}/framenet.original.map.old"
+
 export framenet_fe_map_file="${MODEL_DIR}/framenet.frame.element.map"
+export old_framenet_fe_map_file="${RESOURCES_DIR}/framenet.frame.element.map.old"
 
 export wordnet_config_file="${RESOURCES_DIR}/file_properties.xml"
 export stopwords_file="${RESOURCES_DIR}/stopwords.txt"

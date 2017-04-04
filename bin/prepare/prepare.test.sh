@@ -13,14 +13,10 @@ echo
 #rm -rf ${EXPERIMENT_DATA_DIR}
 #mkdir ${EXPERIMENT_DATA_DIR}
 
-# Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory
-echo "**********************************************************************"
-echo "Creating framenet.original.map and framenet.frame.element.map..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.TrainingMapsCreation \
-    "${training_fe_splits}" \
-    "${postagged_training_sentence_splits}" \
-    "${framenet_lu_map_file}" \
-    "${framenet_fe_map_file}"
-echo "Finished maps creation"
-echo
+# Create files frames.xml and feRelations.xml for use with perl score script under the EXPERIMENT_DATA_DIR directory
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
+    edu.unige.clcl.fn.data.prep.ScoringRequiredDataCreation \
+    "${FRAMENET_DATA_DIR}" \
+    "${EXPERIMENT_DATA_DIR}"

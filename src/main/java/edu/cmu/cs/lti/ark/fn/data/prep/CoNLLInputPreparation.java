@@ -21,6 +21,9 @@
  ******************************************************************************/
 package edu.cmu.cs.lti.ark.fn.data.prep;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 /**
@@ -28,9 +31,13 @@ import java.io.IOException;
  * to CoNLL format.
  */
 public class CoNLLInputPreparation {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	public static void main(String[] args) throws IOException {
+		CoNLLInputPreparation conllinp = new CoNLLInputPreparation();
+		conllinp.logger.info("Converting postagged splits to MST conll input...");
 		String posFile = args[0];
 		String outFile = args[1];
 		ParsePreparation.printCoNLLTypeInput(posFile, outFile);
+		conllinp.logger.info("Done converting postagged splits to MST conll input");
 	}
 }

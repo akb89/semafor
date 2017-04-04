@@ -5,6 +5,8 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Map;
@@ -19,6 +21,7 @@ import static org.apache.commons.io.IOUtils.closeQuietly;
  * @author sthomson@cs.cmu.edu
  */
 public class ConvertFormat {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	// Command line option converters
 	private static Map<String, SentenceCodec> codecMap = ImmutableMap.of(
 			"conll", ConllCodec,
@@ -71,9 +74,12 @@ public class ConvertFormat {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		ConvertFormat cFormat = new ConvertFormat();
+		cFormat.logger.info("Converting postagged splits to Malt conll input...");
 		final ConvertOptions options = new ConvertOptions();
 		new JCommander(options, args);
 		convertStream(options.input, options.inputCodec, options.output, options.outputCodec);
+		cFormat.logger.info("Done converting postagged splits to Malt conll input...");
 	}
 
 	/**

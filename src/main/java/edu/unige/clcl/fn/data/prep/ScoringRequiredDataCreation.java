@@ -1,6 +1,8 @@
 package edu.unige.clcl.fn.data.prep;
 
 import edu.cmu.cs.lti.ark.util.XmlUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,18 +19,20 @@ import java.util.Date;
  * @author Alex Kabbach
  */
 public class ScoringRequiredDataCreation {
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public static void main(String[] args) throws IOException {
-		//final String frameNetDataDir = args[0];
-		//final String preprocessedDataDir = args[1];
-		final String frameNetDataDir = "/Users/AKB/Dropbox/FrameNetData/fndata-1.5";
-		final String preprocessedDataDir = "/Users/AKB/Dropbox/GitHub/semafor/data";
+		ScoringRequiredDataCreation scoringReqDataC = new ScoringRequiredDataCreation();
+		scoringReqDataC.logger.info("Creating frames.xml and feRelations.xml files...");
+		final String frameNetDataDir = args[0];
+		final String preprocessedDataDir = args[1];
 		final String frameDir = frameNetDataDir + "/frame";
 		final String frRelationFile = frameNetDataDir + "/frRelation.xml";
 		final String outputFramesFile = preprocessedDataDir + "/frames.xml";
 		final String outputFrRelationFile = preprocessedDataDir + "/frRelations.xml";
-		//createFramesXmlFile(frameDir, outputFramesFile);
-		//createFrRelationsXmlFile(frRelationFile, outputFrRelationFile);
+		createFramesXmlFile(frameDir, outputFramesFile);
+		createFrRelationsXmlFile(frRelationFile, outputFrRelationFile);
+		scoringReqDataC.logger.info("Done creating frames.xml and feRelations.xml files");
 	}
 
 	private static Element createFrameImportElement(Document frameDoc, Document frameSingleDoc){

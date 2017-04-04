@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,18 +30,20 @@ public class TrainingMapsCreation {
 		final String feSplitsFile = args[0];
 		final String posTaggedSplitsFile = args[1];
 		final String luMapFile = args[2];
-		final String feMapFile = args[3];
+		final String oldLUMapFile = args[3];
+		final String feMapFile = args[4];
+		final String oldFEMapFile = args[5];
 
 		TrainingMapsCreation tMapCreation = new TrainingMapsCreation();
+		tMapCreation.logger
+				.info("Creating framenet.original.map and framenet.frame.element.map...");
 
 		THashMap<String, THashSet<String>> newFEMap = tMapCreation
 				.createFrameFEMap(feSplitsFile);
 		THashMap<String, THashSet<String>> oldFEMap = (THashMap<String, THashSet<String>>) SerializedObjects
-				.readSerializedObject(
-						"/Users/AKB/Dropbox/GitHub/semafor/data/framenet.frame.element.map.old");
+				.readSerializedObject(oldFEMapFile);
 		THashMap<String, THashSet<String>> oldLUMap = (THashMap<String, THashSet<String>>) SerializedObjects
-				.readSerializedObject(
-						"/Users/AKB/Dropbox/GitHub/semafor/data/framenet.original.map.old");
+				.readSerializedObject(oldLUMapFile);
 		THashMap<String, THashSet<String>> newLUMap = tMapCreation
 				.createFrameLUMap(feSplitsFile, posTaggedSplitsFile);
 		tMapCreation.logger
@@ -59,6 +60,8 @@ public class TrainingMapsCreation {
 		tMapCreation.compareValues(oldLUMap, newLUMap);
 		SerializedObjects.writeSerializedObject(newFEMap, feMapFile);
 		SerializedObjects.writeSerializedObject(newLUMap, luMapFile);
+		tMapCreation.logger
+				.info("Done creating framenet.original.map and framenet.frame.element.map");
 	}
 
 	private List<String> splitBy(String line, String regex) {
@@ -73,25 +76,6 @@ public class TrainingMapsCreation {
 		return splitBy(line, "\\t");
 	}
 
-	private Map<String, Integer> getSentenceIndexMap(String sentenceSplits)
-			throws IOException {
-		Map<String, Integer> map = new HashMap<>();
-		int sentenceIterator = 0;
-		List<String> sentences = Files.lines(Paths.get(sentenceSplits))
-				.collect(Collectors.toList());
-		for (String sentence : sentences) {
-			map.put(sentence, sentenceIterator);
-			sentenceIterator += 1;
-		}
-		return map;
-	}
-
-	/**
-	 * Populates the given map object with frames (as keys) and sets of target words that evoke
-	 * those frames in the given corresponding sentences (as values)
-	 *
-	 * @author dipanjan
-	 */
 	private void compareKeys(THashMap<String, THashSet<String>> originalMap,
 			THashMap<String, THashSet<String>> newMap) {
 		logger.info("New Map Size = " + newMap.size());
@@ -99,18 +83,18 @@ public class TrainingMapsCreation {
 		int counter = 0;
 		for (Map.Entry<String, THashSet<String>> entry : newMap.entrySet()) {
 			if (!originalMap.containsKey(entry.getKey())) {
-				logger.info("Original map does not contain frame: " + entry
+				logger.debug("Original map does not contain frame: " + entry
 						.getKey());
 				counter += 1;
 			}
 		}
 		if (counter != 0) {
-			logger.info("--------------------------------");
+			logger.debug("--------------------------------");
 		}
 		for (Map.Entry<String, THashSet<String>> entry : originalMap
 				.entrySet()) {
 			if (!newMap.containsKey(entry.getKey())) {
-				logger.info(
+				logger.debug(
 						"New map does not contain frame: " + entry.getKey());
 				counter += 1;
 			}
@@ -127,26 +111,26 @@ public class TrainingMapsCreation {
 						.get(entry.getKey());
 				THashSet<String> newValues = entry.getValue();
 				if (originalValues.size() != newValues.size()) {
-					logger.info("Different values set size for frame: " + entry
+					logger.debug("Different values set size for frame: " + entry
 							.getKey());
-					logger.info(
+					logger.debug(
 							"	Original values set size = " + originalValues
 									.size());
-					logger.info(
+					logger.debug(
 							"	New values set size = " + newValues.size());
 					for (String value : newValues) {
 						if (!originalValues.contains(value)) {
-							logger.info("		Value = " + value
+							logger.debug("		Value = " + value
 									+ " is not in the original map");
 							counter += 1;
 						}
 					}
 					if (counter != 0) {
-						logger.info("--------------------------------");
+						logger.debug("--------------------------------");
 					}
 					for (String value : originalValues) {
 						if (!newValues.contains(value)) {
-							logger.info("		Value = " + value
+							logger.debug("		Value = " + value
 									+ " is not in the new map");
 							counter += 1;
 						}
