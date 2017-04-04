@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -x # echo commands
 set -e # fail fast
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
