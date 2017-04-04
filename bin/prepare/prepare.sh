@@ -17,7 +17,9 @@ mkdir ${EXPERIMENT_DATA_DIR}
 # Generate cv.***.sentences splits from FrameNet XML data under the EXPERIMENT_DATA_DIR directory
 echo "**********************************************************************"
 echo "Generating training and testing sentences splits from FrameNet XML data..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.SentenceSplitsCreation \
     "${FRAMENET_DATA_DIR}" \
     "${training_sentence_splits}" \
@@ -41,7 +43,9 @@ echo
 # Generate cv.***.sentences.frame.elements from cv.***.sentences splits
 echo "**********************************************************************"
 echo "Generating training and testing frame elements splits from sentences splits..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.FESplitsCreation \
     "${FRAMENET_DATA_DIR}" \
     "${tokenized_training_sentence_splits}" \
@@ -69,7 +73,8 @@ echo
 # Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
 echo "**********************************************************************"
 echo "Converting postagged training splits to Malt conll input..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
     edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
     --input ${postagged_training_sentence_splits} \
     --inputFormat pos \
@@ -79,7 +84,8 @@ echo "Done converting postagged input to conll"
 echo
 echo "**********************************************************************"
 echo "Converting postagged testing splits to Malt conll input..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
     edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
     --input ${postagged_testing_sentence_splits} \
     --inputFormat pos \
@@ -91,13 +97,15 @@ echo
 # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
 echo "**********************************************************************"
 echo "Converting postagged training splits to MST conll input..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
 	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
 	${postagged_training_sentence_splits} ${mst_conll_input_training_sentence_splits}
 echo
 echo "**********************************************************************"
 echo "Converting postagged testing splits to MST conll input..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
 	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
 	${postagged_testing_sentence_splits} ${mst_conll_input_testing_sentence_splits}
 echo
@@ -106,7 +114,8 @@ echo
 echo "**********************************************************************"
 echo "Running MSTParser on conll training splits..."
 pushd ${MST_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
 	-Xms8g -Xmx${max_ram} mst.DependencyParser \
 	test separate-lab \
 	model-name:${mst_parser_model} \
@@ -119,7 +128,8 @@ echo
 echo "**********************************************************************"
 echo "Running MSTParser on conll testing splits..."
 pushd ${MST_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
 	-Xms8g -Xmx${max_ram} mst.DependencyParser \
 	test separate-lab \
 	model-name:${mst_parser_model} \
@@ -134,7 +144,8 @@ echo
 echo "**********************************************************************"
 echo "Running MaltParser on conll training splits..."
 pushd ${MALT_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java -Xmx${max_ram} \
+time ${JAVA_HOME_BIN}/java \
+    -Xmx${max_ram} \
     -jar maltparser-1.7.2.jar \
     -w ${RESOURCES_DIR} \
     -c ${malt_parser_model} \
@@ -145,7 +156,8 @@ echo
 echo "**********************************************************************"
 echo "Running MaltParser on conll testing splits..."
 pushd ${MALT_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java -Xmx${max_ram} \
+time ${JAVA_HOME_BIN}/java \
+    -Xmx${max_ram} \
     -jar maltparser-1.7.2.jar \
     -w ${RESOURCES_DIR} \
     -c ${malt_parser_model} \
@@ -157,24 +169,30 @@ echo
 # Generate cv.***.sentences.all.lemma.tags
 echo "**********************************************************************"
 echo "Merging POS tags, dependency parses, and lemmatized version of each training sentence into one line..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms1g -Xmx${max_ram} \
-        edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
-          ${tokenized_training_sentence_splits} \
-          ${mstparsed_training_sentence_splits} \
-          ${tmp_file} \
-          ${all_lemma_tags_training_sentence_splits}
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xms1g \
+    -Xmx${max_ram} \
+    edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
+    ${tokenized_training_sentence_splits} \
+    ${mstparsed_training_sentence_splits} \
+    ${tmp_file} \
+    ${all_lemma_tags_training_sentence_splits}
 rm "${tmp_file}"
 echo "Finished merging"
 echo
 echo "**********************************************************************"
 echo "Merging POS tags, dependency parses, and lemmatized version of each testing sentence into one line...."
 pushd ${MALT_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xms1g -Xmx${max_ram} \
-        edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
-          ${tokenized_testing_sentence_splits} \
-          ${mstparsed_testing_sentence_splits} \
-          ${tmp_file} \
-          ${all_lemma_tags_testing_sentence_splits}
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xms1g \
+    -Xmx${max_ram} \
+    edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
+    ${tokenized_testing_sentence_splits} \
+    ${mstparsed_testing_sentence_splits} \
+    ${tmp_file} \
+    ${all_lemma_tags_testing_sentence_splits}
 rm "${tmp_file}"
 echo "Finished merging"
 echo
@@ -182,7 +200,9 @@ echo
 # Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory
 echo "**********************************************************************"
 echo "Creating framenet.original.map and framenet.frame.element.map..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.TrainingRequiredDataCreation \
     "${training_fe_splits}" \
     "${postagged_training_sentence_splits}" \
@@ -194,7 +214,10 @@ echo
 # Create the file reqData.jobj under the MODEL_DIR directory
 echo "**********************************************************************"
 echo "Creating reData.jobj..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} -XX:ParallelGCThreads=${gc_threads} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
+    -XX:ParallelGCThreads=${gc_threads} \
     edu.cmu.cs.lti.ark.fn.identification.RequiredDataCreation \
     stopwords-file:${stopwords_file} \
     wordnet-configfile:${wordnet_config_file} \
@@ -213,7 +236,9 @@ echo
 # Create files frames.xml and feRelations.xml for use with perl score script under the EXPERIMENT_DATA_DIR directory
 echo "**********************************************************************"
 echo "Creating frames.xml and feRelations.xml files..."
-time ${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.ScoringRequiredDataCreation \
     "${FRAMENET_DATA_DIR}" \
     "${EXPERIMENT_DATA_DIR}"

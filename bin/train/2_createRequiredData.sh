@@ -10,7 +10,11 @@ echo
 mkdir -p "${MODEL_DIR}"
 
 
-${JAVA_HOME_BIN}/java -classpath ${classpath} -Xms2g -Xmx2g -XX:ParallelGCThreads=2 \
+${JAVA_HOME_BIN}/java \
+    -classpath ${classpath} \
+    -Xms${min_ram} \
+    -Xmx${max_ram} \
+    -XX:ParallelGCThreads=${gc_threads} \
     edu.cmu.cs.lti.ark.fn.identification.RequiredDataCreation \
     stopwords-file:${stopwords_file} \
     wordnet-configfile:${wordnet_config_file} \

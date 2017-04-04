@@ -31,7 +31,7 @@ import static edu.cmu.cs.lti.ark.util.IntRanges.xrange;
 
 
 /**
- * Methods for converting to the "all.lemma.tags" format, as described in training/data/README.md
+ * Methods for converting to the "all.lemma.tags" format, as described in training/data/README_old.md
  */
 public class OneLineDataCreation {
 	public static final String NETAG_SUFFIX = ".ne.tagged";

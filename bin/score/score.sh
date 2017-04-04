@@ -9,7 +9,9 @@ mkdir -p "${RESULTS_DIR}"
 
 #***************** Run SEMAFOR with Gold Targets, Gold Frames, Auto Arg-id ***********************#
 
-scala -classpath ${CLASSPATH} -J-Xmx${max_ram} "${SEMAFOR_HOME}/bin/score/score.scala" \
+scala \
+    -classpath ${CLASSPATH} \
+    -J-Xmx${max_ram} "${SEMAFOR_HOME}/bin/score/score.scala" \
     "${MODEL_DIR}" \
     "${sentences_frames}" \
     "${sentences_maltparsed}" \
@@ -21,7 +23,9 @@ scala -classpath ${CLASSPATH} -J-Xmx${max_ram} "${SEMAFOR_HOME}/bin/score/score.
 end=`wc -l "${tokenized_file}"`
 end=`expr ${end% *}`
 
-${JAVA_HOME_BIN}/java -classpath ${CLASSPATH} -Xmx${max_ram} \
+${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
     edu.cmu.cs.lti.ark.fn.evaluation.PrepareFullAnnotationXML \
     testFEPredictionsFile:"${fe_file}" \
     startIndex:0 \
