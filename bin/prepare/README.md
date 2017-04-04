@@ -2,6 +2,12 @@
 Process a standard set of FrameNet data and generate all files required by
 Semafor
 
+## Necessary files
+You need:
+- `resources` directory under the semafor main dir with the following files:
+    - `fn.fulltext.test.set.documents` specifying the list of documents to be used for testing
+
+
 ## cv.***.sentences files
 Divide between training and testing. Process fulltext and exemplars separately. 
 Careful, certain sentences are identical although they may have different IDs and may be found under different documents
