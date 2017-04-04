@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -148,8 +149,8 @@ public class SentenceSplitsCreation {
 		System.out.println("Test sentences = " + testSentenceSet.size());
 		Set<String> trainSentenceSet = getTrainSentenceSet(fullTextDir, lexUnitDir, testSetDocNameSet, testSentenceSet);
 		System.out.println("Train sentences = " + trainSentenceSet.size());
-		Files.write(Paths.get(outTestFile), testSentenceSet, StandardCharsets.UTF_8);
-		Files.write(Paths.get(outTrainFile), trainSentenceSet, StandardCharsets.UTF_8);
+		Files.write(Paths.get(outTestFile), testSentenceSet, Charset.forName("UTF-8"));
+		Files.write(Paths.get(outTrainFile), trainSentenceSet, Charset.forName("UTF-8"));
 	}
 
 	private static Map<String, Integer> getTrainSentenceToNumberMap(String trainSentenceSplits)
