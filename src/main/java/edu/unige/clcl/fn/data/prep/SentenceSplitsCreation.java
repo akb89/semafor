@@ -149,6 +149,7 @@ public class SentenceSplitsCreation {
 		System.out.println("Test sentences = " + testSentenceSet.size());
 		Set<String> trainSentenceSet = getTrainSentenceSet(fullTextDir, lexUnitDir, testSetDocNameSet, testSentenceSet);
 		System.out.println("Train sentences = " + trainSentenceSet.size());
+		System.out.println(testSentenceSet);
 		Files.write(Paths.get(outTestFile), testSentenceSet, Charset.forName("UTF-8"));
 		Files.write(Paths.get(outTrainFile), trainSentenceSet, Charset.forName("UTF-8"));
 	}
