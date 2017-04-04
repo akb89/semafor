@@ -4,7 +4,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/../config/all.sh"
 
 # You should not need to change anything here
 
-export RESOURCES_DIR="${SEMAFOR_HOME}/resources/data"
+export RESOURCES_DIR="${SEMAFOR_HOME}/resources"
 export LEXUNIT_DIR="${FRAMENET_DATA_DIR}/lu"
 
 export tokenizer_sed="${SEMAFOR_HOME}/scripts/tokenizer.sed"
