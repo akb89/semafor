@@ -13,10 +13,17 @@ echo
 #rm -rf ${EXPERIMENT_DATA_DIR}
 #mkdir ${EXPERIMENT_DATA_DIR}
 
-# Create files frames.xml and feRelations.xml for use with perl score script under the EXPERIMENT_DATA_DIR directory
+# Generate cv.***.sentences.frame.elements from cv.***.sentences splits
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.ScoringRequiredDataCreation \
+    edu.unige.clcl.fn.data.prep.FESplitsCreation \
     "${FRAMENET_DATA_DIR}" \
-    "${EXPERIMENT_DATA_DIR}"
+    "${testing_sentence_splits}" \
+    "${tokenized_testing_sentence_splits}" \
+    "${training_sentence_splits}" \
+    "${tokenized_training_sentence_splits}" \
+    "${test_set_documents_names}"\
+    "${training_fe_splits}"\
+    "${testing_fe_splits}" \
+    "${with_exemplars}"

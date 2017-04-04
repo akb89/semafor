@@ -45,7 +45,8 @@ time ${JAVA_HOME_BIN}/java \
     "${tokenized_training_sentence_splits}" \
     "${test_set_documents_names}"\
     "${training_fe_splits}"\
-    "${testing_fe_splits}"
+    "${testing_fe_splits}" \
+    "${with_exemplars}"
 
 # Generate cv.***.sentences.pos.tagged splits from cv.***.sentences splits
 echo "Part-of-speech tagging tokenized training splits..."
