@@ -131,7 +131,6 @@ public class SentenceSplitsCreation {
 						Element sentence = (Element)sentences.item(i);
 						if(containsFrameNetAnnotation(sentence)){
 							String text = sentence.getElementsByTagName("text").item(0).getTextContent().replaceAll("\\s+$", "");
-							System.out.println(text);
 							testSentenceSet.add(text);
 						}
 					}
@@ -150,9 +149,8 @@ public class SentenceSplitsCreation {
 		System.out.println("Test sentences = " + testSentenceSet.size());
 		Set<String> trainSentenceSet = getTrainSentenceSet(fullTextDir, lexUnitDir, testSetDocNameSet, testSentenceSet);
 		System.out.println("Train sentences = " + trainSentenceSet.size());
-		testSentenceSet.forEach(sentence -> System.out.println(sentence));
-		Files.write(Paths.get(outTestFile), testSentenceSet, Charset.forName("UTF-8"));
-		Files.write(Paths.get(outTrainFile), trainSentenceSet, Charset.forName("UTF-8"));
+		Files.write(Paths.get(outTestFile), testSentenceSet, StandardCharsets.UTF_8);
+		Files.write(Paths.get(outTrainFile), trainSentenceSet, StandardCharsets.UTF_8);
 	}
 
 	private static Map<String, Integer> getTrainSentenceToNumberMap(String trainSentenceSplits)
