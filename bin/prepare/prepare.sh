@@ -143,7 +143,7 @@ time ${JAVA_HOME_BIN}/java \
     -jar maltparser-1.7.2.jar \
     -w ${RESOURCES_DIR} \
     -c ${malt_parser_model} \
-    -i ${matl_conll_input_testing_sentence_splits} \
+    -i ${malt_conll_input_testing_sentence_splits} \
     -o ${maltparsed_testing_sentence_splits}
 echo "Finished Malt dependency parsing"
 echo
