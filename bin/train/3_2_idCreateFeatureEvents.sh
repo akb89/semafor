@@ -2,7 +2,7 @@
 
 set -e # fail fast
 
-source "$(dirname ${BASH_SOURCE[0]})/config.sh"
+source "$(dirname ${0})/../../config/training.sh"
 
 echo
 echo "Frame Identification -- Step 2: Creating feature events for each datapoint"

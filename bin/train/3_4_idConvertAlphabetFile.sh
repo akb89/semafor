@@ -2,12 +2,11 @@
 
 set -e # fail fast
 
-# step 5: convert the alphabet file.
-
-source "$(dirname ${BASH_SOURCE[0]})/config.sh"
+source "$(dirname ${0})/../../config/training.sh"
 
 # gets the last model file created
 model_file="$(ls ${MODEL_DIR}/idmodel.dat_* | sort -r | head -n1)"
+
 echo
 echo "Frame Identification -- Step 4: Combining alphabet file with learned params for Frame IDing"
 echo "Using model file: ${model_file}"

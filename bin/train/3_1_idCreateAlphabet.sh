@@ -2,7 +2,11 @@
 
 set -e # fail fast
 
-source "$(dirname ${BASH_SOURCE[0]})/config.sh"
+source "$(dirname ${0})/../../config/training.sh"
+
+echo
+echo "Frame Identification -- Step 1: Creating alphabet"
+echo
 
 # a temp directory where training events will be stored
 EVENT_DIR="${MODEL_DIR}/events"
@@ -13,9 +17,6 @@ if [ -e ${log_file} ]; then
     rm "${log_file}"
 fi
 
-echo
-echo "Frame Identification -- Step 1: Creating alphabet"
-echo
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \

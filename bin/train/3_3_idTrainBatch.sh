@@ -2,11 +2,11 @@
 
 set -e # fail fast
 
+source "$(dirname ${0})/../../config/training.sh"
+
 echo
 echo "Frame Identification -- Step 3: Training the frame identification model"
 echo
-
-source "$(dirname ${BASH_SOURCE[0]})/config.sh"
 
 mkdir -p ${MODEL_DIR}
 
