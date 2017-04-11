@@ -23,6 +23,8 @@ export EXPERIMENTS_DIR="${SEMAFOR_HOME}/experiments/${model_name}"
 export EXPERIMENT_DATA_DIR="${EXPERIMENTS_DIR}/data"
 export MODEL_DIR="${EXPERIMENTS_DIR}/model"
 
+export fn_id_req_data_file="${MODEL_DIR}/reqData.jobj"
+
 echo "Environment variables:"
 echo "SEMAFOR_HOME=${SEMAFOR_HOME}"
 echo "FRAMENET_DATA_DIR=${FRAMENET_DATA_DIR}"

@@ -63,5 +63,3 @@ export wn_related_words_for_words_file="${RESOURCES_DIR}/wnallrelwords.ser"
 export wn_map_file="${RESOURCES_DIR}/wnMap.ser"
 export revised_map_file="${RESOURCES_DIR}/revisedrelmap.ser"
 export lemma_cache_file="${RESOURCES_DIR}/hvlemmas.ser"
-
-export fn_id_req_data_file="${MODEL_DIR}/reqData.jobj"
