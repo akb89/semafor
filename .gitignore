@@ -15,4 +15,5 @@
 /data
 
 #wsj.model is too big
-/resources
+/resources/wsj.model
+

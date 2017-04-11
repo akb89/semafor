@@ -13,20 +13,20 @@ echo
 #rm -rf ${EXPERIMENT_DATA_DIR}
 #mkdir ${EXPERIMENT_DATA_DIR}
 
-# Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
-echo "Running MSTParser on conll training splits..."
-pushd ${MST_PARSER_HOME}
+# Create the file reqData.jobj under the MODEL_DIR directory
 time ${JAVA_HOME_BIN}/java \
-    -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
-	-Xms${min_ram} \
-	-Xmx${max_ram} \
-	mst.DependencyParser \
-	test \
-	separate-lab \
-	model-name:${mst_parser_model} \
-	decode-type:proj \
-	order:2 \
-	test-file:${mst_conll_input_training_sentence_splits} \
-	output-file:${mstparsed_training_sentence_splits} \
-	format:CONLL
-echo "Finished MST dependency parsing"
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
+    -XX:ParallelGCThreads=${gc_threads} \
+    edu.cmu.cs.lti.ark.fn.identification.training.RequiredDataCreation \
+    stopwords-file:${stopwords_file} \
+    wordnet-configfile:${wordnet_config_file} \
+    framenet-mapfile:${framenet_lu_map_file} \
+    luxmldir:${LEXUNIT_DIR} \
+    allrelatedwordsfile:${all_related_words_file} \
+    hvcorrespondencefile:${hv_correspondence_file} \
+    wnrelatedwordsforwordsfile:${wn_related_words_for_words_file} \
+    wnmapfile:${wn_map_file} \
+    revisedmapfile:${revised_map_file} \
+    lemmacachefile:${lemma_cache_file} \
+    fnidreqdatafile:${fn_id_req_data_file}
