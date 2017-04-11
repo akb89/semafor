@@ -13,3 +13,6 @@
 /models
 /experiments
 /data
+
+#wsj.model is too big
+/resources

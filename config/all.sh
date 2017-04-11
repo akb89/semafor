@@ -12,7 +12,7 @@ export JAVA_HOME_BIN="/usr/bin"
 export model_name="acl2015_baseline_replication_with_homemade_preprocessing" # choose a name for the model to train
 
 export num_threads=55 # should set to roughly the number of cores available (minus one)
-export gc_threads=37 # 3+5N/8) with N number of cores (remove one core on total number of cores just in case. Ex: count 55 cores for 56 cores total)
+export gc_threads=37 # (3+5N/8) with N number of cores (remove one core on total number of cores just in case. Ex: count 55 cores for 56 cores total)
 export min_ram=40g # min RAM allocated to the JVM in GB. Corresponds to the -Xms argument. Training needs at least 40g (yeah, I know...)
 export max_ram=55g # max RAM allocated to the JVM in GB. Corresponds to the -Xmx argument
 
