@@ -8,11 +8,11 @@ export JAVA_HOME_BIN="/usr/bin"
 #export FRAMENET_DATA_DIR="/Users/AKB/Desktop/fndata-1.5"
 #export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
 
-export model_name="acl2015_baseline_replication_with_exemplars_${with_exemplars}_lambda_${lambda}" # choose a name for the model to train
-
 export with_exemplars=true
 export lambda=0.000001
 export batch_size=40000
+
+export model_name="acl2015_baseline_replication_with_exemplars_${with_exemplars}_lambda_${lambda}"
 
 export num_threads=55 # should set to roughly the number of cores available (minus one)
 export gc_threads=37 # (3+5N/8) with N number of cores (remove one core on total number of cores just in case. Ex: count 55 cores for 56 cores total)
