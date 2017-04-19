@@ -12,7 +12,7 @@ export model_name="acl2015_baseline_replication_with_exemplars_${with_exemplars}
 
 export with_exemplars=false
 export lambda=0.000001
-export batch_size=10000
+export batch_size=40000
 
 export num_threads=55 # should set to roughly the number of cores available (minus one)
 export gc_threads=37 # (3+5N/8) with N number of cores (remove one core on total number of cores just in case. Ex: count 55 cores for 56 cores total)
