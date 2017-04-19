@@ -35,17 +35,16 @@ import java.util.StringTokenizer;
  * Script to merge the POS tags, dependency parse, and lemmatized version of each sentence into one line
  */
 public class AllAnnotationsMergingWithoutNE {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(AllAnnotationsMergingWithoutNE.class);
 	public static void main(String[] args) throws FileNotFoundException {
-		AllAnnotationsMergingWithoutNE allMerge = new AllAnnotationsMergingWithoutNE();
-		allMerge.logger.info("Merging POS tags, dependency parses, and lemmatized version of each sentence into one line...");
+		logger.info("Merging POS tags, dependency parses, and lemmatized version of each sentence into one line...");
 		final String tokenizedFile = args[0];
 		final String conllParseFile = args[1];
 		final String tmpParseFile = args[2];
 		final String outfile = args[3];
 		// merge all annotations into one combined file (*.all.lemma.tags)
 		mergeAllAnnotations(tokenizedFile, conllParseFile, tmpParseFile, outfile);
-		allMerge.logger.info("Done merging POS tags, dependency parses, and lemmatized version of each sentence into one line");
+		logger.info("Done merging POS tags, dependency parses, and lemmatized version of each sentence into one line");
 	}
 
 	/**

@@ -72,6 +72,7 @@ public class FrameIdentificationRelease {
 		final BufferedReader input = Files.newReader(new File(idParamsFile), Charsets.UTF_8);
 		try {
 			while ((line = input.readLine()) != null) {
+				System.out.println(line);
 				final String[] nameAndVal = line.split("\t");
 				final String[] logAndSign = nameAndVal[1].split(", ");
 				final double value = exp(Double.parseDouble(logAndSign[0]));

@@ -41,7 +41,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class RequiredDataCreation {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(RequiredDataCreation.class);
 	// map from FrameNet postags to PTB postags
 	public static final Map<String, String> conversionMap =
 		new ImmutableMap.Builder<String, String>().
@@ -58,9 +58,9 @@ public class RequiredDataCreation {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		RequiredDataCreation reqDC = new RequiredDataCreation();
-		reqDC.logger.info("Creating reData.jobj...");
+		logger.info("Creating reData.jobj...");
 		FNModelOptions options = new FNModelOptions(args);
-		Map<String, String> hvLemmas = getHVLemmas(options);
+		Map<String, String> hvLemmas = reqDC.getHVLemmas(options);
 		THashSet<String> relWords = getRelatedWords(options);
 		THashMap<String, THashSet<String>> cMap = getHVCorrespondence(options);
 		Pair<Map<String, Set<String>>, Map<String, THashMap<String, Set<String>>>>
@@ -69,17 +69,21 @@ public class RequiredDataCreation {
 		String fmFile = options.frameNetMapFile.get();
 		THashMap<String, THashSet<String>> frameMap = SerializedObjects.readObject(fmFile);
 		RequiredDataForFrameIdentification req =
-				new RequiredDataForFrameIdentification(relWords,
+				new RequiredDataForFrameIdentification(
+						relWords,
 						pair.first,
 						pair.second,
 						frameMap,
-						cMap, revisedMap,
+						cMap,
+						revisedMap,
 						hvLemmas);
 		SerializedObjects.writeSerializedObject(req, options.fnIdReqDataFile.get());
-		reqDC.logger.info("Done creating reqData.jobj");
+		logger.info("Done creating reqData.jobj");
 	}
 
-	public static Map<String, String> getHVLemmas(FNModelOptions options) throws IOException, ClassNotFoundException {
+	public Map<String, String> getHVLemmas(FNModelOptions options)
+			throws IOException, ClassNotFoundException {
+		logger.info("Creating HV correspondence map hvlemmas.ser...");
 		String fmFile = options.frameNetMapFile.get();
 		String wnConfigFile = options.wnConfigFile.get();
 		String stopFile = options.stopWordsFile.get();
@@ -99,16 +103,18 @@ public class RequiredDataCreation {
 					hiddenUnitLemmas += wnr.getLemma(arr[0], arr[1]) + " ";
 				}
 				hiddenUnitLemmas = hiddenUnitLemmas.trim();
-				System.out.println("Processed:" + hiddenUnitLemmas);
+				logger.debug("Processed: " + hiddenUnitLemmas);
 			}
 		}
 		SerializedObjects.writeSerializedObject(lemmaMap, options.lemmaCacheFile.get());
+		logger.info("Done creating HV correspondence map");
 		return lemmaMap;
 
 	}
 
 	public static Map<String, Map<String, Set<String>>> reviseRelMap(
 			Map<String, THashMap<String, Set<String>>> relMap, FNModelOptions options) {
+		logger.info("Creating revised relations map revisedrelmap.ser");
 		Map<String, Map<String, Set<String>>> revisedMap =
 				new HashMap<String, Map<String, Set<String>>>();
 		Set<String> keys = relMap.keySet();
@@ -144,11 +150,13 @@ public class RequiredDataCreation {
 		}
 		String revisedRelFile = options.revisedMapFile.get();
 		SerializedObjects.writeSerializedObject(revisedMap, revisedRelFile);
+		logger.info("Done creating revised relations map");
 		return revisedMap;
 	}
 
 	public static Pair<Map<String, Set<String>>, Map<String, THashMap<String, Set<String>>>>
 	buildHVWordNetCache(FNModelOptions options) throws IOException, ClassNotFoundException {
+		logger.info("Creating WordNet cache: wnMap.ser and wnallrelwords.ser");
 		String fmFile = options.frameNetMapFile.get();
 		String wnConfigFile = options.wnConfigFile.get();
 		String stopFile = options.stopWordsFile.get();
@@ -167,19 +175,20 @@ public class RequiredDataCreation {
 				}
 				hiddenUnitTokens = hiddenUnitTokens.trim().toLowerCase();
 				wnr.getAllRelationsMap(hiddenUnitTokens);
-				System.out.println(hiddenUnitTokens);
+				logger.debug(hiddenUnitTokens);
 			}
 		}
 		Map<String, Set<String>> relatedWordsForWord = wnr.getRelatedWordsForWord();
 		Map<String, THashMap<String, Set<String>>> wordNetMap = wnr.getWordNetMap();
 		SerializedObjects.writeSerializedObject(relatedWordsForWord, relFile);
 		SerializedObjects.writeSerializedObject(wordNetMap, wnMapFile);
-		return new Pair<Map<String, Set<String>>,
-				Map<String, THashMap<String, Set<String>>>>(relatedWordsForWord, wordNetMap);
+		logger.info("Done creating WordNet cache");
+		return new Pair<>(relatedWordsForWord, wordNetMap);
 	}
 
 	public static THashMap<String, THashSet<String>>
 	getHVCorrespondence(FNModelOptions options) throws IOException, ClassNotFoundException {
+		logger.info("Creating HV correspondence map hvmap.ser");
 		String fmFile = options.frameNetMapFile.get();
 		String wnConfigFile = options.wnConfigFile.get();
 		String stopFile = options.stopWordsFile.get();
@@ -209,14 +218,17 @@ public class RequiredDataCreation {
 				} else {
 					frames.add(frame);
 				}
-				System.out.println("Processed:" + hiddenUnitLemmas);
+				logger.debug("Processed:" + hiddenUnitLemmas);
 			}
 		}
 		SerializedObjects.writeSerializedObject(cMap, hvCorrespondenceFile);
+		logger.info("Done creating HV correspondence map");
 		return cMap;
 	}
 
-	public static THashSet<String> getRelatedWords(FNModelOptions options) throws IOException, ClassNotFoundException {
+	public static THashSet<String> getRelatedWords(FNModelOptions options)
+			throws IOException, ClassNotFoundException {
+		logger.info("Creating all related words map allrelatedwords.ser...");
 		String fmFile = options.frameNetMapFile.get();
 		String wnConfigFile = options.wnConfigFile.get();
 		String stopFile = options.stopWordsFile.get();
@@ -229,16 +241,13 @@ public class RequiredDataCreation {
 		set.addAll(absentExampleLUs);
 		String relatedWordsFile = options.allRelatedWordsFile.get();
 		SerializedObjects.writeSerializedObject(set, relatedWordsFile);
+		logger.info("Done creating all related words map");
 		return set;
 	}
 
 	public static THashSet<String> getListOfLUs(String directory, WordNetRelations wnr) {
 		File f = new File(directory);
-		FilenameFilter filt = new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".xml");
-			}
-		};
+		FilenameFilter filt = (dir, name) -> name.endsWith(".xml");
 		THashSet<String> result = new THashSet<String>();
 		String[] files = f.list(filt);
 		int count = 0;
@@ -261,9 +270,9 @@ public class RequiredDataCreation {
 				count++;
 			}
 		}
-		System.out.println("Total number of cases with no examples:" + count);
+		logger.info("Total number of cases with no examples = " + count);
 		for (String pos : result) {
-			System.out.println(pos);
+			logger.debug(pos);
 		}
 		return result;
 	}
@@ -276,7 +285,7 @@ public class RequiredDataCreation {
 		int count = 0;
 		for (String string : set) {
 			THashSet<String> hus = mFrameMap.get(string);
-			System.out.println(count + "\t" + string);
+			logger.debug(count + "\t" + string);
 			count++;
 			for (String hu : hus) {
 				String[] wps = hu.trim().split(" ");

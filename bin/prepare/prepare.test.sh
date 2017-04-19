@@ -4,29 +4,27 @@ set -e # fail fast
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
 
-echo
-echo "Creating Required Data"
-echo
-
-#rm -rf ${MODEL_DIR}
-#mkdir -p "${MODEL_DIR}"
-#rm -rf ${EXPERIMENT_DATA_DIR}
-#mkdir ${EXPERIMENT_DATA_DIR}
-
 # Create the file reqData.jobj under the MODEL_DIR directory
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
     -XX:ParallelGCThreads=${gc_threads} \
     edu.cmu.cs.lti.ark.fn.identification.training.RequiredDataCreation \
-    stopwords-file:${stopwords_file} \
-    wordnet-configfile:${wordnet_config_file} \
-    framenet-mapfile:${framenet_lu_map_file} \
-    luxmldir:${LEXUNIT_DIR} \
-    allrelatedwordsfile:${all_related_words_file} \
-    hvcorrespondencefile:${hv_correspondence_file} \
-    wnrelatedwordsforwordsfile:${wn_related_words_for_words_file} \
-    wnmapfile:${wn_map_file} \
-    revisedmapfile:${revised_map_file} \
-    lemmacachefile:${lemma_cache_file} \
-    fnidreqdatafile:${fn_id_req_data_file}
+    stopwords_file:${stopwords_file} \
+    wordnet_config_file:${wordnet_config_file} \
+    framenet_lu_map_file:${framenet_lu_map_file} \
+    lexunit_xml_dir:${LEXUNIT_DIR} \
+    all_related_words_file:${all_related_words_file} \
+    hv_correspondence_file:${hv_correspondence_file} \
+    wn_related_words_for_words_file:${wn_related_words_for_words_file} \
+    wn_map_file:${wn_map_file} \
+    revised_map_file:${revised_map_file} \
+    lemma_cache_file:${lemma_cache_file} \
+    fn_id_req_data_file:${fn_id_req_data_file}
+
+rm "${all_related_words_file}"
+rm "${hv_correspondence_file}"
+rm "${wn_related_words_for_words_file}"
+rm "${wn_map_file}"
+rm "${revised_map_file}"
+rm "${lemma_cache_file}"

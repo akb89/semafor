@@ -33,6 +33,8 @@ import edu.cmu.cs.lti.ark.util.SerializedObjects;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 import gnu.trove.TIntDoubleHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,10 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.logging.FileHandler;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import static edu.cmu.cs.lti.ark.fn.identification.training.AlphabetCreationThreaded.readAlphabetFile;
 import static edu.cmu.cs.lti.ark.fn.identification.training.TrainBatch.FEATURE_FILENAME_PREFIX;
@@ -53,7 +51,7 @@ import static edu.cmu.cs.lti.ark.util.SerializedObjects.writeSerializedObject;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 
 public class ExtractTrainingFeatures {
-	private static final Logger logger = Logger.getLogger(ExtractTrainingFeatures.class.getCanonicalName());
+	private static final Logger logger = LoggerFactory.getLogger(ExtractTrainingFeatures.class);
 
 	private final THashMap<String, THashSet<String>> frameMap;
 	private final String parseFile;
@@ -68,11 +66,6 @@ public class ExtractTrainingFeatures {
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		final FNModelOptions options = new FNModelOptions(args);
-
-		LogManager.getLogManager().reset();
-		final FileHandler fh = new FileHandler(options.logOutputFile.get(), true);
-		fh.setFormatter(new SimpleFormatter());
-		logger.addHandler(fh);
 
 		final int startIndex = options.startIndex.get();
 		final int endIndex = options.endIndex.get();
@@ -131,15 +124,13 @@ public class ExtractTrainingFeatures {
 		final ExecutorService threadPool = newFixedThreadPool(numThreads);
 		for (int i = 0; i < dataCount; i++) {
 			final int count = i;
-			threadPool.execute(new Runnable() {
-				public void run() {
-					logger.info(String.format("Task %d : start", count));
-					FeaturesAndCost[] allFeatures = processLine(frameLines.get(count), parseLines);
-					final String filename =
-							String.format("%s%06d%s", FEATURE_FILENAME_PREFIX, count, FEATURE_FILENAME_SUFFIX);
-					writeSerializedObject(allFeatures, new File(eventDir, filename).getAbsolutePath()); // auto-gzips
-					logger.info(String.format("Task %d : end", count));
-				}
+			threadPool.execute(() -> {
+				logger.info(String.format("Task %d : start", count));
+				FeaturesAndCost[] allFeatures = processLine(frameLines.get(count), parseLines);
+				final String filename =
+						String.format("%s%06d%s", FEATURE_FILENAME_PREFIX, count, FEATURE_FILENAME_SUFFIX);
+				writeSerializedObject(allFeatures, new File(eventDir, filename).getAbsolutePath()); // auto-gzips
+				logger.info(String.format("Task %d : end", count));
 			});
 		}
 		threadPool.shutdown();

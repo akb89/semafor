@@ -24,7 +24,7 @@ import java.util.*;
  */
 public class SentenceSplitsCreation {
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(SentenceSplitsCreation.class);
 
 	public static void main(String[] args) throws IOException {
 		final String frameNetDataDir = args[0];
@@ -37,7 +37,7 @@ public class SentenceSplitsCreation {
 		final String lexUnitDir = frameNetDataDir + "/lu";
 
 		SentenceSplitsCreation spCreation = new SentenceSplitsCreation();
-		spCreation.logger.info("Generating training and testing sentences splits from FrameNet XML data...");
+		logger.info("Generating training and testing sentences splits from FrameNet XML data...");
 
 		Set<String> testSetDocNameSet = spCreation.getTestSetDocNameSet(testSetDocsFile);
 		if (withExemplars) {
@@ -47,7 +47,7 @@ public class SentenceSplitsCreation {
 			spCreation.createSentenceSplits(fullTextDir, testSetDocNameSet,
 					testSentenceSplits, trainSentenceSplits);
 		}
-		spCreation.logger.info("Done generating training and testing sentences splits from FrameNet XML data");
+		logger.info("Done generating training and testing sentences splits from FrameNet XML data");
 	}
 
 	private Set<String> getTestSetDocNameSet(String testSetDocsFile)
@@ -183,10 +183,10 @@ public class SentenceSplitsCreation {
 			String outTrainFile) throws IOException {
 		Set<String> testSentenceSet = getTestSentenceSet(fullTextDir,
 				testSetDocNameSet);
-		logger.info("Test sentences = " + testSentenceSet.size());
+		logger.info("#testing_sentences = " + testSentenceSet.size());
 		Set<String> trainSentenceSet = getTrainSentenceSet(fullTextDir,
 				testSetDocNameSet, testSentenceSet);
-		logger.info("Train sentences = " + trainSentenceSet.size());
+		logger.info("#training_sentences = " + trainSentenceSet.size());
 		Files.write(Paths.get(outTestFile), testSentenceSet,
 				StandardCharsets.UTF_8);
 		Files.write(Paths.get(outTrainFile), trainSentenceSet,
@@ -201,10 +201,10 @@ public class SentenceSplitsCreation {
 			String outTestFile, String outTrainFile) throws IOException {
 		Set<String> testSentenceSet = getTestSentenceSet(fullTextDir,
 				testSetDocNameSet);
-		logger.info("Test sentences = " + testSentenceSet.size());
+		logger.info("#testing_sentences = " + testSentenceSet.size());
 		Set<String> trainSentenceSet = getTrainSentenceSet(fullTextDir,
 				lexUnitDir, testSetDocNameSet, testSentenceSet);
-		logger.info("Train sentences = " + trainSentenceSet.size());
+		logger.info("#training_sentences = " + trainSentenceSet.size());
 		Files.write(Paths.get(outTestFile), testSentenceSet,
 				StandardCharsets.UTF_8);
 		Files.write(Paths.get(outTrainFile), trainSentenceSet,

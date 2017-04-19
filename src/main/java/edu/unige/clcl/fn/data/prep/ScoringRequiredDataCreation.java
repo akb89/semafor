@@ -19,23 +19,23 @@ import java.util.Date;
  * @author Alex Kabbach
  */
 public class ScoringRequiredDataCreation {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(ScoringRequiredDataCreation.class);
 
 	public static void main(String[] args) throws IOException {
 		ScoringRequiredDataCreation scoringReqDataC = new ScoringRequiredDataCreation();
-		scoringReqDataC.logger.info("Creating frames.xml and feRelations.xml files...");
+		logger.info("Creating frames.xml and feRelations.xml files...");
 		final String frameNetDataDir = args[0];
 		final String preprocessedDataDir = args[1];
 		final String frameDir = frameNetDataDir + "/frame";
 		final String frRelationFile = frameNetDataDir + "/frRelation.xml";
 		final String outputFramesFile = preprocessedDataDir + "/frames.xml";
 		final String outputFrRelationFile = preprocessedDataDir + "/frRelations.xml";
-		createFramesXmlFile(frameDir, outputFramesFile);
-		createFrRelationsXmlFile(frRelationFile, outputFrRelationFile);
-		scoringReqDataC.logger.info("Done creating frames.xml and feRelations.xml files");
+		scoringReqDataC.createFramesXmlFile(frameDir, outputFramesFile);
+		scoringReqDataC.createFrRelationsXmlFile(frRelationFile, outputFrRelationFile);
+		logger.info("Done creating frames.xml and feRelations.xml files");
 	}
 
-	private static Element createFrameImportElement(Document frameDoc, Document frameSingleDoc){
+	private Element createFrameImportElement(Document frameDoc, Document frameSingleDoc){
 		Element frame = frameDoc.getDocumentElement();
 		Node frameImportNode = frameSingleDoc.importNode(frame, false);
 		Element frameImportElement = (Element) frameImportNode;
@@ -48,35 +48,45 @@ public class ScoringRequiredDataCreation {
 		for(int i=0; i<frameChildren.getLength(); i++){
 			String frameChildNodeName = frameChildren.item(i).getNodeName();
 			// Append the definition
-			if(frameChildNodeName.equals("definition")){
-				frameImportElement.appendChild(frameSingleDoc.importNode(frameChildren.item(i), true));
-			}else if(frameChildNodeName.equals("FE")){
+			switch (frameChildNodeName) {
+			case "definition":
+				frameImportElement.appendChild(
+						frameSingleDoc.importNode(frameChildren.item(i), true));
+				break;
+			case "FE":
 				Element semTypes = frameSingleDoc.createElement("semTypes");
-				Node feNode = frameSingleDoc.importNode(frameChildren.item(i), false);
+				Node feNode = frameSingleDoc
+						.importNode(frameChildren.item(i), false);
 				NodeList feChildren = frameChildren.item(i).getChildNodes();
-				for(int j=0; j<feChildren.getLength(); j++){
+				for (int j = 0; j < feChildren.getLength(); j++) {
 					String feChildNodeName = feChildren.item(j).getNodeName();
 					// Append the definition
-					if(feChildNodeName.equals("definition")){
-						feNode.appendChild(frameSingleDoc.importNode(feChildren.item(j), true));
+					if (feChildNodeName.equals("definition")) {
+						feNode.appendChild(frameSingleDoc
+								.importNode(feChildren.item(j), true));
 					}
 					// Append the semTypes
-					if(feChildNodeName.equals("semType")){
-						semTypes.appendChild(frameSingleDoc.importNode(feChildren.item(j), true));
+					if (feChildNodeName.equals("semType")) {
+						semTypes.appendChild(frameSingleDoc
+								.importNode(feChildren.item(j), true));
 					}
 					// Append excludesFE
-					if(feChildNodeName.equals("excludesFE")){
-						feNode.appendChild(frameSingleDoc.importNode(feChildren.item(j), true));
+					if (feChildNodeName.equals("excludesFE")) {
+						feNode.appendChild(frameSingleDoc
+								.importNode(feChildren.item(j), true));
 					}
 					// Append requiresFE
-					if(feChildNodeName.equals("requiresFE")){
-						feNode.appendChild(frameSingleDoc.importNode(feChildren.item(j), true));
+					if (feChildNodeName.equals("requiresFE")) {
+						feNode.appendChild(frameSingleDoc
+								.importNode(feChildren.item(j), true));
 					}
 				}
 				feNode.appendChild(semTypes);
 				fes.appendChild(feNode);
-			}else if(frameChildNodeName.equals("lexUnit")){
+				break;
+			case "lexUnit":
 				hasLexUnits = true;
+				break;
 			}
 		}
 		frameImportElement.appendChild(fes);
@@ -87,7 +97,7 @@ public class ScoringRequiredDataCreation {
 		return frameImportElement;
 	}
 
-	private static void createFramesXmlFile(String frameDir, String outputFile) throws IOException {
+	private void createFramesXmlFile(String frameDir, String outputFile) throws IOException {
 		Document frameSingleDoc = XmlUtils.getNewDocument();
 		Element framesRootElement = frameSingleDoc.createElement("frames");
 		frameSingleDoc.appendChild(framesRootElement);
@@ -111,7 +121,7 @@ public class ScoringRequiredDataCreation {
 	}
 
 
-	private static void createFrRelationsXmlFile(String frRelationFile, String outputFile){
+	private void createFrRelationsXmlFile(String frRelationFile, String outputFile){
 		Document frRelationDoc = XmlUtils.parseXmlFile(frRelationFile, false);
 		NodeList frRelationTypeNodeList = frRelationDoc.getElementsByTagName("frameRelationType");
 		for(int i=0; i<frRelationTypeNodeList.getLength(); i++){

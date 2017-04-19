@@ -31,6 +31,8 @@ import edu.cmu.cs.lti.ark.fn.identification.RequiredDataForFrameIdentification;
 import edu.cmu.cs.lti.ark.fn.utils.FNModelOptions;
 import edu.cmu.cs.lti.ark.util.FileUtil;
 import edu.cmu.cs.lti.ark.util.SerializedObjects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,16 +42,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.*;
-import java.util.logging.FileHandler;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import static edu.cmu.cs.lti.ark.util.IntRanges.xrange;
 import static org.apache.commons.io.IOUtils.closeQuietly;
 
 public class AlphabetCreationThreaded {
-	private static final Logger logger = Logger.getLogger(AlphabetCreationThreaded.class.getCanonicalName());
+	private static final Logger logger = LoggerFactory.getLogger(AlphabetCreationThreaded.class);
 	private static final int DEFAULT_MINIMUM_FEATURE_COUNT = 2;
 	public static final String ALPHABET_FILENAME = "alphabet.dat";
 
@@ -70,11 +68,6 @@ public class AlphabetCreationThreaded {
 	 */
 	public static void main(String[] args) throws IOException, ClassNotFoundException, ExecutionException, InterruptedException {
 		final FNModelOptions options = new FNModelOptions(args);
-
-		LogManager.getLogManager().reset();
-		final FileHandler fileHandler = new FileHandler(options.logOutputFile.get(), true);
-		fileHandler.setFormatter(new SimpleFormatter());
-		logger.addHandler(fileHandler);
 
 		final int startIndex = options.startIndex.get();
 		final int endIndex = options.endIndex.get();
@@ -172,20 +165,18 @@ public class AlphabetCreationThreaded {
 									 final List<String> frameLineBatch,
 									 final List<String> parseLines,
 									 final Multiset<String> alphabet) {
-		return new Callable<Integer>() {
-			public Integer call() {
-				logger.info("Thread " + threadId + " : start");
-				for (int i = 0; i < frameLineBatch.size() && !Thread.currentThread().isInterrupted(); i++) {
-					processLine(frameLineBatch.get(i), parseLines, alphabet);
-					if (i % 50 == 0) {
-						logger.info("Thread " + i + "\n" +
-								"Processed index:" + i + " of " + frameLineBatch.size() + "\n" +
-								"Alphabet size:" + alphabet.elementSet().size());
-					}
+		return () -> {
+			logger.info("Thread " + threadId + " : start");
+			for (int i = 0; i < frameLineBatch.size() && !Thread.currentThread().isInterrupted(); i++) {
+				processLine(frameLineBatch.get(i), parseLines, alphabet);
+				if (i % 50 == 0) {
+					logger.info("Thread " + i + "\n" +
+							"Processed index:" + i + " of " + frameLineBatch.size() + "\n" +
+							"Alphabet size:" + alphabet.elementSet().size());
 				}
-				logger.info("Thread " + threadId + " : end");
-				return frameLineBatch.size();
 			}
+			logger.info("Thread " + threadId + " : end");
+			return frameLineBatch.size();
 		};
 	}
 

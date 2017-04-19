@@ -33,32 +33,27 @@ import edu.cmu.cs.lti.ark.ml.optimization.Lbfgs;
 import edu.cmu.cs.lti.ark.fn.utils.FNModelOptions;
 import edu.cmu.cs.lti.ark.fn.utils.ThreadPool;
 import edu.cmu.cs.lti.ark.util.SerializedObjects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.FileHandler;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import static org.apache.commons.io.IOUtils.closeQuietly;
 
 
 public class TrainBatchModelDerThreaded {
-	private static final Logger logger = Logger.getLogger(TrainBatchModelDerThreaded.class.getCanonicalName());
+	private static final Logger logger = LoggerFactory.getLogger(TrainBatchModelDerThreaded.class);
 
 	private static final int BATCH_SIZE = 10;
 	private static final boolean CACHE_FEATURES = false;
 	private static final String FEATURE_FILENAME_PREFIX = "feats_";
 	private static final String FEATURE_FILENAME_SUFFIX = ".jobj.gz";
-	private static final FilenameFilter featureFilenameFilter = new FilenameFilter() {
-		public boolean accept(File dir, String name) {
-			return name.startsWith(FEATURE_FILENAME_PREFIX) && name.endsWith(FEATURE_FILENAME_SUFFIX);
-		}
-	};
+	private static final FilenameFilter featureFilenameFilter = (dir, name) ->
+			name.startsWith(FEATURE_FILENAME_PREFIX) && name.endsWith(FEATURE_FILENAME_SUFFIX);
 	private static final Comparator<String> featureFilenameComparator = new Comparator<String>() {
 		private final int PREFIX_LEN = FEATURE_FILENAME_PREFIX.length();
 		private final int SUFFIX_LEN = FEATURE_FILENAME_SUFFIX.length();
@@ -91,10 +86,6 @@ public class TrainBatchModelDerThreaded {
 
 	public static void main(String[] args) throws Exception {
 		final FNModelOptions options = new FNModelOptions(args);
-		LogManager.getLogManager().reset();
-		final FileHandler fh = new FileHandler(options.logOutputFile.get(), true);
-		fh.setFormatter(new SimpleFormatter());
-		logger.addHandler(fh);
 
 		final String restartFile = options.restartFile.get();
 		final int numThreads = options.numThreads.present() ?
@@ -173,16 +164,14 @@ public class TrainBatchModelDerThreaded {
 			final int taskId = task;
 			final int start = i;
 			final int end = Math.min(i + BATCH_SIZE, eventFiles.size());
-			threadPool.runTask(new Runnable() {
-				public void run() {
-					logger.info("Task " + taskId + " : start");
-					try {
-						processBatch(taskId, start, end);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-					logger.info("Task " + taskId + " : end");
+			threadPool.runTask(() -> {
+				logger.info("Task " + taskId + " : start");
+				try {
+					processBatch(taskId, start, end);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
 				}
+				logger.info("Task " + taskId + " : end");
 			});
 			task++;
 		}

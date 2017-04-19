@@ -30,14 +30,6 @@ import edu.cmu.cs.lti.ark.util.CommandLineOptions;
  * @since 2009-09-25
  */
 public final class FNModelOptions extends CommandLineOptions {
-	public FNModelOptions(String[] args) {
-		this(args, false);
-	}
-	public FNModelOptions(String[] args, boolean ignoreUnknownOptions) {
-		super();
-		init(args, ignoreUnknownOptions);
-	}
-	
 	public StringOption alphabetFile = new StringOption("alphabetfile");
 	public BoolOption train = new BoolOption("train");
 	public BoolOption dev = new BoolOption("dev");
@@ -47,9 +39,9 @@ public final class FNModelOptions extends CommandLineOptions {
 	public StringOption trainFrameElementFile = new StringOption("train-fefile");
 	public StringOption reg = new StringOption("regularization");
 	public DoubleOption lambda = new DoubleOption("lambda");
-	public StringOption frameNetMapFile = new StringOption("framenet-mapfile");
-	public ExistingPathOption wnConfigFile = new ExistingPathOption("wordnet-configfile");
-	public ExistingPathOption stopWordsFile = new ExistingPathOption("stopwords-file");
+	public StringOption frameNetMapFile = new StringOption("framenet_lu_map_file");
+	public ExistingPathOption wnConfigFile = new ExistingPathOption("wordnet_config_file");
+	public ExistingPathOption stopWordsFile = new ExistingPathOption("stopwords_file");
 	public StringOption testFrameFile = new StringOption("test-framefile");
 	public StringOption testParseFile = new StringOption("test-parsefile");
 	public StringOption modelFile = new StringOption("model");
@@ -60,13 +52,13 @@ public final class FNModelOptions extends CommandLineOptions {
 	public IntOption startIndex = new IntOption("startindex");
 	public IntOption endIndex = new IntOption("endindex");
 	public ExistingPathOption testTokenizedFile = new ExistingPathOption("testtokenizedfile");
-	public StringOption allRelatedWordsFile = new StringOption("allrelatedwordsfile");
-	public StringOption wnRelatedWordsForWordsFile = new StringOption("wnrelatedwordsforwordsfile");
-	public StringOption wnMapFile = new StringOption("wnmapfile");
-	public StringOption hvCorrespondenceFile = new StringOption("hvcorrespondencefile");
-	public StringOption fnIdReqDataFile = new StringOption("fnidreqdatafile");
+	public StringOption allRelatedWordsFile = new StringOption("all_related_words_file");
+	public StringOption wnRelatedWordsForWordsFile = new StringOption("wn_related_words_for_words_file");
+	public StringOption wnMapFile = new StringOption("wn_map_file");
+	public StringOption hvCorrespondenceFile = new StringOption("hv_correspondence_file");
+	public StringOption fnIdReqDataFile = new StringOption("fn_id_req_data_file");
 	public ExistingPathOption idParamFile = new ExistingPathOption("idmodelfile");
-	public ExistingPathOption luXmlDir = new ExistingPathOption("luxmldir");
+	public ExistingPathOption luXmlDir = new ExistingPathOption("lexunit_xml_dir");
 	public NewFilePathOption frameElementsOutputFile = new NewFilePathOption("frameelementsoutputfile");
 	public NewFilePathOption logOutputFile = new NewFilePathOption("logoutputfile");
 	public IntOption minimumCount = new IntOption("minimum-count");
@@ -76,18 +68,22 @@ public final class FNModelOptions extends CommandLineOptions {
 	public DoubleOption costMultiple = new DoubleOption("cost-multiple");
 	public ExistingPathOption inputFile = new ExistingPathOption("input-file");
 	public NewFilePathOption outputFile = new NewFilePathOption("output-file");
-
 	public StringOption idFeatureExtractorType = new StringOption("id-feature-extractor-type");
 	public StringOption eventsFile = new StringOption("eventsfile");
 	public StringOption spansFile = new StringOption("spansfile");
 	public StringOption frameFeaturesCacheFile = new StringOption("localfeaturescache");
 	public StringOption restartFile = new StringOption("restartfile");
-	public StringOption lemmaCacheFile = new StringOption("lemmacachefile");
-	
-	public StringOption revisedMapFile = new StringOption("revisedmapfile");
-
+	public StringOption lemmaCacheFile = new StringOption("lemma_cache_file");
+	public StringOption revisedMapFile = new StringOption("revised_map_file");
 	public StringOption useGraph = new StringOption("useGraph");
 	public IntOption port = new IntOption("port");
 	public StringOption modelDirectory = new StringOption("model-dir");
 	public PositiveIntOption kBestOutput = new PositiveIntOption("k-best-output");
+	public FNModelOptions(String[] args) {
+		this(args, false);
+	}
+	public FNModelOptions(String[] args, boolean ignoreUnknownOptions) {
+		super();
+		init(args, ignoreUnknownOptions);
+	}
 }

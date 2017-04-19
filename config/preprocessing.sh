@@ -1,8 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 source "$(dirname "${BASH_SOURCE[0]}")/../config/all.sh"
-
-export with_exemplars=false;
 
 # You should not need to change anything here
 
@@ -24,6 +22,9 @@ export tmp_file="${EXPERIMENT_DATA_DIR}/tmp"
 
 export training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences"
 export testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences"
+
+export training_frame_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frames"
+export testing_frame_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frames"
 
 export training_fe_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frame.elements"
 export testing_fe_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frame.elements"
@@ -57,9 +58,9 @@ export old_framenet_fe_map_file="${RESOURCES_DIR}/framenet.frame.element.map.old
 
 export wordnet_config_file="${RESOURCES_DIR}/file_properties.xml"
 export stopwords_file="${RESOURCES_DIR}/stopwords.txt"
-export all_related_words_file="${RESOURCES_DIR}/allrelatedwords.ser"
-export hv_correspondence_file="${RESOURCES_DIR}/hvmap.ser"
-export wn_related_words_for_words_file="${RESOURCES_DIR}/wnallrelwords.ser"
-export wn_map_file="${RESOURCES_DIR}/wnMap.ser"
-export revised_map_file="${RESOURCES_DIR}/revisedrelmap.ser"
-export lemma_cache_file="${RESOURCES_DIR}/hvlemmas.ser"
+export all_related_words_file="${MODEL_DIR}/allrelatedwords.ser"
+export hv_correspondence_file="${MODEL_DIR}/hvmap.ser"
+export wn_related_words_for_words_file="${MODEL_DIR}/wnallrelwords.ser"
+export wn_map_file="${MODEL_DIR}/wnMap.ser"
+export revised_map_file="${MODEL_DIR}/revisedrelmap.ser"
+export lemma_cache_file="${MODEL_DIR}/hvlemmas.ser"

@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x # echo commands
 set -e # fail fast
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/scoring.sh"

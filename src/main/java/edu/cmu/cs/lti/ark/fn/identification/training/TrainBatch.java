@@ -33,6 +33,8 @@ import edu.cmu.cs.lti.ark.fn.utils.ThreadPool;
 import edu.cmu.cs.lti.ark.util.SerializedObjects;
 import edu.cmu.cs.lti.ark.util.ds.Pair;
 import gnu.trove.TIntDoubleHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -40,25 +42,18 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.FileHandler;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import static edu.cmu.cs.lti.ark.util.IntRanges.xrange;
 import static edu.cmu.cs.lti.ark.util.Math2.sum;
 
 
 public class TrainBatch {
-	private static final Logger logger = Logger.getLogger(TrainBatch.class.getCanonicalName());
+	private static final Logger logger = LoggerFactory.getLogger(TrainBatch.class);
 
 	public static final String FEATURE_FILENAME_PREFIX = "feats_";
 	public static final String FEATURE_FILENAME_SUFFIX = ".jobj.gz";
-	private static final FilenameFilter featureFilenameFilter = new FilenameFilter() {
-		public boolean accept(File dir, String name) {
-			return name.startsWith(FEATURE_FILENAME_PREFIX) && name.endsWith(FEATURE_FILENAME_SUFFIX);
-		}
-	};
+	private static final FilenameFilter featureFilenameFilter = (dir, name) ->
+			name.startsWith(FEATURE_FILENAME_PREFIX) && name.endsWith(FEATURE_FILENAME_SUFFIX);
 	private static final Comparator<String> featureFilenameComparator = new Comparator<String>() {
 		private final int PREFIX_LEN = FEATURE_FILENAME_PREFIX.length();
 		private final int SUFFIX_LEN = FEATURE_FILENAME_SUFFIX.length();
@@ -85,10 +80,6 @@ public class TrainBatch {
 
 	public static void main(String[] args) throws Exception {
 		final FNModelOptions options = new FNModelOptions(args);
-		LogManager.getLogManager().reset();
-		final FileHandler fh = new FileHandler(options.logOutputFile.get(), true);
-		fh.setFormatter(new SimpleFormatter());
-		logger.addHandler(fh);
 
 		final String restartFile = options.restartFile.get();
 		final int numThreads = options.numThreads.present() ?
@@ -134,12 +125,7 @@ public class TrainBatch {
 	}
 
 	public double[] trainModel() throws Exception {
-		final Function<double[], Pair<Double, double[]>> valueAndGradientFunction =
-				new Function<double[], Pair<Double, double[]>>() {
-					@Override public Pair<Double, double[]> apply(double[] currentParams) {
-						return getValuesAndGradientsThreaded(currentParams);
-					}
-				};
+		final Function<double[], Pair<Double, double[]>> valueAndGradientFunction = currentParams -> getValuesAndGradientsThreaded(currentParams);
 		return Lbfgs.trainAndSaveModel(params, valueAndGradientFunction, modelFile);
 	}
 
@@ -151,14 +137,12 @@ public class TrainBatch {
 		for (int start = 0; start < eventFiles.size(); start += batchSize) {
 			final int taskId = task;
 			final Iterable<Integer> targetIdxs = xrange(start, Math.min(start + batchSize, eventFiles.size()));
-			threadPool.runTask(new Runnable() {
-				public void run() {
-					logger.info(String.format("Task %d : start", taskId));
-					try {
-						tValues[taskId] = processBatch(targetIdxs, currentParams, tGradients[taskId]);
-					} catch (Exception e) { throw new RuntimeException(e); }
-					logger.info(String.format("Task %d : end", taskId));
-				}
+			threadPool.runTask(() -> {
+				logger.info(String.format("Task %d : start", taskId));
+				try {
+					tValues[taskId] = processBatch(targetIdxs, currentParams, tGradients[taskId]);
+				} catch (Exception e) { throw new RuntimeException(e); }
+				logger.info(String.format("Task %d : end", taskId));
 			});
 			task++;
 		}

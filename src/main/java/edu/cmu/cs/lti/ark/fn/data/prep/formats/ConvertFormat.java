@@ -21,7 +21,7 @@ import static org.apache.commons.io.IOUtils.closeQuietly;
  * @author sthomson@cs.cmu.edu
  */
 public class ConvertFormat {
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(ConvertFormat.class);
 	// Command line option converters
 	private static Map<String, SentenceCodec> codecMap = ImmutableMap.of(
 			"conll", ConllCodec,
@@ -74,12 +74,11 @@ public class ConvertFormat {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		ConvertFormat cFormat = new ConvertFormat();
-		cFormat.logger.info("Converting postagged splits to Malt conll input...");
+		logger.info("Converting postagged splits to Malt conll input...");
 		final ConvertOptions options = new ConvertOptions();
 		new JCommander(options, args);
 		convertStream(options.input, options.inputCodec, options.output, options.outputCodec);
-		cFormat.logger.info("Done converting postagged splits to Malt conll input...");
+		logger.info("Done converting postagged splits to Malt conll input...");
 	}
 
 	/**

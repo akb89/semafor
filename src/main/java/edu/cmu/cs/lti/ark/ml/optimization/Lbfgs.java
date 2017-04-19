@@ -4,13 +4,13 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.io.OutputSupplier;
 import edu.cmu.cs.lti.ark.util.ds.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import riso.numerical.LBFGS;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Logger;
 
 import static com.google.common.io.Files.newWriterSupplier;
 import static org.apache.commons.io.IOUtils.closeQuietly;
@@ -21,8 +21,7 @@ import static org.apache.commons.io.IOUtils.closeQuietly;
  * @author sthomson@cs.cmu.edu
  */
 public class Lbfgs {
-	private static final Logger logger = Logger.getLogger(Lbfgs.class.getCanonicalName());
-	static { logger.addHandler(new ConsoleHandler()); }
+	private static final Logger logger = LoggerFactory.getLogger(Lbfgs.class);
 	/*
 	 * LBFGS constants
 	 */

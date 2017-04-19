@@ -22,6 +22,7 @@
 package edu.cmu.cs.lti.ark.fn.wordnet;
 
 
+import edu.cmu.cs.lti.ark.fn.identification.training.RequiredDataCreation;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 import net.didion.jwnl.JWNL;
@@ -29,6 +30,8 @@ import net.didion.jwnl.data.*;
 import net.didion.jwnl.data.list.PointerTargetNode;
 import net.didion.jwnl.data.list.PointerTargetNodeList;
 import net.didion.jwnl.dictionary.Dictionary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -41,6 +44,9 @@ import java.util.Set;
  *
  */
 public class WordNetAPI {
+	private static final Logger logger = LoggerFactory
+			.getLogger(WordNetAPI.class);
+
 	private static WordNetAPI instance = null;
 	
 	private static Dictionary wDict;
@@ -110,14 +116,9 @@ public class WordNetAPI {
 		return instance;
 	}
 
-	private static void info(String info){
-		System.out.println(info);
-	}
-
-
 	private WordNetAPI(InputStream propsFile) throws Exception {
 
-		info("Initialize WordNet...: ");
+		logger.info("Initializing WordNet...");
 		
 		if (propsFile == null)
 			throw new RuntimeException("Missing required property 'WN_PROP'");
@@ -129,7 +130,7 @@ public class WordNetAPI {
 		} catch (Exception e) {
 			throw new RuntimeException("Initialization failed", e);
 		}
-		info("Done initializing WordNet...");
+		logger.info("Done initializing WordNet");
 	}
 
 

@@ -33,11 +33,27 @@ time sed -f ${tokenizer_sed} ${testing_sentence_splits} > ${tokenized_testing_se
 echo "Finished tokenization"
 echo
 
+# Generate cv.***.sentences.frames from cv.***.sentences splits
+time ${JAVA_HOME_BIN}/java \
+    -classpath ${CLASSPATH} \
+    -Xmx${max_ram} \
+    edu.unige.clcl.fn.data.prep.FFESplitsCreation \
+    "${FRAMENET_DATA_DIR}" \
+    "${testing_sentence_splits}" \
+    "${tokenized_testing_sentence_splits}" \
+    "${training_sentence_splits}" \
+    "${tokenized_training_sentence_splits}" \
+    "${test_set_documents_names}"\
+    "${training_frame_splits}"\
+    "${testing_frame_splits}" \
+    "false" \
+    "${with_exemplars}"
+
 # Generate cv.***.sentences.frame.elements from cv.***.sentences splits
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.FESplitsCreation \
+    edu.unige.clcl.fn.data.prep.FFESplitsCreation \
     "${FRAMENET_DATA_DIR}" \
     "${testing_sentence_splits}" \
     "${tokenized_testing_sentence_splits}" \
@@ -46,6 +62,7 @@ time ${JAVA_HOME_BIN}/java \
     "${test_set_documents_names}"\
     "${training_fe_splits}"\
     "${testing_fe_splits}" \
+    "true" \
     "${with_exemplars}"
 
 # Generate cv.***.sentences.pos.tagged splits from cv.***.sentences splits
@@ -190,17 +207,25 @@ time ${JAVA_HOME_BIN}/java \
     -Xmx${max_ram} \
     -XX:ParallelGCThreads=${gc_threads} \
     edu.cmu.cs.lti.ark.fn.identification.training.RequiredDataCreation \
-    stopwords-file:${stopwords_file} \
-    wordnet-configfile:${wordnet_config_file} \
-    framenet-mapfile:${framenet_lu_map_file} \
-    luxmldir:${LEXUNIT_DIR} \
-    allrelatedwordsfile:${all_related_words_file} \
-    hvcorrespondencefile:${hv_correspondence_file} \
-    wnrelatedwordsforwordsfile:${wn_related_words_for_words_file} \
-    wnmapfile:${wn_map_file} \
-    revisedmapfile:${revised_map_file} \
-    lemmacachefile:${lemma_cache_file} \
-    fnidreqdatafile:${fn_id_req_data_file}
+    stopwords_file:${stopwords_file} \
+    wordnet_config_file:${wordnet_config_file} \
+    framenet_lu_map_file:${framenet_lu_map_file} \
+    lexunit_xml_dir:${LEXUNIT_DIR} \
+    all_related_words_file:${all_related_words_file} \
+    hv_correspondence_file:${hv_correspondence_file} \
+    wn_related_words_for_words_file:${wn_related_words_for_words_file} \
+    wn_map_file:${wn_map_file} \
+    revised_map_file:${revised_map_file} \
+    lemma_cache_file:${lemma_cache_file} \
+    fn_id_req_data_file:${fn_id_req_data_file}
+
+# Removing unnecessary temporary files
+rm "${all_related_words_file}"
+rm "${hv_correspondence_file}"
+rm "${wn_related_words_for_words_file}"
+rm "${wn_map_file}"
+rm "${revised_map_file}"
+rm "${lemma_cache_file}"
 
 # Create files frames.xml and feRelations.xml for use with perl score script under the EXPERIMENT_DATA_DIR directory
 time ${JAVA_HOME_BIN}/java \
