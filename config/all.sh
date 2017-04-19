@@ -10,7 +10,7 @@ export JAVA_HOME_BIN="/usr/bin"
 
 export model_name="acl2015_baseline_replication_with_exemplars_${with_exemplars}_lambda_${lambda}" # choose a name for the model to train
 
-export with_exemplars=false
+export with_exemplars=true
 export lambda=0.000001
 export batch_size=40000
 
