@@ -74,6 +74,21 @@ public class SentenceSplitsCreation {
 		return false;
 	}
 
+	private void addSentencesTextToSet(NodeList sentences,
+			Set<String> trainSentenceSet, Set<String> testSentenceSet){
+		for (int i = 0; i < sentences.getLength(); i++) {
+			Element sentence = (Element) sentences.item(i);
+			if (containsFrameNetAnnotation(sentence)) {
+				String text = sentence.getElementsByTagName("text")
+						.item(0).getTextContent()
+						.replaceAll("\\s+$", "");
+				if (!testSentenceSet.contains(text)) {
+					trainSentenceSet.add(text);
+				}
+			}
+		}
+	}
+
 	private void addFullTextSentences(String fullTextDir,
 			Set<String> testSetDocNameSet, Set<String> testSentenceSet,
 			Set<String> trainSentenceSet) throws IOException {
@@ -87,18 +102,7 @@ public class SentenceSplitsCreation {
 				if (!testSetDocNameSet.contains(docName)) {
 					NodeList sentences = fullTextDoc.getDocumentElement()
 							.getElementsByTagName("sentence");
-					for (int i = 0; i < sentences.getLength(); i++) {
-						Element sentence = (Element) sentences.item(i);
-						if (containsFrameNetAnnotation(sentence)) {
-							String text = sentence.getElementsByTagName("text")
-									.item(0).getTextContent()
-									.replaceAll("\\s+$", "");
-							;
-							if (!testSentenceSet.contains(text)) {
-								trainSentenceSet.add(text);
-							}
-						}
-					}
+					addSentencesTextToSet(sentences, trainSentenceSet, testSentenceSet);
 				}
 			}
 		});
@@ -118,18 +122,7 @@ public class SentenceSplitsCreation {
 					Element subCorpus = (Element) subCorpora.item(i);
 					NodeList sentences = subCorpus
 							.getElementsByTagName("sentence");
-					for (int j = 0; j < sentences.getLength(); j++) {
-						Element sentence = (Element) sentences.item(j);
-						if (containsFrameNetAnnotation(sentence)) {
-							String text = sentence.getElementsByTagName("text")
-									.item(0).getTextContent()
-									.replaceAll("\\s+$", "");
-							;
-							if (!testSentenceSet.contains(text)) {
-								trainSentenceSet.add(text);
-							}
-						}
-					}
+					addSentencesTextToSet(sentences, trainSentenceSet, testSentenceSet);
 				}
 			}
 		});

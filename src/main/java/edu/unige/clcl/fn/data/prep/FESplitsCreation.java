@@ -18,8 +18,10 @@ import java.util.stream.Collectors;
 
 /**
  * Format:
- * FE_VALUE_0	FE_VALUE_1	#(frame + FEs)	Frame	LU	#target	target	#sentence	FE	feStart:feEnd
- * Indexes (for FE spans and targets) are based on the tokenized splits, NOT on the sentence splits
+ * FE_VALUE_0	FE_VALUE_1	#(frame + FEs)	Frame	LU	#target	target
+ * #sentence	FE	feStart:feEnd
+ * Indexes (for FE spans and targets) are based on the tokenized splits,
+ * NOT on the sentence splits
  *
  * @author Alex Kabbach
  */
@@ -46,7 +48,8 @@ public class FESplitsCreation {
 
 		FESplitsCreation feSplitsCreation = new FESplitsCreation();
 		feSplitsCreation.logger
-				.info("Generating training and testing frame elements splits from sentences splits...");
+				.info("Generating training and testing frame elements splits "
+						+ "from sentences splits...");
 
 		Set<String> testSetDocNameSet = feSplitsCreation
 				.getTestSetDocNameSet(testSetDocsFile);
@@ -65,29 +68,8 @@ public class FESplitsCreation {
 		}
 
 		feSplitsCreation.logger
-				.info("Done generating training and testing frame elements splits from sentences splits");
-	}
-
-	private void testTokenIndex(String test, int start, int end) {
-		toTokenIndex(test, start, end);
-	}
-
-	private void test(String sentenceSplits, String tokenizedSentenceSplits)
-			throws IOException {
-		String text = "As husband of Louis VII's sister , Constance , Raymond of Toulouse could count on help from his brother-in-law .";
-		String targetWithIndex = "count#73";
-		Map<String, Integer> sentenceMap = getSentenceIndexMap(sentenceSplits);
-		List<String> tokenizedSentences = Files
-				.lines(Paths.get(tokenizedSentenceSplits))
-				.collect(Collectors.toList());
-		Map<TokenIndex, TokenIndex> indexMap = SentenceToTokenizedIndexMapping
-				.getTokenIndexMap(text,
-						tokenizedSentences.get(sentenceMap.get(text)));
-		String targetIndex = getTargetIndex(text, targetWithIndex, indexMap);
-		System.out.println(targetIndex);
-		if (targetIndex.isEmpty()) {
-			System.out.println("isEmpty");
-		}
+				.info("Done generating training and testing frame elements "
+						+ "splits from sentences splits");
 	}
 
 	private List<String> splitBy(String text, String regex) {
@@ -288,10 +270,6 @@ public class FESplitsCreation {
 
 	/**
 	 * Parser does not handle discontinuous targets
-	 *
-	 * @param text
-	 * @param annotationSet
-	 * @return
 	 */
 	private String getTargetWithStartCharIndex(String text,
 			Element annotationSet) {

@@ -7,13 +7,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * Format:
+ * FRAME_VALUE_0	FRAME_VALUE_1	#(frame + FEs)	Frame	LU	#target	target
+ * #sentence
+ * Indexes (for targets) are based on the tokenized splits, NOT on the sentence
+ * splits
+ *
  * @author Alex Kabbach
  */
 public class FrameSplitsCreation {
 
 	public static final String FRAME_VALUE_0 = "0";
 	public static final String FRAME_VALUE_1 = "1.0";
-	public static final String FRAME_VALUE_2 = "1";
 
 	public static void main(String[] args) throws IOException {
 		/*final String frameNetDataDir = args[0];
@@ -23,8 +28,10 @@ public class FrameSplitsCreation {
 
 		final String frameNetDataDir = "/Users/AKB/Dropbox/FrameNetData/fndata-1.5";
 		final String resourcesDir = "/Users/AKB/Dropbox/GitHub/semafor/data";
-		final String testSentenceSplits = resourcesDir + "/cv.test.sentences"; // TODO: use global variable?
-		final String trainSentenceSplits = resourcesDir + "/cv.train.sentences"; // TODO: use global variable?
+		final String testSentenceSplits = resourcesDir
+				+ "/cv.test.sentences"; // TODO: use global variable?
+		final String trainSentenceSplits = resourcesDir
+				+ "/cv.train.sentences"; // TODO: use global variable?
 		final String testSetDocsFile = "/Users/AKB/Dropbox/GitHub/semafor/resources/fn.fulltext.test.set.documents";
 
 		final String fullTextDir = frameNetDataDir + "/fulltext";
@@ -41,12 +48,12 @@ public class FrameSplitsCreation {
 		return testSetDocNameSet;
 	}
 
-	private static Map<String, Integer> getSentenceToNumberMap(String sentenceSplits)
-			throws IOException {
+	private static Map<String, Integer> getSentenceToNumberMap(
+			String sentenceSplits) throws IOException {
 		Map<String, Integer> map = new HashMap<>();
 		int sentenceIterator = 0;
-		List<String> sentences = Files.lines(Paths.get(sentenceSplits)).collect(
-				Collectors.toList());
+		List<String> sentences = Files.lines(Paths.get(sentenceSplits))
+				.collect(Collectors.toList());
 		for (String sentence : sentences) {
 			map.put(sentence, sentenceIterator);
 			sentenceIterator += 1;
@@ -54,19 +61,19 @@ public class FrameSplitsCreation {
 		return map;
 	}
 
-	private static Set<String> getTestFrameFESet(){
+	private static Set<String> getTestFrameFESet() {
 		Set<String> testFrameFESet = new HashSet<>();
 
 		return testFrameFESet;
 	}
 
-	private static Set<String> getTrainFrameFESet(){
+	private static Set<String> getTrainFrameFESet() {
 		Set<String> trainFrameFESet = new HashSet<>();
 
 		return trainFrameFESet;
 	}
 
-	private static void createFrameSplits(){
+	private static void createFrameSplits() {
 		/*
 		Map<String, Integer> testSentenceToNumberMap = getSentenceToNumberMap(testSentenceSplits);
 		Set<String> testFrameSet = getTestFrameFESet();

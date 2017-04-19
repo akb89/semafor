@@ -11,7 +11,8 @@ mkdir -p "${RESULTS_DIR}"
 
 scala \
     -classpath ${CLASSPATH} \
-    -J-Xmx${max_ram} "${SEMAFOR_HOME}/bin/score/score.scala" \
+    -J-Xmx${max_ram} \
+    "${SEMAFOR_HOME}/bin/score/score.scala" \
     "${MODEL_DIR}" \
     "${sentences_frames}" \
     "${sentences_maltparsed}" \
