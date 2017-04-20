@@ -23,17 +23,28 @@ export tmp_file="${EXPERIMENT_DATA_DIR}/tmp"
 export training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences"
 export testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences"
 
+export training_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.with.exemplars"
+export testing_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.test.sentences.with.exemplars"
+
 export training_frame_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frames"
 export testing_frame_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frames"
 
 export training_fe_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frame.elements"
 export testing_fe_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frame.elements"
 
+export training_fe_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frame.elements.with.exemplars"
+export testing_fe_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frame.elements.with.exemplars"
+
 export tokenized_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.tokenized"
 export tokenized_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.tokenized"
 
+export tokenized_training_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.tokenized.with.exemplars"
+export tokenized_testing_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.test.sentences.tokenized.with.exemplars"
+
 export postagged_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.pos.tagged"
 export postagged_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.pos.tagged"
+
+export postagged_training_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.with.exemplars.pos.tagged"
 
 export malt_conll_input_training_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.malt.input.conll"
 export malt_conll_input_testing_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.malt.input.conll"

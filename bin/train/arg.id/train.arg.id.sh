@@ -2,7 +2,7 @@
 
 set -e # fail fast
 
-source "$(dirname ${0})/../../config/training.sh"
+source "$(dirname ${0})/../../../config/training.sh"
 
 echo
 echo "Training Argument Identification"

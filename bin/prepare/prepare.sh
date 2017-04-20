@@ -1,236 +1,88 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 set -e # fail fast
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
 
 echo
-echo "Creating Required Data"
-echo
+echo "Creating Required Data..."
 
 rm -rf ${MODEL_DIR}
 mkdir -p "${MODEL_DIR}"
 rm -rf ${EXPERIMENT_DATA_DIR}
 mkdir ${EXPERIMENT_DATA_DIR}
 
+prepare_bin="$(dirname ${0})"
+
+# Validate input parameters
+bash ${prepare_bin}/prepare.validate.input.parameters.sh
+
 # Generate cv.***.sentences splits from FrameNet XML data under the EXPERIMENT_DATA_DIR directory
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.SentenceSplitsCreation \
-    "${FRAMENET_DATA_DIR}" \
-    "${training_sentence_splits}" \
-    "${testing_sentence_splits}" \
-    "${test_set_documents_names}" \
-    "${with_exemplars}" \
+bash ${prepare_bin}/prepare.splits.raw.sentences.sh
 
 # Generate cv.***.sentences.tokenized splits from cv.***.sentences splits
-echo "Tokenizing training splits: ${training_sentence_splits} ..."
-time sed -f ${tokenizer_sed} ${training_sentence_splits} > ${tokenized_training_sentence_splits}
-echo "Finished tokenization."
-echo
-echo "Tokenizing testing splits: ${testing_sentence_splits} ..."
-time sed -f ${tokenizer_sed} ${testing_sentence_splits} > ${tokenized_testing_sentence_splits}
-echo "Finished tokenization"
-echo
+bash ${prepare_bin}/prepare.splits.tokenize.sh
 
 # Generate cv.***.sentences.frames from cv.***.sentences splits
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.FFESplitsCreation \
-    "${FRAMENET_DATA_DIR}" \
-    "${testing_sentence_splits}" \
-    "${tokenized_testing_sentence_splits}" \
-    "${training_sentence_splits}" \
-    "${tokenized_training_sentence_splits}" \
-    "${test_set_documents_names}"\
-    "${training_frame_splits}"\
-    "${testing_frame_splits}" \
-    "false" \
-    "${with_exemplars}"
+bash ${prepare_bin}/prepare.splits.frames.sh
 
 # Generate cv.***.sentences.frame.elements from cv.***.sentences splits
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.FFESplitsCreation \
-    "${FRAMENET_DATA_DIR}" \
-    "${testing_sentence_splits}" \
-    "${tokenized_testing_sentence_splits}" \
-    "${training_sentence_splits}" \
-    "${tokenized_training_sentence_splits}" \
-    "${test_set_documents_names}"\
-    "${training_fe_splits}"\
-    "${testing_fe_splits}" \
-    "true" \
-    "${with_exemplars}"
+bash ${prepare_bin}/prepare.splits.frame.elements.sh
 
 # Generate cv.***.sentences.pos.tagged splits from cv.***.sentences splits
-echo "Part-of-speech tagging tokenized training splits..."
-pushd ${POS_TAGGER_HOME}
-time ./mxpost tagger.project < ${tokenized_training_sentence_splits} > ${postagged_training_sentence_splits}
-echo "Finished part-of-speech tagging"
-echo
-echo "Part-of-speech tagging tokenized testing splits..."
-pushd ${POS_TAGGER_HOME}
-time ./mxpost tagger.project < ${tokenized_testing_sentence_splits} > ${postagged_testing_sentence_splits}
-echo "Finished part-of-speech tagging"
-echo
+bash ${prepare_bin}/prepare.splits.postag.sh
 
-# Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
-    --input ${postagged_training_sentence_splits} \
-    --inputFormat pos \
-    --output ${malt_conll_input_training_sentence_splits} \
-    --outputFormat conll
+if [ "${dependency_parser}" = "MST" ]; then
 
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
-    --input ${postagged_testing_sentence_splits} \
-    --inputFormat pos \
-    --output ${malt_conll_input_testing_sentence_splits} \
-    --outputFormat conll
+fi
+
+if [ "${dependency_parser}" = "MALT" ]; then
+
+fi
+
+if [ "${dependency_parser}" = "TURBO" ]; then
+
+fi
 
 # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
-	${postagged_training_sentence_splits} ${mst_conll_input_training_sentence_splits}
-
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
-	${postagged_testing_sentence_splits} ${mst_conll_input_testing_sentence_splits}
+bash ${prepare_bin}/prepare.splits.mst.input.sh
 
 # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
-echo "Running MSTParser on conll training splits..."
-pushd ${MST_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java \
-    -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
-	-Xms${min_ram} \
-	-Xmx${max_ram} \
-	mst.DependencyParser \
-	test \
-	separate-lab \
-	model-name:${mst_parser_model} \
-	decode-type:proj \
-	order:2 \
-	test-file:${mst_conll_input_training_sentence_splits} \
-	output-file:${mstparsed_training_sentence_splits} \
-	format:CONLL
-echo "Finished MST dependency parsing"
-echo
-echo "Running MSTParser on conll testing splits..."
-pushd ${MST_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java \
-    -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
-	-Xms${min_ram} \
-	-Xmx${max_ram} \
-	mst.DependencyParser \
-	test \
-	separate-lab \
-	model-name:${mst_parser_model} \
-	decode-type:proj \
-	order:2 \
-	test-file:${mst_conll_input_testing_sentence_splits} \
-	output-file:${mstparsed_testing_sentence_splits} \
-	format:CONLL
-echo "Finished MST dependency parsing"
-echo
+bash ${prepare_bin}/prepare.splits.parse.mst.sh
+
+# Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
+bash ${prepare_bin}/prepare.splits.malt.input.sh
 
 # Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.malt.input.conll splits
-echo "Running MaltParser on conll training splits..."
-pushd ${MALT_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java \
-    -Xmx${max_ram} \
-    -jar maltparser-1.7.2.jar \
-    -w ${RESOURCES_DIR} \
-    -c ${malt_parser_model} \
-    -i ${malt_conll_input_training_sentence_splits} \
-    -o ${maltparsed_training_sentence_splits}
-echo "Finished Malt dependency parsing"
-echo
-echo "Running MaltParser on conll testing splits..."
-pushd ${MALT_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java \
-    -Xmx${max_ram} \
-    -jar maltparser-1.7.2.jar \
-    -w ${RESOURCES_DIR} \
-    -c ${malt_parser_model} \
-    -i ${malt_conll_input_testing_sentence_splits} \
-    -o ${maltparsed_testing_sentence_splits}
-echo "Finished Malt dependency parsing"
-echo
+bash ${prepare_bin}/prepare.splits.parse.malt.sh
 
 # Generate cv.train.sentences.all.lemma.tags
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xms${min_ram} \
-    -Xmx${max_ram} \
-    edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
-    ${tokenized_training_sentence_splits} \
-    ${mstparsed_training_sentence_splits} \
-    ${tmp_file} \
-    ${all_lemma_tags_training_sentence_splits}
-rm "${tmp_file}"
+bash ${prepare_bin}/prepare.splits.merge.all.tags.sh
 
-# Generate cv.test.sentences.all.lemma.tags
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xms${min_ram} \
-    -Xmx${max_ram} \
-    edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
-    ${tokenized_testing_sentence_splits} \
-    ${mstparsed_testing_sentence_splits} \
-    ${tmp_file} \
-    ${all_lemma_tags_testing_sentence_splits}
-rm "${tmp_file}"
+# framenet.original.map and framenet.frame.element.map are based on fulltext AND exemplar data
+# When processing fulltext data only, it is necessary to add exemplar data for generating the maps
+if [ "${with_exemplars}" = false ]; then
+    bash ${prepare_bin}/prepare.splits.raw.sentences.with.exemplars.sh
+    bash ${prepare_bin}/prepare.splits.tokenize.with.exemplars.sh
+    bash ${prepare_bin}/prepare.splits.postag.with.exemplars.sh
+    bash ${prepare_bin}/prepare.splits.framel.elements.with.exemplars.sh
+fi
+
+if [ "${with_exemplars}" = true ]; then
+    ${training_fe_splits_with_exemplars}=${training_fe_splits}
+    ${postagged_training_sentence_splits_with_exemplars}=${postagged_training_sentence_splits}
+fi
 
 # Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.TrainingMapsCreation \
-    "${training_fe_splits}" \
-    "${postagged_training_sentence_splits}" \
-    "${framenet_lu_map_file}" \
-    "${old_framenet_lu_map_file}" \
-    "${framenet_fe_map_file}" \
-    "${old_framenet_fe_map_file}"
+bash ${prepare_bin}/prepare.splits.framenet.maps.sh
 
 # Create the file reqData.jobj under the MODEL_DIR directory
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xmx${max_ram} \
-    -XX:ParallelGCThreads=${gc_threads} \
-    edu.cmu.cs.lti.ark.fn.identification.training.RequiredDataCreation \
-    stopwords_file:${stopwords_file} \
-    wordnet_config_file:${wordnet_config_file} \
-    framenet_lu_map_file:${framenet_lu_map_file} \
-    lexunit_xml_dir:${LEXUNIT_DIR} \
-    all_related_words_file:${all_related_words_file} \
-    hv_correspondence_file:${hv_correspondence_file} \
-    wn_related_words_for_words_file:${wn_related_words_for_words_file} \
-    wn_map_file:${wn_map_file} \
-    revised_map_file:${revised_map_file} \
-    lemma_cache_file:${lemma_cache_file} \
-    fn_id_req_data_file:${fn_id_req_data_file}
-
-# Removing unnecessary temporary files
-rm "${all_related_words_file}"
-rm "${hv_correspondence_file}"
-rm "${wn_related_words_for_words_file}"
-rm "${wn_map_file}"
-rm "${revised_map_file}"
-rm "${lemma_cache_file}"
+bash ${prepare_bin}/prepare.splits.wordnet.maps.sh
 
 # Create files frames.xml and feRelations.xml for use with perl score script under the EXPERIMENT_DATA_DIR directory
-time ${JAVA_HOME_BIN}/java \
-    -classpath ${CLASSPATH} \
-    -Xmx${max_ram} \
-    edu.unige.clcl.fn.data.prep.ScoringRequiredDataCreation \
-    "${FRAMENET_DATA_DIR}" \
-    "${EXPERIMENT_DATA_DIR}"
+bash ${prepare_bin}/prepare.xml.files.for.scoring.sh
+
+# Removing unnecessary temporary files
+if [ "${clean_after_preprocessing}" = true ]; then
+    bash ${prepare_bin}/prepare.splits.clean.sh
+fi
