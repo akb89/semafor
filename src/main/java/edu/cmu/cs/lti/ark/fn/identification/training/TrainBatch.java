@@ -138,11 +138,11 @@ public class TrainBatch {
 			final int taskId = task;
 			final Iterable<Integer> targetIdxs = xrange(start, Math.min(start + batchSize, eventFiles.size()));
 			threadPool.runTask(() -> {
-				logger.info(String.format("Task %d : start", taskId));
+				logger.debug(String.format("Task %d : start", taskId));
 				try {
 					tValues[taskId] = processBatch(targetIdxs, currentParams, tGradients[taskId]);
 				} catch (Exception e) { throw new RuntimeException(e); }
-				logger.info(String.format("Task %d : end", taskId));
+				logger.debug(String.format("Task %d : end", taskId));
 			});
 			task++;
 		}

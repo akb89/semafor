@@ -71,7 +71,7 @@ public class AlphabetCreationThreaded {
 
 		final int startIndex = options.startIndex.get();
 		final int endIndex = options.endIndex.get();
-		logger.info("Start:" + startIndex + " end:" + endIndex);
+		logger.debug("Start:" + startIndex + " end:" + endIndex);
 		final RequiredDataForFrameIdentification r =
 				SerializedObjects.readObject(options.fnIdReqDataFile.get());
 
@@ -230,7 +230,7 @@ public class AlphabetCreationThreaded {
 		final BufferedWriter output = Files.newWriter(alphabetFile, Charsets.UTF_8);
 		final int unconjoinedSize = unconjoinedFeatures.elementSet().size();
 		try {
-			logger.info("Writing alphabet.");
+			logger.info("Writing alphabet...");
 			int numUnconjoined = 0;
 			int numConjoined = 0;
 			for (String unconjoinedFeature : unconjoinedFeatures.elementSet()) {
@@ -248,7 +248,7 @@ public class AlphabetCreationThreaded {
 					logger.debug("Conjoined: " + numConjoined );
 				}
 			}
-			logger.info("Done writing alphabet.");
+			logger.info("Done writing alphabet");
 		} finally {
 			closeQuietly(output);
 		}

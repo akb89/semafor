@@ -6,7 +6,6 @@ source "$(dirname ${0})/../../../config/training.sh"
 
 echo
 echo "Training Frame Identification"
-echo
 
 mkdir -p "${EVENT_DIR}"
 

@@ -32,6 +32,9 @@ import edu.cmu.cs.lti.ark.util.ds.Range;
 import edu.cmu.cs.lti.ark.util.ds.Range0Based;
 import edu.cmu.cs.lti.ark.util.ds.Range1Based;
 import edu.cmu.cs.lti.ark.util.ds.map.SingleAssignmentHashMap;
+import edu.unige.clcl.fn.data.prep.FFESplitsCreation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Processes command-line arguments and stores a variety of configuration parameters as option-value pairs. 
@@ -43,6 +46,8 @@ import edu.cmu.cs.lti.ark.util.ds.map.SingleAssignmentHashMap;
  * 2009-09-25: Made abstract, with application-specific options in {@link edu.cmu.cs.lti.ark.util.FNModelOptions}
  */
 public abstract class CommandLineOptions {
+	private static final Logger logger = LoggerFactory
+			.getLogger(FFESplitsCreation.class);
 	public class InvalidOptionsException extends Exception {
 		private static final long serialVersionUID = -4353285681883730567L;
 		public InvalidOptionsException(String s) {
@@ -252,13 +257,13 @@ public abstract class CommandLineOptions {
 		boolean ok = true;
 		for(int i = 0; i < args.length; i ++)
 		{
-			System.out.println(args[i]);
+			logger.debug(args[i]);
 			String[] pair = args[i].split(":");
 			
 			String optName = pair[0];
 			Option opt = getOptionByName(optName);
 			if (opt==null) {
-				System.err.println("Invalid option name: " + optName);
+				logger.error("Invalid option name: " + optName);
 				ok = false;
 			}
 			else {
@@ -272,7 +277,7 @@ public abstract class CommandLineOptions {
 			}
 		}
 		if (!ok) {
-			System.err.println("Exiting (invalid set of options)");
+			logger.error("Exiting (invalid set of options)");
 			System.exit(1);
 		}
 	}
