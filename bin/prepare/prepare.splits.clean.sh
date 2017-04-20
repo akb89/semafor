@@ -1,12 +1,13 @@
 #!/bin/bash
 
 # Removing unnecessary temporary files
-rm "${all_related_words_file}"
-rm "${hv_correspondence_file}"
-rm "${wn_related_words_for_words_file}"
-rm "${wn_map_file}"
-rm "${revised_map_file}"
-rm "${lemma_cache_file}"
+rm "${training_sentence_splits}"
+rm "${testing_sentence_splits}"
+rm "${training_frame_splits}"
+rm "${training_tokenized_sentence_splits}"
+rm "${training_postagged_sentence_splits}"
+rm "${testing_postagged_sentence_splits}"
+rm "${training_sentence_splits_with_dependencies}"
 
 if [ "${with_exemplars}" = false ]; then
     rm "${training_sentence_splits_with_exemplars}"
@@ -32,3 +33,12 @@ if [ "${dependency_parser}" = "TURBO" ]; then
     rm "${turbo_conll_input_training_sentence_splits}"
     rm "${turbo_conll_input_testing_sentence_splits}"
 fi
+
+rm "${framenet_lu_map_file}"
+rm "${framenet_fe_map_file}"
+rm "${all_related_words_file}"
+rm "${hv_correspondence_file}"
+rm "${wn_related_words_for_words_file}"
+rm "${wn_map_file}"
+rm "${revised_map_file}"
+rm "${lemma_cache_file}"
