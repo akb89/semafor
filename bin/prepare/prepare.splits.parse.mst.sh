@@ -18,7 +18,7 @@ time ${JAVA_HOME_BIN}/java \
 	decode-type:proj \
 	order:2 \
 	test-file:${mst_conll_input_training_sentence_splits} \
-	output-file:${mstparsed_training_sentence_splits} \
+	output-file:${training_sentence_splits_with_dependencies} \
 	format:CONLL
 echo "Finished MST dependency parsing"
 echo
@@ -35,7 +35,7 @@ time ${JAVA_HOME_BIN}/java \
 	decode-type:proj \
 	order:2 \
 	test-file:${mst_conll_input_testing_sentence_splits} \
-	output-file:${mstparsed_testing_sentence_splits} \
+	output-file:${testing_sentence_splits_with_dependencies} \
 	format:CONLL
 echo "Finished MST dependency parsing"
 echo

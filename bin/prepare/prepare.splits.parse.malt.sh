@@ -13,7 +13,7 @@ time ${JAVA_HOME_BIN}/java \
     -w ${RESOURCES_DIR} \
     -c ${malt_parser_model} \
     -i ${malt_conll_input_training_sentence_splits} \
-    -o ${maltparsed_training_sentence_splits}
+    -o ${training_sentence_splits_with_dependencies}
 echo "Finished Malt dependency parsing"
 echo
 echo "Running MaltParser on conll testing splits..."
@@ -24,6 +24,6 @@ time ${JAVA_HOME_BIN}/java \
     -w ${RESOURCES_DIR} \
     -c ${malt_parser_model} \
     -i ${malt_conll_input_testing_sentence_splits} \
-    -o ${maltparsed_testing_sentence_splits}
+    -o ${testing_sentence_splits_with_dependencies}
 echo "Finished Malt dependency parsing"
 echo
