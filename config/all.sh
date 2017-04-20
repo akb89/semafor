@@ -8,8 +8,8 @@ export JAVA_HOME_BIN="/usr/bin"
 #export FRAMENET_DATA_DIR="/Users/AKB/Desktop/fndata-1.5"
 #export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
 
-export with_exemplars=true # set to true to include exemplar sentences in addition to fulltext
-export dependency_parser=MALT # set to MST, MALT or TURBO according to the dependency parser you want to use
+export with_exemplars=false # set to true to include exemplar sentences in addition to fulltext
+export dependency_parser=MST # set to MST, MALT or TURBO according to the dependency parser you want to use
 export clean_after_preprocessing=true # Remove unnecessary temporary files used for preprocessing. Set to false if you need to debug preprocessing
 
 export lambda=0.000001 # hyperparameter for argument identification. Refer to Kshirsagar et al. (2015) for details.
