@@ -125,12 +125,12 @@ public class ExtractTrainingFeatures {
 		for (int i = 0; i < dataCount; i++) {
 			final int count = i;
 			threadPool.execute(() -> {
-				logger.info(String.format("Task %d : start", count));
+				logger.debug(String.format("Task %d : start", count));
 				FeaturesAndCost[] allFeatures = processLine(frameLines.get(count), parseLines);
 				final String filename =
 						String.format("%s%06d%s", FEATURE_FILENAME_PREFIX, count, FEATURE_FILENAME_SUFFIX);
 				writeSerializedObject(allFeatures, new File(eventDir, filename).getAbsolutePath()); // auto-gzips
-				logger.info(String.format("Task %d : end", count));
+				logger.debug(String.format("Task %d : end", count));
 			});
 		}
 		threadPool.shutdown();

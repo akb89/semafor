@@ -186,7 +186,7 @@ public class TrainBatch {
 			if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
 			logLikelihood +=
 					addLogLossAndGradientForExample(getFeaturesForTarget(targetIdx), currentParams, tGradients);
-			if (targetIdx % 100 == 0) logger.info(String.format("target idx: %d", targetIdx));
+			if (targetIdx % 100 == 0) logger.debug(String.format("target idx: %d", targetIdx));
 		}
 		return logLikelihood;
 	}

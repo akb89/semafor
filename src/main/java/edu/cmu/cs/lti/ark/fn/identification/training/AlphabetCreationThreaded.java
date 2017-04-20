@@ -166,16 +166,16 @@ public class AlphabetCreationThreaded {
 									 final List<String> parseLines,
 									 final Multiset<String> alphabet) {
 		return () -> {
-			logger.info("Thread " + threadId + " : start");
+			logger.debug("Thread " + threadId + " : start");
 			for (int i = 0; i < frameLineBatch.size() && !Thread.currentThread().isInterrupted(); i++) {
 				processLine(frameLineBatch.get(i), parseLines, alphabet);
 				if (i % 50 == 0) {
-					logger.info("Thread " + i + "\n" +
+					logger.debug("Thread " + i + "\n" +
 							"Processed index:" + i + " of " + frameLineBatch.size() + "\n" +
 							"Alphabet size:" + alphabet.elementSet().size());
 				}
 			}
-			logger.info("Thread " + threadId + " : end");
+			logger.debug("Thread " + threadId + " : end");
 			return frameLineBatch.size();
 		};
 	}
