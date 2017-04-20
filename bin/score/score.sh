@@ -13,8 +13,8 @@ scala \
     -J-Xmx${max_ram} \
     "${SEMAFOR_HOME}/bin/score/score.scala" \
     "${MODEL_DIR}" \
-    "${sentences_frames}" \
-    "${sentences_maltparsed}" \
+    "${testing_frame_splits}" \
+    "${testing_sentence_splits_with_dependencies}" \
     "${RESULTS_DIR}/test.goldframe.predicted.xml" \
     true # use gold frames
 
@@ -27,11 +27,11 @@ ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
     edu.cmu.cs.lti.ark.fn.evaluation.PrepareFullAnnotationXML \
-    testFEPredictionsFile:"${fe_file}" \
+    testFEPredictionsFile:"${testing_fe_splits}" \
     startIndex:0 \
     endIndex:${end} \
-    testParseFile:"${processed_file}" \
-    testTokenizedFile:"${tokenized_file}" \
+    testParseFile:"${all_lemma_tags_testing_sentence_splits}" \
+    testTokenizedFile:"${tokenized_testing_sentence_splits}" \
     outputFile:"${RESULTS_DIR}/test.gold.xml"
 
 

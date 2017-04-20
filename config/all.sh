@@ -10,12 +10,12 @@ export JAVA_HOME_BIN="/usr/bin"
 
 export with_exemplars=true # set to true to include exemplar sentences in addition to fulltext
 export dependency_parser=MST # set to MST, MALT or TURBO according to the dependency parser you want to use
-export clean_after_preprocessing=false # Remove unnecessary temporary files used for preprocessing. Set to false if you need to debug preprocessing
+export clean_after_preprocessing=true # Remove unnecessary temporary files used for preprocessing. Set to false if you need to debug preprocessing
 
 export lambda=0.000001 # hyperparameter for argument identification. Refer to Kshirsagar et al. (2015) for details.
 export batch_size=40000 # number of batches processed at once for argument identification.
 
-export model_name="test_prep_with_exemplars_${with_exemplars}_dep_parser_${dependency_parser}_lambda_${lambda}"
+export model_name="acl2015_baseline_with_exemplars_${with_exemplars}_dep_parser_${dependency_parser}_lambda_${lambda}"
 
 export num_threads=55 # should set to roughly the number of cores available (minus one)
 export gc_threads=37 # (3+5N/8) with N number of cores (remove one core on total number of cores just in case. Ex: count 55 cores for 56 cores total)
