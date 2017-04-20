@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class CommandLineOptions {
 	private static final Logger logger = LoggerFactory
-			.getLogger(FFESplitsCreation.class);
+			.getLogger(CommandLineOptions.class);
 	public class InvalidOptionsException extends Exception {
 		private static final long serialVersionUID = -4353285681883730567L;
 		public InvalidOptionsException(String s) {
