@@ -36,3 +36,7 @@ case "${clean_after_preprocessing}" in
         echo "Invalid clean_after_preprocessing parameter: ${clean_after_preprocessing}. Should be true or false"
         exit 1
 esac
+
+echo
+echo "All input parameters are valid"
+echo
