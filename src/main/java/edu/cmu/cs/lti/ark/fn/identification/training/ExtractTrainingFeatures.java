@@ -76,9 +76,10 @@ public class ExtractTrainingFeatures {
 						options.idFeatureExtractorType.get() :
 						"basic";
 		final IdFeatureExtractor featureExtractor = IdFeatureExtractor.fromName(featureExtractorType);
-		logger.info("Reading alphabet");
+		logger.info("Reading alphabet...");
 		final Map<String, Integer> alphabet = readAlphabetFile(new File(options.modelFile.get()));
 		logger.info("Done reading alphabet");
+		logger.info("Extracting training features...");
 		final ExtractTrainingFeatures events =
 				new ExtractTrainingFeatures(alphabet,
 						new File(options.eventsFile.get()),
@@ -91,6 +92,7 @@ public class ExtractTrainingFeatures {
 						options.numThreads.get(),
 						featureExtractor);
 		events.createEvents();
+		logger.info("Done extracting training features");
 	}
 
 	public ExtractTrainingFeatures(Map<String, Integer> alphabet,
