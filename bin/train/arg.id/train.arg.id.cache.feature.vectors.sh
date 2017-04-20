@@ -8,7 +8,7 @@ ${JAVA_HOME_BIN}/java \
     -Xms${min_ram} \
     -Xmx${max_ram} \
     edu.cmu.cs.lti.ark.fn.parsing.CacheFrameFeaturesApp \
-    eventsfile:${train_events} \
-    spansfile:${spans_file} \
-    train-framefile:${training_fe_splits} \
-    localfeaturescache:${feature_cache}
+    events_file:${train_events} \
+    spans_file:${spans_file} \
+    train_frame_file:${training_fe_splits} \
+    local_features_cache:${feature_cache}

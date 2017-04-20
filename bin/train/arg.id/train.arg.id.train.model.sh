@@ -9,10 +9,10 @@ ${JAVA_HOME_BIN}/java \
     -Xmx${max_ram} \
     edu.cmu.cs.lti.ark.fn.parsing.TrainArgIdApp \
     model:${arg_id_model} \
-    alphabetfile:${arg_id_alphabet} \
-    localfeaturescache:${feature_cache} \
+    alphabet_file:${arg_id_alphabet} \
+    local_features_cache:${feature_cache} \
     lambda:${lambda} \
-    numthreads:${num_threads} \
-    batch-size:${batch_size} \
-    save-every-k-batches:400 \
-    num-models-to-save:60
+    num_threads:${num_threads} \
+    batch_size:${batch_size} \
+    save_every_k_batches:400 \
+    num_models_to_save:60

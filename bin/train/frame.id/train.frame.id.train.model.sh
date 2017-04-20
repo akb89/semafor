@@ -12,13 +12,13 @@ ${JAVA_HOME_BIN}/java \
     -Xmx${max_ram} \
     -XX:ParallelGCThreads=${gc_threads} \
     edu.cmu.cs.lti.ark.fn.identification.training.TrainBatch \
-    alphabetfile:${frame_id_alphabet} \
-    eventsfile:${EVENT_DIR} \
+    alphabet_file:${frame_id_alphabet} \
+    events_file:${EVENT_DIR} \
     model:${frame_id_model} \
     regularization:l1 \
     lambda:1.0 \
-    restartfile:null \
-    logoutputfile:${log_file} \
-    numthreads:${num_threads} \
-    use-partial-credit:true \
-    cost-multiple:5
+    restart_file:null \
+    log_output_file:${log_file} \
+    num_threads:${num_threads} \
+    use_partial_credit:true \
+    cost_multiple:5
