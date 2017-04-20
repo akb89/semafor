@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
 echo "Running MSTParser on conll training splits..."
 pushd ${MST_PARSER_HOME}

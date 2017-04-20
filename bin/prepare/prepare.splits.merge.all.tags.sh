@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.train.sentences.all.lemma.tags
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \

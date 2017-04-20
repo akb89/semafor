@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 echo
 echo "Validating input parameters..."
 echo

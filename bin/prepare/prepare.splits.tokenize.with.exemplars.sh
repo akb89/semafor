@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.***.sentences.tokenized.with.exemplars splits from cv.***.sentences.with.exemplars splits
 echo "Tokenizing training splits with exemplars: ${training_sentence_splits_with_exemplars} ..."
 time sed -f ${tokenizer_sed} ${training_sentence_splits_with_exemplars} > ${tokenized_training_sentence_splits_with_exemplars}

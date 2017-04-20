@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \

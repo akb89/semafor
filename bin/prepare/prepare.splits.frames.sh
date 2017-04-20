@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.***.sentences.frames from cv.***.sentences splits
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \

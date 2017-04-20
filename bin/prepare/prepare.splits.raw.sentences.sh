@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.***.sentences splits from FrameNet XML data under the EXPERIMENT_DATA_DIR directory
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \

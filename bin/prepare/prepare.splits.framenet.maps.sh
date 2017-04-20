@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \

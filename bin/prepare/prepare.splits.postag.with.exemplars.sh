@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.***.sentences.pos.tagged.with.exemplars splits from cv.***.sentences.with.exemplars splits
 echo "Part-of-speech tagging tokenized training splits with exemplars..."
 pushd ${POS_TAGGER_HOME}

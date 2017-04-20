@@ -1,9 +1,5 @@
 #!/bin/bash
 
-set -e # fail fast
-
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 # Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.malt.input.conll splits
 echo "Running MaltParser on conll training splits..."
 pushd ${MALT_PARSER_HOME}
