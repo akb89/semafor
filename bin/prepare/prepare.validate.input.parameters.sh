@@ -10,11 +10,11 @@ echo
 
 echo "Validating dependency_parser parameter..."
 case "${dependency_parser}" in
-    "MST" )
+    MST )
         ;;   #fallthru
-    "MALT" )
+    MALT )
         ;;   #fallthru
-    "TURBO" )
+    TURBO )
         ;;   #fallthru
     * )
         echo "Invalid dependency_parser parameter: ${dependency_parser}. Should be MST, MALT or TURBO"
