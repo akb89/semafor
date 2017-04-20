@@ -3,9 +3,7 @@
 echo
 echo "Frame Identification -- Step 3: Training the frame identification model"
 echo
-if [ -e ${log_file} ]; then
-    rm "${log_file}"
-fi
+
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \

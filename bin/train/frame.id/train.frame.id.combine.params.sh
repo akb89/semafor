@@ -6,6 +6,7 @@ echo "Frame Identification -- Step 4: Combining alphabet file with learned param
 model_file="$(ls ${MODEL_DIR}/idmodel.dat_* | sort -r | head -n1)"
 echo "Using model file: ${model_file}"
 echo
+
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \

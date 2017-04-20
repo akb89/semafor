@@ -69,7 +69,7 @@ public class ExtractTrainingFeatures {
 
 		final int startIndex = options.startIndex.get();
 		final int endIndex = options.endIndex.get();
-		logger.info("Start:" + startIndex + " end:" + endIndex);
+		logger.debug("Start:" + startIndex + " end:" + endIndex);
 		final RequiredDataForFrameIdentification r = SerializedObjects.readObject(options.fnIdReqDataFile.get());
 		final String featureExtractorType =
 				options.idFeatureExtractorType.present() ?

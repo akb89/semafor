@@ -153,7 +153,7 @@ public class AlphabetCreationThreaded {
 		threadPool.shutdown();
 		try {
 			for (Integer i : xrange(results.size())) {
-				logger.info(String.format("Thread %d successfully processed %d lines", i, results.get(i).get()));
+				logger.debug(String.format("Thread %d successfully processed %d lines", i, results.get(i).get()));
 			}
 		} finally {
 			threadPool.shutdownNow();
@@ -244,8 +244,8 @@ public class AlphabetCreationThreaded {
 				}
 				numUnconjoined++;
 				if (numUnconjoined % 50 == 0) {
-					logger.info("Unconjoined: " + numUnconjoined + " of " + unconjoinedSize);
-					logger.info("Conjoined: " + numConjoined );
+					logger.debug("Unconjoined: " + numUnconjoined + " of " + unconjoinedSize);
+					logger.debug("Conjoined: " + numConjoined );
 				}
 			}
 			logger.info("Done writing alphabet.");

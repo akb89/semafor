@@ -3,9 +3,7 @@
 echo
 echo "Frame Identification -- Step 2: Creating feature events for each datapoint"
 echo
-if [ -e ${log_file} ]; then
-    rm "${log_file}"
-fi
+
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \
