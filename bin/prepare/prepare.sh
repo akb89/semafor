@@ -67,7 +67,7 @@ fi
 
 if [ "${with_exemplars}" = true ]; then
     training_fe_splits_with_exemplars=${training_fe_splits}
-    postagged_training_sentence_splits_with_exemplars=${postagged_training_sentence_splits}
+    training_postagged_sentence_splits_with_exemplars=${training_postagged_sentence_splits}
 fi
 
 # Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory

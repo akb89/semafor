@@ -4,15 +4,15 @@
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
-    --input ${postagged_training_sentence_splits} \
+    --input ${training_postagged_sentence_splits} \
     --inputFormat pos \
-    --output ${malt_conll_input_training_sentence_splits} \
+    --output ${training_malt_conll_input_sentence_splits} \
     --outputFormat conll
 
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
-    --input ${postagged_testing_sentence_splits} \
+    --input ${testing_postagged_sentence_splits} \
     --inputFormat pos \
-    --output ${malt_conll_input_testing_sentence_splits} \
+    --output ${testing_malt_conll_input_sentence_splits} \
     --outputFormat conll

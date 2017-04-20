@@ -12,8 +12,8 @@ ${JAVA_HOME_BIN}/java \
     -Xmx${max_ram} \
     -XX:ParallelGCThreads=${gc_threads} \
     edu.cmu.cs.lti.ark.fn.identification.training.ExtractTrainingFeatures \
-    train-fefile:${fe_file} \
-    train-parsefile:${parsed_file} \
+    train-fefile:${training_fe_splits} \
+    train-parsefile:${training_all_lemma_tags_sentence_splits} \
     fnidreqdatafile:${fn_id_req_data_file} \
     logoutputfile:${log_file} \
     model:${frame_id_alphabet} \

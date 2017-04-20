@@ -10,5 +10,5 @@ ${JAVA_HOME_BIN}/java \
     edu.cmu.cs.lti.ark.fn.parsing.CacheFrameFeaturesApp \
     eventsfile:${train_events} \
     spansfile:${spans_file} \
-    train-framefile:${fe_file} \
+    train-framefile:${training_fe_splits} \
     localfeaturescache:${feature_cache}

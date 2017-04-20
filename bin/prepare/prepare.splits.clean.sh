@@ -13,19 +13,19 @@ if [ "${with_exemplars}" = false ]; then
     rm "${testing_sentence_splits_with_exemplars}"
     rm "${training_fe_splits_with_exemplars}"
     rm "${testing_fe_splits_with_exemplars}"
-    rm "${tokenized_training_sentence_splits_with_exemplars}"
-    rm "${tokenized_testing_sentence_splits_with_exemplars}"
-    rm "${postagged_training_sentence_splits_with_exemplars}"
+    rm "${training_tokenized_sentence_splits_with_exemplars}"
+    rm "${testing_tokenized_sentence_splits_with_exemplars}"
+    rm "${training_postagged_sentence_splits_with_exemplars}"
 fi
 
 if [ "${dependency_parser}" = "MST" ]; then
-    rm "${mst_conll_input_training_sentence_splits}"
-    rm "${mst_conll_input_testing_sentence_splits}"
+    rm "${training_mst_conll_input_sentence_splits}"
+    rm "${testing_mst_conll_input_sentence_splits}"
 fi
 
 if [ "${dependency_parser}" = "MALT" ]; then
-    rm "${malt_conll_input_training_sentence_splits}"
-    rm "${malt_conll_input_testing_sentence_splits}"
+    rm "${training_malt_conll_input_sentence_splits}"
+    rm "${testing_malt_conll_input_sentence_splits}"
 fi
 
 if [ "${dependency_parser}" = "TURBO" ]; then

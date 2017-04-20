@@ -7,9 +7,9 @@ time ${JAVA_HOME_BIN}/java \
     edu.unige.clcl.fn.data.prep.FFESplitsCreation \
     "${FRAMENET_DATA_DIR}" \
     "${testing_sentence_splits_with_exemplars}" \
-    "${tokenized_testing_sentence_splits_with_exemplars}" \
+    "${testing_tokenized_sentence_splits_with_exemplars}" \
     "${training_sentence_splits_with_exemplars}" \
-    "${tokenized_training_sentence_splits_with_exemplars}" \
+    "${training_tokenized_sentence_splits_with_exemplars}" \
     "${test_set_documents_names}"\
     "${training_fe_splits_with_exemplars}"\
     "${testing_fe_splits_with_exemplars}" \

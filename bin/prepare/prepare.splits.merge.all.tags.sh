@@ -6,10 +6,10 @@ time ${JAVA_HOME_BIN}/java \
     -Xms${min_ram} \
     -Xmx${max_ram} \
     edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
-    ${tokenized_training_sentence_splits} \
+    ${training_tokenized_sentence_splits} \
     ${training_sentence_splits_with_dependencies} \
     ${tmp_file} \
-    ${all_lemma_tags_training_sentence_splits}
+    ${training_all_lemma_tags_sentence_splits}
 rm "${tmp_file}"
 
 # Generate cv.test.sentences.all.lemma.tags
@@ -18,8 +18,8 @@ time ${JAVA_HOME_BIN}/java \
     -Xms${min_ram} \
     -Xmx${max_ram} \
     edu.cmu.cs.lti.ark.fn.data.prep.AllAnnotationsMergingWithoutNE \
-    ${tokenized_testing_sentence_splits} \
+    ${testing_tokenized_sentence_splits} \
     ${testing_sentence_splits_with_dependencies} \
     ${tmp_file} \
-    ${all_lemma_tags_testing_sentence_splits}
+    ${testing_all_lemma_tags_sentence_splits}
 rm "${tmp_file}"

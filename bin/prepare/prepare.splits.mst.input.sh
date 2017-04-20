@@ -4,9 +4,9 @@
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
 	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
-	${postagged_training_sentence_splits} ${mst_conll_input_training_sentence_splits}
+	${training_postagged_sentence_splits} ${training_mst_conll_input_sentence_splits}
 
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
 	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
-	${postagged_testing_sentence_splits} ${mst_conll_input_testing_sentence_splits}
+	${testing_postagged_sentence_splits} ${testing_mst_conll_input_sentence_splits}

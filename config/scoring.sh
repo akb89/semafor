@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../config/preprocessing.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/../config/training.sh"
 
 # You should not need to change anything here
 export RESULTS_DIR="${EXPERIMENTS_DIR}/results"

@@ -8,8 +8,8 @@ ${JAVA_HOME_BIN}/java \
     -Xms${min_ram} \
     -Xmx${max_ram} \
     edu.cmu.cs.lti.ark.fn.parsing.CreateAlphabet \
-    ${fe_file} \
-    ${parsed_file} \
+    ${training_fe_splits} \
+    ${training_all_lemma_tags_sentence_splits} \
     ${train_events} \
     ${arg_id_alphabet} \
     ${spans_file} \

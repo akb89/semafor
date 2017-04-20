@@ -6,7 +6,7 @@ time ${JAVA_HOME_BIN}/java \
     -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.TrainingMapsCreation \
     "${training_fe_splits_with_exemplars}" \
-    "${postagged_training_sentence_splits_with_exemplars}" \
+    "${training_postagged_sentence_splits_with_exemplars}" \
     "${framenet_lu_map_file}" \
     "${old_framenet_lu_map_file}" \
     "${framenet_fe_map_file}" \
