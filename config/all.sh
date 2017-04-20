@@ -32,13 +32,3 @@ export EXPERIMENT_DATA_DIR="${EXPERIMENTS_DIR}/data"
 export MODEL_DIR="${EXPERIMENTS_DIR}/model"
 
 export fn_id_req_data_file="${MODEL_DIR}/reqData.jobj"
-
-echo "Environment variables:"
-echo "SEMAFOR_HOME=${SEMAFOR_HOME}"
-echo "FRAMENET_DATA_DIR=${FRAMENET_DATA_DIR}"
-echo "CLASSPATH=${CLASSPATH}"
-echo "JAVA_HOME_BIN=${JAVA_HOME_BIN}"
-echo "model_name=${model_name}"
-echo "MODEL_DIR=${MODEL_DIR}"
-echo "EXPERIMENTS_DIR=${EXPERIMENTS_DIR}"
-echo "EXPERIMENT_DATA_DIR=${EXPERIMENT_DATA_DIR}"

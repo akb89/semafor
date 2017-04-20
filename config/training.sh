@@ -19,11 +19,3 @@ export spans_file="${SCAN_DIR}/cv.train.sentences.frame.elements.spans "
 export feature_cache="${SCAN_DIR}/featurecache.jobj"
 export arg_id_model="${MODEL_DIR}/lambda_${lambda}/svm.argmodel.dat"
 
-echo num_threads="${num_threads}"
-echo gc_threads="${gc_threads}"
-echo EXPERIMENT_DATA_DIR="${EXPERIMENT_DATA_DIR}"
-echo fe_file="${fe_file}"
-echo parsed_file="${parsed_file}"
-echo fe_file_length="${fe_file_length}"
-echo SCAN_DIR="${SCAN_DIR}"
-
