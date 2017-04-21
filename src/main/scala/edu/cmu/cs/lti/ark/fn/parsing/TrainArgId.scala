@@ -7,11 +7,12 @@ import java.util.Scanner
 import breeze.linalg.{DenseVector, Vector => Vec}
 import com.google.common.base.Charsets
 import com.google.common.io.Files
-import edu.cmu.cs.lti.ark.fn.parsing.ArgIdTrainer.{readModel, frameExampleToArgExamples}
+import edu.cmu.cs.lti.ark.fn.parsing.ArgIdTrainer.{frameExampleToArgExamples, readModel}
 import edu.cmu.cs.lti.ark.fn.parsing.FrameFeaturesCache.readFrameFeatures
 import edu.cmu.cs.lti.ark.fn.utils.FNModelOptions
 import edu.cmu.cs.lti.ark.ml.optimization._
 import edu.cmu.cs.lti.ark.ml.{FeatureVector, MultiClassTrainingExample}
+import org.slf4j.LoggerFactory
 import resource.{ManagedResource, managed}
 
 import scala.collection.Iterator.continually
@@ -63,6 +64,8 @@ object FrameFeaturesCache {
  * modelFile + "_" + i
  */
 object TrainArgIdApp extends App {
+  val logger = LoggerFactory.getLogger(this.getClass)
+
   val opts = new FNModelOptions(args)
   val modelFile = opts.modelFile.get
   val oWarmStartModelFile = if (opts.warmStartModelFile.present) Some(opts.warmStartModelFile.get) else None
@@ -78,13 +81,13 @@ object TrainArgIdApp extends App {
   private val numFeats: Int = {
     managed(new Scanner(new FileInputStream(alphabetFile))).acquireAndGet(_.nextInt + 1)
   }
-  System.err.println("Reading cached training data")
+  logger.info("Reading cached training data...")
   val trainingData: Array[MultiClassTrainingExample] = {
     readFrameFeatures(frameFeaturesCacheFile).acquireAndGet(
       _.flatMap(frameExampleToArgExamples(numFeats)).toArray
     )
   }
-  System.err.println(s"Done reading cached training data. ${trainingData.length} training examples.")
+  logger.info(s"Done reading cached training data. ${trainingData.length} training examples.")
   val initialWeights = oWarmStartModelFile.fold(DenseVector.zeros[Double](numFeats))(readModel)
   ArgIdTrainer(
     modelFile,
@@ -122,6 +125,8 @@ case class ArgIdTrainer(modelFile: String,
 }
 
 object ArgIdTrainer {
+  val logger = LoggerFactory.getLogger(this.getClass)
+
   def frameExampleToArgExamples(numFeats: Int)(example: FrameFeatures): Iterator[MultiClassTrainingExample] = {
     val frameFeatures = example.fElementSpansAndFeatures.asScala.iterator
     val goldLabels = example.goldSpanIdxs.asScala.iterator
@@ -132,16 +137,16 @@ object ArgIdTrainer {
   }
 
   def readModel(warmStartModelFile: String): DenseVector[Double] = {
-    System.err.println(s"Reading warm start model from $warmStartModelFile")
+    logger.info(s"Reading warm start model from $warmStartModelFile...")
     val input = Source.fromFile(warmStartModelFile)(Codec.UTF8)
     val weights = DenseVector(input.getLines().map(_.toDouble).toArray)
-    System.err.println(s"Done reading warm start model from $warmStartModelFile")
+    logger.info(s"Done reading warm start model from $warmStartModelFile")
     weights
   }
 
   def writeModel(weights: Vec[Double], modelFile: String) {
     for (ps <- managed(new PrintStream(new FileOutputStream(modelFile)))) {
-      System.err.println(s"Writing model to $modelFile")
+      System.err.println(s"Writing model to $modelFile...")
       weights.foreach(ps.println)
       System.err.println(s"Finished writing model $modelFile")
     }

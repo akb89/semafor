@@ -1,6 +1,7 @@
 package edu.cmu.cs.lti.ark.ml.optimization
 
 import breeze.linalg.{DenseVector, Vector => Vec}
+import org.slf4j.LoggerFactory
 
 import scala.math.sqrt
 import scala.util.Random
@@ -59,6 +60,7 @@ case class MiniBatch[T](trainingData: IndexedSeq[T],
                         lambda: Double,
                         batchSize: Int,
                         numThreads: Int) {
+  val logger = LoggerFactory.getLogger(this.getClass)
 
   private[this] val n = trainingData.length
 //  private[this] val taskSupport = new ThreadPoolTaskSupport(
@@ -103,7 +105,7 @@ case class MiniBatch[T](trainingData: IndexedSeq[T],
 //      val avgStepSize = norm(state.avgSquaredDelta, 2)
       val partialIt = iteration + (batchNum.toDouble * batchSize / n)
       val time = (System.currentTimeMillis() - startTime) / 1000.0
-      System.err.println(f"i: $partialIt%.3f,  loss: $loss%.5f,  regLoss: $regLoss%.5f,  time:$time%.2fs") //avgStepSize: $avgStepSize%.5f,
+      logger.info(f"i: $partialIt%.3f,  loss: $loss%.5f,  regLoss: $regLoss%.5f,  time:$time%.2fs") //avgStepSize: $avgStepSize%.5f,
       // i think it's important for regGradient to be on the left here,
       // so the result is a DenseVector?
       state = state.step(regGradient + (gradient * batchRecip))

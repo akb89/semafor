@@ -51,11 +51,10 @@ public class CreateAlphabet {
 		final int kBestParse = Integer.parseInt(args[6]);
 
 		if(doGenerateAlphabet) logger.info("Creating alphabet...");
-
 		final List<String> feLines = readLines(new File(feFilename), UTF_8);
 		final List<String> tagLines = readLines(new File(tagFilename), UTF_8);
 		run(doGenerateAlphabet, tagLines, feLines, eventFilename, alphabetFilename, spanFilename, kBestParse);
-		logger.info("Done creating alphabet");
+		if(doGenerateAlphabet) logger.info("Done creating alphabet");
 	}
 
 	private static void run(boolean doGenerateAlphabet,

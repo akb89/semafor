@@ -15,5 +15,5 @@ export train_events=${SCAN_DIR}/cv.train.events.bin
 export arg_id_alphabet="${SCAN_DIR}/parser.conf.unlabeled"
 export spans_file="${SCAN_DIR}/cv.train.sentences.frame.elements.spans "
 export feature_cache="${SCAN_DIR}/featurecache.jobj"
-export arg_id_model="${MODEL_DIR}/lambda_${lambda}/svm.argmodel.dat"
+export arg_id_model="${MODEL_DIR}/svm.argmodel.dat"
 
