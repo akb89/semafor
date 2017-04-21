@@ -45,7 +45,7 @@ object FrameFeaturesCache {
   def readFrameFeatures(inputFile: String): ManagedResource[Iterator[FrameFeatures]] = {
     for (input <- managed(new ObjectInputStream(new BufferedInputStream(new FileInputStream(inputFile))))) yield {
       Iterator.from(1).map(i => {
-        if (i % 100 == 0) System.err.print(".")
+        //if (i % 100 == 0) System.err.print(".")
         Try(input.readObject.asInstanceOf[FrameFeatures])
       }).takeWhile(_.isSuccess).map(_.get)
     }
@@ -146,9 +146,9 @@ object ArgIdTrainer {
 
   def writeModel(weights: Vec[Double], modelFile: String) {
     for (ps <- managed(new PrintStream(new FileOutputStream(modelFile)))) {
-      System.err.println(s"Writing model to $modelFile...")
+      logger.info(s"Writing model to $modelFile...")
       weights.foreach(ps.println)
-      System.err.println(s"Finished writing model $modelFile")
+      logger.info(s"Finished writing model $modelFile")
     }
   }
 }
