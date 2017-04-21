@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Check if script is called from commandline or from within another script
+if ps -o stat= -p $PPID | grep -q "s"; then
+    source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
+fi
+
 # Generate cv.train.sentences.all.lemma.tags
 time ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \

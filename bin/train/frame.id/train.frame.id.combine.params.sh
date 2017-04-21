@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Check if script is called from commandline or from within another script
+if ps -o stat= -p $PPID | grep -q "s"; then
+    source "$(dirname ${0})/../../../config/training.sh"
+fi
+
 echo
 echo "Frame Identification -- Step 4: Combining alphabet file with learned params for Frame IDing"
 # get the last model file created

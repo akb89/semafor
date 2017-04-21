@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Check if script is called from commandline or from within another script
+if ps -o stat= -p $PPID | grep -q "s"; then
+    source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
+fi
+
 # Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.malt.input.conll splits
 echo "Running MaltParser on conll training splits..."
 pushd ${MALT_PARSER_HOME}
