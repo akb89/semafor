@@ -47,6 +47,30 @@ case "${clean_after_preprocessing}" in
 esac
 echo "  clean_after_preprocessing = ${clean_after_preprocessing}"
 
+echo "Validating clean_after_training parameter..."
+case "${clean_after_training}" in
+    true )
+        ;;   #fallthru
+    false )
+        ;;   #fallthru
+    * )
+        echo "Invalid clean_after_training parameter: ${clean_after_training}. Should be true or false"
+        exit 1
+esac
+echo "  clean_after_training = ${clean_after_training}"
+
+echo "Validating clean_after_scoring parameter..."
+case "${clean_after_scoring}" in
+    true )
+        ;;   #fallthru
+    false )
+        ;;   #fallthru
+    * )
+        echo "Invalid clean_after_scoring parameter: ${clean_after_scoring}. Should be true or false"
+        exit 1
+esac
+echo "  clean_after_scoring = ${clean_after_scoring}"
+
 echo
 echo "All input parameters are valid"
 echo

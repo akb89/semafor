@@ -8,7 +8,7 @@ fi
 echo
 echo "Frame Identification -- Step 4: Combining alphabet file with learned params for Frame IDing"
 # get the last model file created
-model_file="$(ls ${MODEL_DIR}/idmodel.dat_* | sort -r | head -n1)"
+model_file="$(ls ${frame_id_model}_* | sort -r | head -n1)"
 echo "Using model file: ${model_file}"
 echo
 

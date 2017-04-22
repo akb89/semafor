@@ -19,5 +19,5 @@ ${JAVA_HOME_BIN}/java \
     lambda:${lambda} \
     num_threads:${num_threads} \
     batch_size:${batch_size} \
-    save_every_k_batches:400 \
-    num_models_to_save:60
+    save_every_k_batches:${save_every_k_batches} \
+    num_models_to_save:${num_models_to_save}

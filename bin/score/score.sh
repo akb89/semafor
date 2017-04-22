@@ -3,25 +3,24 @@ set -e # fail fast
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/scoring.sh"
 
-echo "results directory: ${RESULTS_DIR}"
+echo "Results directory: ${RESULTS_DIR}"
 mkdir -p "${RESULTS_DIR}"
 
-#***************** Run SEMAFOR with Gold Targets, Gold Frames, Auto Arg-id ***********************#
+#***************** Run SEMAFOR with Gold Targets and Gold Frames ***********************#
 
-scala \
+${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
-    -J-Xmx${max_ram} \
-    "${SEMAFOR_HOME}/bin/score/score.scala" \
-    "${MODEL_DIR}" \
-    "${testing_frame_splits}" \
+    -Xmx${max_ram} \
+    unige.clcl.fn.score.ScoreWithGoldFrames \
     "${testing_sentence_splits_with_dependencies}" \
-    "${RESULTS_DIR}/test.goldframe.predicted.xml" \
-    true # use gold frames
+    "${testing_frame_splits}" \
+    "${arg_id_alphabet}" \
+    "${framenet_fe_map_file}" \
+    "${arg_id_model}" \
+    1 \
+    "${scoring_predicted_goldframe_xml_file}"
 
 #***************** Create a gold XML file with the same tokenization that SEMAFOR used ***********************#
-
-end=`wc -l "${tokenized_file}"`
-end=`expr ${end% *}`
 
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
@@ -29,10 +28,10 @@ ${JAVA_HOME_BIN}/java \
     edu.cmu.cs.lti.ark.fn.evaluation.PrepareFullAnnotationXML \
     testFEPredictionsFile:"${testing_fe_splits}" \
     startIndex:0 \
-    endIndex:${end} \
+    endIndex:${end_index_prepare_fullanno_xml} \
     testParseFile:"${testing_all_lemma_tags_sentence_splits}" \
     testTokenizedFile:"${testing_tokenized_sentence_splits}" \
-    outputFile:"${RESULTS_DIR}/test.gold.xml"
+    outputFile:"${scoring_gold_xml_file}"
 
 
 #********************************** Evaluation ********************************************#
@@ -46,7 +45,12 @@ ${SEMAFOR_HOME}/bin/score/score.pl \
     -v \
     "${frames_single_file}" \
     "${relation_modified_file}" \
-    "${RESULTS_DIR}/test.gold.xml" \
-    "${RESULTS_DIR}/test.goldframe.predicted.xml" > "${RESULTS_DIR}/arg_test_exact_verbose"
+    "${scoring_gold_xml_file}" \
+    "${scoring_predicted_goldframe_xml_file}" > "${scoring_output_text_file}"
 
 #********************************** End of Evaluation ********************************************#
+
+# Removing unnecessary temporary files
+if [ "${clean_after_scoring}" = true ]; then
+    echo "cleaning score tmp"
+fi

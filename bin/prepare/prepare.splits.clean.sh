@@ -40,7 +40,6 @@ if [ "${dependency_parser}" = "TURBO" ]; then
 fi
 
 rm "${framenet_lu_map_file}"
-rm "${framenet_fe_map_file}"
 rm "${all_related_words_file}"
 rm "${hv_correspondence_file}"
 rm "${wn_related_words_for_words_file}"

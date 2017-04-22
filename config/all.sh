@@ -10,10 +10,15 @@ export JAVA_HOME_BIN="/usr/bin"
 
 export with_exemplars=false # set to true to include exemplar sentences in addition to fulltext
 export dependency_parser=MST # set to MST, MALT or TURBO according to the dependency parser you want to use
-export clean_after_preprocessing=true # Remove unnecessary temporary files used for preprocessing. Set to false if you need to debug preprocessing
+
+export clean_after_preprocessing=true # remove unnecessary temporary files used for preprocessing. Set to false if you need to debug preprocessing
+export clean_after_training=true # remove unnecessary temporary files used for training. Set to false if you need to debug training
+export clean_after_scoring=false # remove unnecessary temporary files used for scoring. Set to false if you need to debug scoring
 
 export lambda=0.000001 # hyperparameter for argument identification. Refer to Kshirsagar et al. (2015) for details.
 export batch_size=40000 # number of batches processed at once for argument identification.
+export save_every_k_batches=400 # for argument identification
+export num_models_to_save=60 # for argument identification
 
 export model_name="acl2015_baseline_with_exemplars_${with_exemplars}_dep_parser_${dependency_parser}_lambda_${lambda}"
 

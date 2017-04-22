@@ -23,7 +23,9 @@ bash ${train_frame_id_bin}/train.frame.id.train.model.sh
 # Frame Identification -- Step 4: Combining alphabet file with learned params for Frame IDing
 bash ${train_frame_id_bin}/train.frame.id.combine.params.sh
 
-# Remove unnecessary files
-rm idmodel.dat_*
-rm -R "${EVENT_DIR}"
-# rm "${frame_id_alphabet}"
+# Removing unnecessary temporary files
+if [ "${clean_after_training}" = true ]; then
+    rm ${idmodel.dat}_*
+    rm -R "${EVENT_DIR}"
+    rm "${frame_id_alphabet}"
+fi
