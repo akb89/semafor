@@ -44,9 +44,7 @@ public class StaticSemafor {
 			throws IOException {
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
-		logger.info("idResults size = " + idResults.size());
 		for (String feLine : idResults) {
-			logger.info("Processing feLine");
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
 			final String frame = dataPoint.getFrameName();
@@ -89,7 +87,6 @@ public class StaticSemafor {
 	private static List<String> predictArgsForSentence(Sentence sentence,
 			List<String> frameSplits, Map<String, Integer> argIdFeatureIndex,
 			FEDict feDict, Decoding decoder, int kBest) throws IOException {
-		logger.info("FrameSplits size = " + frameSplits.size());
 		return predictArgumentLines(sentence, frameSplits,
 				argIdFeatureIndex, feDict, decoder, kBest);
 	}
@@ -100,14 +97,25 @@ public class StaticSemafor {
 			Map<String, Integer> argIdFeatureIndex, FEDict feDict,
 			Decoding decoder, int kBest) throws IOException {
 		List<String> allPredictedArgs = new ArrayList<>();
+		logger.info("sentences.size = " + sentences.size());
+		logger.info("frameSplitsMap.size = " + frameSplitsMap.size());
+		for(int j=0; j<10; j++){
+			logger.info("sentence = " + sentences.get(j).toString());
+		}
+		int counter = 0;
 		for(int i=0; i<sentences.size(); i++){
 			Sentence sentence = sentences.get(i);
-			List<String> frameSplits = frameSplitsMap.get(i);
-			List<String> predictedArgs =
-					predictArgsForSentence(sentence, frameSplits,
-							argIdFeatureIndex, feDict, decoder, kBest);
-			allPredictedArgs.addAll(predictedArgs);
+			if(frameSplitsMap.containsKey(i)){
+				List<String> frameSplits = frameSplitsMap.get(i);
+				List<String> predictedArgs =
+						predictArgsForSentence(sentence, frameSplits,
+								argIdFeatureIndex, feDict, decoder, kBest);
+				allPredictedArgs.addAll(predictedArgs);
+			}else{
+				counter += 1;
+			}
 		}
+		logger.info("There are " + counter + " sentences without frame annotation");
 		return allPredictedArgs;
 	}
 }
