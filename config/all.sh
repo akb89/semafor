@@ -3,10 +3,10 @@
 export BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." > /dev/null && pwd )"
 
 # Change the following settings according to your environment
-export FRAMENET_DATA_DIR="/home/kabbach/FrameNetData/fndata-1.5"
-export JAVA_HOME_BIN="/usr/bin"
-#export FRAMENET_DATA_DIR="/Users/AKB/Desktop/fndata-1.5"
-#export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
+#export FRAMENET_DATA_DIR="/home/kabbach/FrameNetData/fndata-1.5"
+#export JAVA_HOME_BIN="/usr/bin"
+export FRAMENET_DATA_DIR="/Users/AKB/Desktop/fndata-1.5"
+export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
 
 export with_exemplars=false # set to true to include exemplar sentences in addition to fulltext
 export dependency_parser=MST # set to MST, MALT or TURBO according to the dependency parser you want to use
@@ -20,7 +20,8 @@ export batch_size=40000 # number of batches processed at once for argument ident
 export save_every_k_batches=400 # for argument identification
 export num_models_to_save=60 # for argument identification
 
-export model_name="acl2015_baseline_with_exemplars_${with_exemplars}_dep_parser_${dependency_parser}_lambda_${lambda}"
+export model_name="acl2015_baseline_with_old_semafor_data"
+#export model_name="acl2015_baseline_with_exemplars_${with_exemplars}_dep_parser_${dependency_parser}_lambda_${lambda}"
 
 export num_threads=55 # should set to roughly the number of cores available (minus one)
 export gc_threads=37 # (3+5N/8) with N number of cores (remove one core on total number of cores just in case. Ex: count 55 cores for 56 cores total)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../config/all.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/all.sh"
 
 # You should not need to change anything here
 
@@ -32,14 +32,14 @@ export testing_frame_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frames"
 export training_fe_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frame.elements"
 export testing_fe_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frame.elements"
 
-export training_fe_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.frame.elements.with.exemplars"
-export testing_fe_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.test.sentences.frame.elements.with.exemplars"
+export training_fe_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.with.exemplars.frame.elements"
+export testing_fe_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.test.sentences.with.exemplars.frame.elements"
 
 export training_tokenized_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.tokenized"
 export testing_tokenized_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.tokenized"
 
-export training_tokenized_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.tokenized.with.exemplars"
-export testing_tokenized_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.test.sentences.tokenized.with.exemplars"
+export training_tokenized_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.train.sentences.with.exemplars.tokenized"
+export testing_tokenized_sentence_splits_with_exemplars="${EXPERIMENT_DATA_DIR}/cv.test.sentences.with.exemplars.tokenized"
 
 export training_postagged_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.pos.tagged"
 export testing_postagged_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.pos.tagged"
