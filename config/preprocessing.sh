@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/all.sh"
+# You should not need to change anything below
 
-# You should not need to change anything here
+source "$(dirname "${BASH_SOURCE[0]}")/all.sh"
 
 export RESOURCES_DIR="${SEMAFOR_HOME}/resources"
 export LEXUNIT_DIR="${FRAMENET_DATA_DIR}/lu"

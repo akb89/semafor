@@ -1,8 +1,9 @@
 #!/bin/bash
 
+# You should not need to change anything below
+
 source "$(dirname "${BASH_SOURCE[0]}")/preprocessing.sh"
 
-# You should not need to change anything here
 export EVENT_DIR="${MODEL_DIR}/events" # a temp directory where training events will be stored
 export log_file="${MODEL_DIR}/log"
 export frame_id_alphabet="${MODEL_DIR}/alphabet.dat"
