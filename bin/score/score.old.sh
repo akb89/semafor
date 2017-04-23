@@ -20,7 +20,7 @@ scala \
 
 #***************** Create a gold XML file with the same tokenization that SEMAFOR used ***********************#
 
-end=`wc -l "${testing_sentence_tokenized_splits}"`
+end=`wc -l "${testing_tokenized_sentence_splits}"`
 end=`expr ${end% *}`
 
 ${JAVA_HOME_BIN}/java \
