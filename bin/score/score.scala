@@ -74,7 +74,7 @@ def predictAllArgs(frames: Seq[String],
   val sentences = unLemmatized.map(sem.addLemmas)
   val sentencesAndFrames: Seq[(Sentence, Seq[String])] = sentences.zipWithIndex.map({case (s, i) => (s, framesBySentence.getOrElse(i, Nil))})
   sentencesAndFrames.zipWithIndex.map({ case ((sentence, frame), i) =>
-      predictArgsForSentence(sentence, frame.toList, sem).asScala.map(line => setSentenceId(line, i.toString))
+      predictArgsForSentence(sentence, frame.toList, sem, useGoldFrames).asScala.map(line => setSentenceId(line, i.toString))
   })
 }
 
@@ -88,7 +88,7 @@ def runWithGoldTargets(sem: Semafor, useGoldFrames: Boolean = false) {
   val tokenizedLines: util.List[String] = unLemmatized.map(_.getTokens.asScala.map(_.getForm).mkString(" ")).asJava
   val depParseLines: util.List[String] = unLemmatized.map(s => AllLemmaTags.makeLine(s.toAllLemmaTagsArray)).asJava
   // run arg id'ing
-  val resultLines: util.List[String] = predictAllArgs(frameLines, unLemmatized, sem).flatten.asJava
+  val resultLines: util.List[String] = predictAllArgs(frameLines, unLemmatized, sem, useGoldFrames).flatten.asJava
   // convert to xml
   val doc = createXMLDoc(resultLines, new Range0Based(0, unLemmatized.size, false), depParseLines, tokenizedLines)
   // write results to file
