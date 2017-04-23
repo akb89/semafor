@@ -8,8 +8,6 @@ echo
 echo "Training Argument Identification"
 echo
 
-mkdir -p ${SCAN_DIR}
-
 train_arg_id_bin="$(dirname ${0})"
 
 # Argument Identification -- Step 1: Creating alphabet
