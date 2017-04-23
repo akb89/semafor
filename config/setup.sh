@@ -2,10 +2,10 @@
 
 # Change the following settings according to your environment
 
-#export FRAMENET_DATA_DIR="/home/kabbach/FrameNetData/fndata-1.5"
-#export JAVA_HOME_BIN="/usr/bin"
-export FRAMENET_DATA_DIR="/Users/AKB/Desktop/fndata-1.5"
-export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
+export FRAMENET_DATA_DIR="/home/kabbach/FrameNetData/fndata-1.5"
+export JAVA_HOME_BIN="/usr/bin"
+#export FRAMENET_DATA_DIR="/Users/AKB/Desktop/fndata-1.5"
+#export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
 
 export with_exemplars=false # set to true to include exemplar sentences in addition to fulltext
 export dependency_parser=MST # set to MST, MALT or TURBO according to the dependency parser you want to use
