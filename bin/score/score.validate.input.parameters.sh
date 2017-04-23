@@ -16,3 +16,7 @@ case "${clean_after_scoring}" in
         exit 1
 esac
 echo "  clean_after_scoring = ${clean_after_scoring}"
+
+echo
+echo "All input parameters are valid"
+echo

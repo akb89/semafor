@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e # fail fast
 
+echo
+echo "Evaluating Semafor parser..."
+
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/scoring.sh"
 
 score_bin="$(dirname ${0})"
@@ -41,7 +44,7 @@ ${JAVA_HOME_BIN}/java \
 
 #********************************** Evaluation ********************************************#
 
-echo "Exact Arg Results"
+echo "Scoring with SemEval perl script..."
 ${SEMAFOR_HOME}/bin/score/score.pl \
     -c "${RESULTS_DIR}" \
     -l \
@@ -52,6 +55,8 @@ ${SEMAFOR_HOME}/bin/score/score.pl \
     "${relation_modified_file}" \
     "${scoring_gold_xml_file}" \
     "${scoring_predicted_goldframe_xml_file}" > "${scoring_output_text_file}"
+
+echo "Scoring completed"
 
 #********************************** End of Evaluation ********************************************#
 

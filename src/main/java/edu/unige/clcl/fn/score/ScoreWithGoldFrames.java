@@ -45,20 +45,38 @@ public class ScoreWithGoldFrames {
 		final String outputXmlFilePath = args[6];
 
 		ScoreWithGoldFrames score = new ScoreWithGoldFrames();
-
+		logger.info("Initializing parser for scoring with gold frames...");
+		logger.info("Extracting dependency-parsed testing sentences...");
+		logger.info("	from: " + depParsedSplitsPath);
 		List<Sentence> sentences = score.getSentences(depParsedSplitsPath);
+		logger.info("Done extracting dependency-parsed testing sentences");
+		logger.info("Extracting gold frame testing splits...");
+		logger.info("	from: " + frameSplitsPath);
 		List<String> frameSplits = score.getFrameSplits(frameSplitsPath);
 		Map<Integer, List<String>> frameSplitsMap = score
 				.getFrameSplitsMap(frameSplits);
+		logger.info("Done extracting gold frame testing splits");
+		logger.info("Extracting argument identification alphabet...");
+		logger.info("	from: " + alphabetFilename);
 		final Map<String, Integer> argIdFeatureIndex = DataPrep
 				.readFeatureIndex(new File(alphabetFilename));
+		logger.info("Done extracting argument identification alphabet");
+		logger.info("Extracting Frame2FrameElement dictionary...");
+		logger.info("	from: " + frameElementMapFilename);
 		final FEDict feDict = FEDict.fromFile(frameElementMapFilename);
+		logger.info("Done extracting Frame2FrameElement dictionary");
+		logger.info("Initializing decoder...");
+		logger.info("	from: " + argModelFilename);
+		logger.info("	and from: " + alphabetFilename);
 		final Decoding decoder = Decoding
 				.fromFile(argModelFilename, alphabetFilename);
+		logger.info("Done initializing decoder");
 		List<String> tokenizedSplits = score.getTokenizedSplits(sentences);
 		List<String> depParsedSplits = score.getDepParsedSplits(sentences);
 		Range0Based range =
 				new Range0Based(0, sentences.size(), false);
+
+		logger.info("Done initializing parser");
 
 		score.runWithGoldFrames(sentences, frameSplitsMap, argIdFeatureIndex,
 				feDict, decoder, kBest, depParsedSplits,
@@ -71,13 +89,18 @@ public class ScoreWithGoldFrames {
 			Decoding decoder, int kBest, List<String> depParsedSplits,
 			List<String> tokenizedSplits, Range range,
 			String outputXmlFilePath) throws IOException {
+		logger.info("Scoring with gold frames...");
+		logger.info("Predicting arguments...");
 		List<String> predictedFESplits = StaticSemafor
 				.predictAllArguments(sentences, frameSplitsMap,
 						argIdFeatureIndex, feDict, decoder, kBest);
+		logger.info("Done predicting arguments");
+		logger.info("Preparing gold FullTextAnnotation XML file for evaluation...");
 		Document outputDoc = PrepareFullAnnotationXML
 				.createXMLDoc(predictedFESplits, range, depParsedSplits,
 						tokenizedSplits);
 		XmlUtils.writeXML(outputXmlFilePath, outputDoc);
+		logger.info("Done preparing gold FullTextAnnotation XML file");
 	}
 
 	private List<Sentence> getSentences(String depParsedSplitsPath)

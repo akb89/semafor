@@ -1,13 +1,10 @@
 package edu.unige.clcl.fn.score;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
-import edu.cmu.cs.lti.ark.fn.data.prep.formats.AllLemmaTags;
 import edu.cmu.cs.lti.ark.fn.data.prep.formats.Sentence;
 import edu.cmu.cs.lti.ark.fn.parsing.*;
 import edu.cmu.cs.lti.ark.fn.utils.DataPointWithFrameElements;
-import edu.cmu.cs.lti.ark.util.ds.Pair;
 import edu.cmu.cs.lti.ark.util.ds.Range0Based;
 import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParse;
 import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParses;
@@ -17,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static edu.cmu.cs.lti.ark.fn.identification.FrameIdentificationRelease.getTokenRepresentation;
 
 /**
  * @author Alex Kabbach
@@ -39,12 +34,12 @@ public class StaticSemafor {
 	}
 
 	private static List<String> predictArgumentLines(Sentence sentence,
-			List<String> idResult, Map<String, Integer> argIdFeatureIndex,
+			List<String> idResults, Map<String, Integer> argIdFeatureIndex,
 			FEDict feDict, Decoding decoder, int kBest)
 			throws IOException {
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
-		for (String feLine : idResult) {
+		for (String feLine : idResults) {
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
 			final String frame = dataPoint.getFrameName();
@@ -81,7 +76,7 @@ public class StaticSemafor {
 					targetEndTokenIdx, frameElements,
 					featuresAndSpanByArgument));
 		}
-		return decoder.decodeAll(frameFeaturesList, idResult, 0, kBest);
+		return decoder.decodeAll(frameFeaturesList, idResults, 0, kBest);
 	}
 
 	private static List<String> predictArgsForSentence(Sentence sentence,

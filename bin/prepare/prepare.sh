@@ -2,10 +2,10 @@
 
 set -e # fail fast
 
-source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
-
 echo
 echo "Creating Required Data..."
+
+source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
 
 rm -rf ${MODEL_DIR}
 mkdir -p "${MODEL_DIR}"
