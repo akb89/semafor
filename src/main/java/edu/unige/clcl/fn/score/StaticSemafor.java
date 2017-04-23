@@ -8,6 +8,8 @@ import edu.cmu.cs.lti.ark.fn.utils.DataPointWithFrameElements;
 import edu.cmu.cs.lti.ark.util.ds.Range0Based;
 import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParse;
 import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +21,9 @@ import java.util.Set;
  * @author Alex Kabbach
  */
 public class StaticSemafor {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(StaticSemafor.class);
 
 	private static int[] convertToIdxs(Map<String, Integer> argIdFeatureIndex,
 			Iterable<String> featureSet) {
@@ -39,7 +44,9 @@ public class StaticSemafor {
 			throws IOException {
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
+		logger.info("idResults size = " + idResults.size());
 		for (String feLine : idResults) {
+			logger.info("Processing feLine");
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
 			final String frame = dataPoint.getFrameName();
@@ -82,6 +89,7 @@ public class StaticSemafor {
 	private static List<String> predictArgsForSentence(Sentence sentence,
 			List<String> frameSplits, Map<String, Integer> argIdFeatureIndex,
 			FEDict feDict, Decoding decoder, int kBest) throws IOException {
+		logger.info("FrameSplits size = " + frameSplits.size());
 		return predictArgumentLines(sentence, frameSplits,
 				argIdFeatureIndex, feDict, decoder, kBest);
 	}
