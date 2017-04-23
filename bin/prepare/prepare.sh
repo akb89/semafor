@@ -59,10 +59,7 @@ bash ${prepare_bin}/prepare.splits.merge.all.tags.sh
 # framenet.original.map and framenet.frame.element.map are based on fulltext AND exemplar data
 # When processing fulltext data only, it is necessary to add exemplar data for generating the maps
 if [ "${with_exemplars}" = false ]; then
-    bash ${prepare_bin}/prepare.splits.raw.sentences.with.exemplars.sh
-    bash ${prepare_bin}/prepare.splits.tokenize.with.exemplars.sh
-    bash ${prepare_bin}/prepare.splits.postag.with.exemplars.sh
-    bash ${prepare_bin}/prepare.splits.frame.elements.with.exemplars.sh
+    bash ${prepare_bin}/prepare.splits.for.maps.with.exemplars.sh
 fi
 
 if [ "${with_exemplars}" = true ]; then
