@@ -310,14 +310,10 @@ public class DataPrep {
 	private static int getLineCount(FileInputStream inputStream){
 		Scanner scanner = new Scanner(inputStream);
 		int count = 0;
-		try {
-			// First count the number of lines in the file
-			while (scanner.hasNextLine()) {
-				count++;
-				scanner.nextLine();
-			}
-		} finally {
-			closeQuietly(inputStream);
+		// First count the number of lines in the file
+		while (scanner.hasNextLine()) {
+			count++;
+			scanner.nextLine();
 		}
 		return count;
 	}
