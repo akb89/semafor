@@ -30,7 +30,7 @@ ${JAVA_HOME_BIN}/java \
     testFEPredictionsFile:"${testing_fe_splits}" \
     startIndex:0 \
     endIndex:${end} \
-    testParseFile:"${all_lemma_tags_testing_sentence_splits}" \
+    testParseFile:"${testing_all_lemma_tags_sentence_splits}" \
     testTokenizedFile:"${testing_tokenized_sentence_splits}" \
     outputFile:"${RESULTS_DIR}/test.gold.old.xml"
 
