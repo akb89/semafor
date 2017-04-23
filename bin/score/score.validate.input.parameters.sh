@@ -5,7 +5,10 @@ if ps -o stat= -p $PPID | grep -q "s"; then
     source "$(dirname "${BASH_SOURCE[0]}")/../../config/scoring.sh"
 fi
 
+echo
 echo "Validating clean_after_scoring parameter..."
+echo
+
 case "${clean_after_scoring}" in
     true )
         ;;   #fallthru
