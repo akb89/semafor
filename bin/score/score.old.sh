@@ -15,7 +15,7 @@ scala \
     "${MODEL_DIR}" \
     "${testing_frame_splits}" \
     "${testing_sentence_splits_with_dependencies}" \
-    "${RESULTS_DIR}/test.goldframe.predicted.xml" \
+    "${RESULTS_DIR}/test.goldframe.old.predicted.xml" \
     true # use gold frames
 
 #***************** Create a gold XML file with the same tokenization that SEMAFOR used ***********************#
@@ -32,7 +32,7 @@ ${JAVA_HOME_BIN}/java \
     endIndex:${end} \
     testParseFile:"${all_lemma_tags_testing_sentence_splits}" \
     testTokenizedFile:"${testing_tokenized_sentence_splits}" \
-    outputFile:"${RESULTS_DIR}/test.gold.xml"
+    outputFile:"${RESULTS_DIR}/test.gold.old.xml"
 
 
 #********************************** Evaluation ********************************************#
