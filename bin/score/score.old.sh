@@ -15,7 +15,7 @@ scala \
     "${MODEL_DIR}" \
     "${testing_frame_splits}" \
     "${testing_sentence_splits_with_dependencies}" \
-    "${RESULTS_DIR}/test.goldframe.old.predicted.xml" \
+    "${RESULTS_DIR}/test.goldframe.predicted.old.xml" \
     true # use gold frames
 
 #***************** Create a gold XML file with the same tokenization that SEMAFOR used ***********************#
@@ -47,6 +47,6 @@ ${SEMAFOR_HOME}/bin/score/score.pl \
     "${frames_single_file}" \
     "${relation_modified_file}" \
     "${RESULTS_DIR}/test.gold.old.xml" \
-    "${RESULTS_DIR}/test.goldframe.old.predicted.xml" > "${RESULTS_DIR}/arg_test_exact_verbose_old"
+    "${RESULTS_DIR}/test.goldframe.predicted.old.xml" > "${RESULTS_DIR}/arg_test_exact_verbose_old"
 
 #********************************** End of Evaluation ********************************************#
