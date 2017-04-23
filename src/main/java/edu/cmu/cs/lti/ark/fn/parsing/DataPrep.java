@@ -307,21 +307,9 @@ public class DataPrep {
 		return featArray;
 	}
 
-	private static int getLineCount(FileInputStream inputStream){
-		Scanner scanner = new Scanner(inputStream);
-		int count = 0;
-		// First count the number of lines in the file
-		while (scanner.hasNextLine()) {
-			count++;
-			scanner.nextLine();
-		}
-		return count;
-	}
-
 	public static Map<String, Integer> readFeatureIndex(File alphabetFile) throws FileNotFoundException {
 		HashMap<String, Integer> featureIndex = Maps.newHashMap();
 		final FileInputStream inputStream = new FileInputStream(alphabetFile);
-		final int lineCount = getLineCount(inputStream);
 		Scanner scanner = new Scanner(inputStream);
 		try {
 			int count = 0;
@@ -329,14 +317,12 @@ public class DataPrep {
 			scanner.nextLine();
 			while (scanner.hasNextLine()) {
 				addFeature(scanner.nextLine(), featureIndex);
-				System.out.print((count/lineCount)*100 + "%");
-				/*
 				if (count % 100000 == 0) {
-					System.err.print(count + " ");
-				}*/
+					System.out.print(count + " ");
+				}
 				count++;
 			}
-			//System.err.println();
+			System.out.println();
 		} finally {
 			closeQuietly(inputStream);
 		}
