@@ -2,11 +2,7 @@ package edu.unige.clcl.fn.data.prep.utils;
 
 import edu.unige.clcl.fn.data.prep.models.TokenIndex;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Alex Kabbach
@@ -28,15 +24,15 @@ public class SentenceToTokenizedIndexMapping {
 	}
 
 	private static String[] replaceSpecialChars(String[] tokens,
-			Map<String, String> specialCharMap) {
+												Map<String, String> specialCharMap) {
 		List<String> output = new ArrayList<>();
 		for (int i = 0; i < tokens.length; i++) {
 			String token = "";
 			for (int j = 0; j < tokens[i].length(); j++) {
-				if (specialCharMap
-						.containsKey(Character.toString(tokens[i].charAt(j)))) {
-					token += specialCharMap
-							.get(Character.toString(tokens[i].charAt(j)));
+				if (specialCharMap.containsKey(
+						Character.toString(tokens[i].charAt(j)))) {
+					token += specialCharMap.get(
+							Character.toString(tokens[i].charAt(j)));
 				} else {
 					token += tokens[i].charAt(j);
 				}
@@ -47,7 +43,7 @@ public class SentenceToTokenizedIndexMapping {
 	}
 
 	public static Map<TokenIndex, TokenIndex> getTokenIndexMap(String sentence,
-			String tokenizedSentence) {
+															   String tokenizedSentence) {
 		String[] sentenceTokens = sentence.split("\\s+");
 		String[] tokenizedTokens = tokenizedSentence.split("\\s+");
 		Map<String, String> specialCharMap = getSpecialCharMap();
@@ -69,12 +65,12 @@ public class SentenceToTokenizedIndexMapping {
 							agglo += tokenizedTokens[k];
 							if (!sentenceTokens[i].contains(agglo)) {
 								indexMap.put(new TokenIndex(i, i),
-										new TokenIndex(j, k - 1));
+											 new TokenIndex(j, k - 1));
 								start = k;
 								break;
 							} else if (k + 1 == tokenizedTokens.length) {
 								indexMap.put(new TokenIndex(i, i),
-										new TokenIndex(j, k));
+											 new TokenIndex(j, k));
 							}
 						}
 						break;

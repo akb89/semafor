@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
  */
 public class FFEUtils {
 
-	private static final Logger logger = LoggerFactory.getLogger(FFEUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(
+			FFEUtils.class);
 
 	public static List<String> splitBy(String text, String regex) {
 		return Arrays.asList(text.split(regex));
@@ -29,13 +30,13 @@ public class FFEUtils {
 
 	public static Set<String> getTestSetDocNameSet(String testSetDocsFile)
 			throws IOException {
-		return Files.lines(Paths.get(testSetDocsFile))
-				.collect(Collectors.toSet());
+		return Files.lines(Paths.get(testSetDocsFile)).collect(
+				Collectors.toSet());
 	}
 
 	public static boolean containsFrameNetAnnotation(Element sentenceElement) {
-		NodeList annotationSets = sentenceElement
-				.getElementsByTagName("annotationSet");
+		NodeList annotationSets = sentenceElement.getElementsByTagName(
+				"annotationSet");
 		for (int i = 0; i < annotationSets.getLength(); i++) {
 			NodeList layers = annotationSets.item(i).getChildNodes();
 			for (int j = 0; j < layers.getLength(); j++) {
@@ -50,12 +51,12 @@ public class FFEUtils {
 		return false;
 	}
 
-	public static Map<String, Integer> getSentenceIndexMap(String sentenceSplits)
-			throws IOException {
+	public static Map<String, Integer> getSentenceIndexMap(
+			String sentenceSplits) throws IOException {
 		Map<String, Integer> map = new HashMap<>();
 		int sentenceIterator = 0;
-		List<String> sentences = Files.lines(Paths.get(sentenceSplits))
-				.collect(Collectors.toList());
+		List<String> sentences = Files.lines(Paths.get(sentenceSplits)).collect(
+				Collectors.toList());
 		for (String sentence : sentences) {
 			map.put(sentence, sentenceIterator);
 			sentenceIterator += 1;
@@ -73,8 +74,8 @@ public class FFEUtils {
 				for (int j = 0; j < labels.getLength(); j++) {
 					Element label = (Element) labels.item(j);
 					// Only count FEs visible in the sentence (no CNI, DNI etc.)
-					if (label.hasAttribute("start") && label
-							.hasAttribute("end")) {
+					if (label.hasAttribute("start") && label.hasAttribute(
+							"end")) {
 						frameFENumber += 1;
 					}
 				}
@@ -106,27 +107,28 @@ public class FFEUtils {
 	}
 
 	public static String getTargetIndex(String text, String targetWithIndex,
-			Map<TokenIndex, TokenIndex> tokenIndexMap) {
-		int targetStartChar = Integer
-				.parseInt(splitBy(targetWithIndex, "#").get(1));
-		int targetEndChar =
-				targetStartChar + splitBy(targetWithIndex, "#").get(0).length()
-						- 1;
+										Map<TokenIndex, TokenIndex> tokenIndexMap) {
+		int targetStartChar = Integer.parseInt(
+				splitBy(targetWithIndex, "#").get(1));
+		int targetEndChar = targetStartChar + splitBy(targetWithIndex, "#").get(
+				0).length() - 1;
 		TokenIndex tokenIndex = toTokenIndex(text, targetStartChar,
-				targetEndChar);
+											 targetEndChar);
 		if (tokenIndex == null) {
 			logger.warn(
 					"Could not find TokenIndex (" + tokenIndex.getStart() + ", "
-							+ tokenIndex.getEnd() + ") for target: "
-							+ targetWithIndex + " in sentence: " + text);
+					+ tokenIndex.getEnd() + ") for target: " + targetWithIndex
+					+ " in sentence: " + text);
 			return "";
 		}
 		TokenIndex tokenizedIndex = getTokenizedTokenIndex(tokenIndexMap,
-				tokenIndex.getStart(), tokenIndex.getEnd());
+														   tokenIndex
+																   .getStart(),
+														   tokenIndex.getEnd());
 		if (tokenizedIndex == null) {
 			logger.warn("Could not find tokenized TokenIndex (" + tokenIndex
 					.getStart() + ", " + tokenIndex.getEnd() + ") for target: "
-					+ targetWithIndex + " in sentence: " + text);
+						+ targetWithIndex + " in sentence: " + text);
 			return "";
 		}
 		if (tokenizedIndex.getStart() == tokenizedIndex.getEnd()) {
@@ -136,7 +138,8 @@ public class FFEUtils {
 		}
 	}
 
-	public static TokenIndex toTokenIndex(String text, int startChar, int endChar) {
+	public static TokenIndex toTokenIndex(String text, int startChar,
+										  int endChar) {
 		List<String> tokens = splitByWhiteSpace(text);
 		List<String> sequence = splitByWhiteSpace(
 				text.substring(startChar, endChar + 1));
@@ -150,7 +153,7 @@ public class FFEUtils {
 				}
 			}
 			if (tokens.get(i).equals(sequence.get(0))
-					&& charIndex == startChar) {
+				&& charIndex == startChar) {
 				int startTokenIndex = i;
 				int endTokenIndex = i;
 				if (sequence.size() > 1) {
@@ -164,7 +167,7 @@ public class FFEUtils {
 	}
 
 	public static String getFEsChunk(String text, Element annotationSet,
-			Map<TokenIndex, TokenIndex> tokenIndexMap) {
+									 Map<TokenIndex, TokenIndex> tokenIndexMap) {
 		String feChunks = "";
 		NodeList layers = annotationSet.getElementsByTagName("layer");
 		for (int i = 0; i < layers.getLength(); i++) {
@@ -173,17 +176,16 @@ public class FFEUtils {
 				NodeList labels = layer.getElementsByTagName("label");
 				for (int j = 0; j < labels.getLength(); j++) {
 					Element label = (Element) labels.item(j);
-					if (label.hasAttribute("start") && label
-							.hasAttribute("end")) {
-						int start = Integer
-								.parseInt(label.getAttribute("start"));
+					if (label.hasAttribute("start") && label.hasAttribute(
+							"end")) {
+						int start = Integer.parseInt(
+								label.getAttribute("start"));
 						int end = Integer.parseInt(label.getAttribute("end"));
 						TokenIndex tokenIndex = toTokenIndex(text, start, end);
 						if (tokenIndex == null) {
 							logger.warn(
 									"Could not find TokenIndex (" + start + ", "
-											+ end + ") for FE in sentence: "
-											+ text);
+									+ end + ") for FE in sentence: " + text);
 							return "";
 						}
 						feChunks += label.getAttribute("name");
@@ -193,9 +195,9 @@ public class FFEUtils {
 								tokenIndex.getEnd());
 						if (tokenizedIndex == null) {
 							logger.warn("Could not find tokenized TokenIndex ("
-									+ tokenIndex.getStart() + ", " + tokenIndex
-									.getEnd() + ") for FE in sentence: "
-									+ text);
+										+ tokenIndex.getStart() + ", "
+										+ tokenIndex.getEnd()
+										+ ") for FE in sentence: " + text);
 							return "";
 						}
 						if (tokenizedIndex.getStart() == tokenizedIndex
@@ -219,7 +221,7 @@ public class FFEUtils {
 	 * Parser does not handle discontinuous targets
 	 */
 	public static String getTargetWithStartCharIndex(String text,
-			Element annotationSet) {
+													 Element annotationSet) {
 		String targetWithIndex = "";
 		NodeList layers = annotationSet.getElementsByTagName("layer");
 		for (int i = 0; i < layers.getLength(); i++) {
@@ -234,29 +236,27 @@ public class FFEUtils {
 				int minStart = -1;
 				int maxEnd = -1;
 				for (int j = 0; j < labels.getLength(); j++) {
-					Element label = (Element) layer
-							.getElementsByTagName("label").item(j);
+					Element label = (Element) layer.getElementsByTagName(
+							"label").item(j);
 					// Handle annotation errors where
 					// the target start/end attributes are not specified
-					if (!label.hasAttribute("start") || !label
-							.hasAttribute("end")) {
+					if (!label.hasAttribute("start") || !label.hasAttribute(
+							"end")) {
 						return targetWithIndex;
 					}
-					if (minStart == -1
-							|| Integer.parseInt(label.getAttribute("start"))
-							< minStart) {
-						minStart = Integer
-								.parseInt(label.getAttribute("start"));
+					if (minStart == -1 || Integer.parseInt(
+							label.getAttribute("start")) < minStart) {
+						minStart = Integer.parseInt(
+								label.getAttribute("start"));
 					}
-					if (maxEnd == -1
-							|| Integer.parseInt(label.getAttribute("end"))
-							> maxEnd) {
+					if (maxEnd == -1 || Integer.parseInt(
+							label.getAttribute("end")) > maxEnd) {
 						maxEnd = Integer.parseInt(label.getAttribute("end"));
 					}
 				}
 				if (minStart != -1 && maxEnd != -1) {
 					targetWithIndex = text.substring(minStart, maxEnd + 1) + "#"
-							+ minStart;
+									  + minStart;
 				}
 			}
 		}
@@ -281,8 +281,9 @@ public class FFEUtils {
 		return whiteSpaces;
 	}
 
-	public static String getTargetIndex(String text, String target, int startChar,
-			Map<TokenIndex, TokenIndex> tokenIndexMap) {
+	public static String getTargetIndex(String text, String target,
+										int startChar,
+										Map<TokenIndex, TokenIndex> tokenIndexMap) {
 		String targetIndex = "";
 		List<String> tokens = splitByWhiteSpace(text);
 		List<String> targetTokens = splitByWhiteSpace(target);
@@ -300,7 +301,7 @@ public class FFEUtils {
 			}
 		}
 		TokenIndex tokenIndex = getTokenizedTokenIndex(tokenIndexMap, start,
-				end);
+													   end);
 		if (tokenIndex == null) {
 			return targetIndex;
 		}

@@ -3,7 +3,7 @@ package edu.unige.clcl.fn.data.prep.models;
 /**
  * @author Alex Kabbach
  */
-public class TokenIndex implements Comparable{
+public class TokenIndex implements Comparable {
 	private int start;
 	private int end;
 
@@ -48,9 +48,9 @@ public class TokenIndex implements Comparable{
 	}
 
 	@Override public int compareTo(Object obj) {
-		if(this.equals(obj)){
+		if (this.equals(obj)) {
 			return 0;
 		}
-		return this.getStart() > ((TokenIndex)obj).getStart() ? 1 : -1;
+		return this.getStart() > ((TokenIndex) obj).getStart() ? 1 : -1;
 	}
 }

@@ -24,7 +24,8 @@ public class TrainingMapsCreation {
 	private static final int FE_SPLITS_SENTENCE_INDEX = 7;
 	private static final int FE_SPLITS_FE_START_INDEX = 8;
 
-	private static final Logger logger = LoggerFactory.getLogger(TrainingMapsCreation.class);
+	private static final Logger logger = LoggerFactory.getLogger(
+			TrainingMapsCreation.class);
 
 	public static void main(String[] args) throws IOException {
 		final String feSplitsFile = args[0];
@@ -35,7 +36,8 @@ public class TrainingMapsCreation {
 		final String oldFEMapFile = args[5];
 
 		TrainingMapsCreation tMapCreation = new TrainingMapsCreation();
-		logger.info("Creating framenet.original.map and framenet.frame.element.map...");
+		logger.info(
+				"Creating framenet.original.map and framenet.frame.element.map...");
 
 		THashMap<String, THashSet<String>> newFEMap = tMapCreation
 				.createFrameFEMap(feSplitsFile);
@@ -45,18 +47,22 @@ public class TrainingMapsCreation {
 				.readSerializedObject(oldLUMapFile);
 		THashMap<String, THashSet<String>> newLUMap = tMapCreation
 				.createFrameLUMap(feSplitsFile, posTaggedSplitsFile);
-		logger.info("Comparing keys (frames) between old and new Frame Element Maps");
+		logger.info(
+				"Comparing keys (frames) between old and new Frame Element Maps");
 		tMapCreation.compareKeys(oldFEMap, newFEMap);
-		logger.info("Comparing keys (frames) between old and new Lexical Unit Maps");
+		logger.info(
+				"Comparing keys (frames) between old and new Lexical Unit Maps");
 		tMapCreation.compareKeys(oldLUMap, newLUMap);
-		logger.info("Comparing values (FEs) between old and new Frame Element Maps");
+		logger.info(
+				"Comparing values (FEs) between old and new Frame Element Maps");
 		tMapCreation.compareValues(oldFEMap, newFEMap);
-		tMapCreation.logger
-				.info("Comparing values (LUs) between old and new Lexical Unit Maps");
+		tMapCreation.logger.info(
+				"Comparing values (LUs) between old and new Lexical Unit Maps");
 		tMapCreation.compareValues(oldLUMap, newLUMap);
 		SerializedObjects.writeSerializedObject(newFEMap, feMapFile);
 		SerializedObjects.writeSerializedObject(newLUMap, luMapFile);
-		logger.info("Done creating framenet.original.map and framenet.frame.element.map");
+		logger.info(
+				"Done creating framenet.original.map and framenet.frame.element.map");
 	}
 
 	private List<String> splitBy(String line, String regex) {
@@ -72,7 +78,7 @@ public class TrainingMapsCreation {
 	}
 
 	private void compareKeys(THashMap<String, THashSet<String>> originalMap,
-			THashMap<String, THashSet<String>> newMap) {
+							 THashMap<String, THashSet<String>> newMap) {
 		logger.info("New Map Size = " + newMap.size());
 		logger.info("Old Map Size = " + originalMap.size());
 		int counter = 0;
@@ -98,12 +104,12 @@ public class TrainingMapsCreation {
 	}
 
 	private void compareValues(THashMap<String, THashSet<String>> originalMap,
-			THashMap<String, THashSet<String>> newMap) {
+							   THashMap<String, THashSet<String>> newMap) {
 		int counter = 0;
 		for (Map.Entry<String, THashSet<String>> entry : newMap.entrySet()) {
 			if (originalMap.containsKey(entry.getKey())) {
-				THashSet<String> originalValues = originalMap
-						.get(entry.getKey());
+				THashSet<String> originalValues = originalMap.get(
+						entry.getKey());
 				THashSet<String> newValues = entry.getValue();
 				if (originalValues.size() != newValues.size()) {
 					logger.debug("Different values set size for frame: " + entry
@@ -116,7 +122,7 @@ public class TrainingMapsCreation {
 					for (String value : newValues) {
 						if (!originalValues.contains(value)) {
 							logger.debug("		Value = " + value
-									+ " is not in the original map");
+										 + " is not in the original map");
 							counter += 1;
 						}
 					}
@@ -126,17 +132,19 @@ public class TrainingMapsCreation {
 					for (String value : originalValues) {
 						if (!newValues.contains(value)) {
 							logger.debug("		Value = " + value
-									+ " is not in the new map");
+										 + " is not in the new map");
 							counter += 1;
 						}
 					}
 				}
 			}
 		}
-		logger.info("New Map Size = " + newMap.entrySet()
-				.stream().mapToInt(e->e.getValue().size()).sum());
-		logger.info("Old Map Size = " + originalMap.entrySet()
-				.stream().mapToInt(e->e.getValue().size()).sum());
+		logger.info("New Map Size = " + newMap.entrySet().stream().mapToInt(
+				e -> e.getValue().size()).sum());
+		logger.info("Old Map Size = " + originalMap.entrySet().stream()
+												   .mapToInt(e -> e.getValue()
+																   .size())
+												   .sum());
 		logger.info("Number of differences in total = " + counter);
 	}
 
@@ -170,7 +178,10 @@ public class TrainingMapsCreation {
 
 	private List<Integer> getTargetIndexes(List<String> feSplitTokens) {
 		return splitBy(feSplitTokens.get(FE_SPLITS_TARGET_INDEX), "_").stream()
-				.map(Integer::parseInt).collect(Collectors.toList());
+																	  .map(Integer::parseInt)
+																	  .collect(
+																			  Collectors
+																					  .toList());
 	}
 
 	private int getSentenceIndex(List<String> feSplitTokens) {
@@ -178,7 +189,7 @@ public class TrainingMapsCreation {
 	}
 
 	private String getTaggedLU(List<String> taggedTokens,
-			List<Integer> targetIndexes) {
+							   List<Integer> targetIndexes) {
 		String taggedLU = "";
 		for (Integer index : targetIndexes) {
 			taggedLU += taggedTokens.get(index);
@@ -191,8 +202,8 @@ public class TrainingMapsCreation {
 			String frameElementSplits, String posTaggedSplits)
 			throws IOException {
 		THashMap<String, THashSet<String>> frameLUMap = new THashMap<>();
-		List<String> posTaggedSentences = Files
-				.lines(Paths.get(posTaggedSplits)).collect(Collectors.toList());
+		List<String> posTaggedSentences = Files.lines(
+				Paths.get(posTaggedSplits)).collect(Collectors.toList());
 		Files.lines(Paths.get(frameElementSplits)).forEach((line) -> {
 			List<String> tokens = splitByTab(line);
 			String frame = getFrame(tokens);
