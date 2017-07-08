@@ -20,3 +20,5 @@
 #wsj.model is too big
 /resources/wsj.model
 
+*.swp
+
