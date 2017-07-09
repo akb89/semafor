@@ -4,7 +4,7 @@
 
 export FRAMENET_DATA_DIR="/home/kabbach/FrameNetData/fndata-1.5"
 export JAVA_HOME_BIN="/usr/bin"
-#export FRAMENET_DATA_DIR="/Users/AKB/Desktop/fndata-1.5"
+#export FRAMENET_DATA_DIR="/Users/AKB/Dropbox/FrameNetData/fndata-1.5"
 #export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
 
 export with_exemplars=false # set to true to include exemplar sentences in addition to fulltext

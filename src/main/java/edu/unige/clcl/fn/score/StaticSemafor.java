@@ -45,6 +45,8 @@ public class StaticSemafor {
 													 Decoding decoder,
 													 int kBest)
 			throws IOException {
+		System.out.println("idResult.size = " + idResults.size());
+		System.out.println("argIdFeatureIndex.size = " + argIdFeatureIndex.size());
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
 		for (String feLine : idResults) {
@@ -108,11 +110,9 @@ public class StaticSemafor {
 		List<String> allPredictedArgs = new ArrayList<>();
 		logger.info("sentences.size = " + sentences.size());
 		logger.info("frameSplitsMap.size = " + frameSplitsMap.size());
-		for (int j = 0; j < 10; j++) {
-			logger.info("sentence = " + sentences.get(j).toString());
-		}
 		int counter = 0;
 		for (int i = 0; i < sentences.size(); i++) {
+			System.out.println("Sentence at i = " + i);
 			Sentence sentence = sentences.get(i);
 			if (frameSplitsMap.containsKey(i)) {
 				List<String> frameSplits = frameSplitsMap.get(i);
