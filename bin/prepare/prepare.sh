@@ -7,10 +7,10 @@ echo "Creating Required Data..."
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
 
-rm -rf ${MODEL_DIR}
+#rm -rf ${MODEL_DIR}
 mkdir -p "${MODEL_DIR}"
-rm -rf ${EXPERIMENT_DATA_DIR}
-mkdir ${EXPERIMENT_DATA_DIR}
+#rm -rf ${EXPERIMENT_DATA_DIR}
+mkdir -p ${EXPERIMENT_DATA_DIR}
 
 prepare_bin="$(dirname ${0})"
 
@@ -30,7 +30,7 @@ bash ${prepare_bin}/prepare.splits.frames.sh
 bash ${prepare_bin}/prepare.splits.frame.elements.sh
 
 # Generate cv.***.sentences.pos.tagged splits from cv.***.sentences splits
-bash ${prepare_bin}/prepare.splits.postag.sh
+bash ${prepare_bin}/prepare.splits.postag.sh 2> ${LOGS_DIR}/mxpost.log # Redirect stderr to semafor/logs/mxpost.log
 
 if [ "${dependency_parser}" = "MST" ]; then
     # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
