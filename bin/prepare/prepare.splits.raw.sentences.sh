@@ -6,7 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Generate cv.***.sentences splits from FrameNet XML data under the EXPERIMENT_DATA_DIR directory
-time ${JAVA_HOME_BIN}/java \
+${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.SentenceSplitsCreation \

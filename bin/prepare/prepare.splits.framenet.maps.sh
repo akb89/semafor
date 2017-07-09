@@ -6,7 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory
-time ${JAVA_HOME_BIN}/java \
+${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.TrainingMapsCreation \

@@ -10,7 +10,7 @@ mkdir -p ${MST_PARSER_HOME}/tmp
 # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
 echo "Running MSTParser on conll training splits..."
 pushd ${MST_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java \
+${JAVA_HOME_BIN}/java \
     -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
 	-Xms${min_ram} \
 	-Xmx${max_ram} \
@@ -27,7 +27,7 @@ echo "Finished MST dependency parsing"
 echo
 echo "Running MSTParser on conll testing splits..."
 pushd ${MST_PARSER_HOME}
-time ${JAVA_HOME_BIN}/java \
+${JAVA_HOME_BIN}/java \
     -classpath ".:./lib/trove.jar:./lib/mallet-deps.jar:./lib/mallet.jar" \
 	-Xms${min_ram} \
 	-Xmx${max_ram} \

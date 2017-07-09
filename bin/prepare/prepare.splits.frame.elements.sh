@@ -6,7 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Generate cv.***.sentences.frame.elements from cv.***.sentences splits
-time ${JAVA_HOME_BIN}/java \
+${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.FFESplitsCreation \

@@ -6,7 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Generate cv.train.sentences.all.lemma.tags
-time ${JAVA_HOME_BIN}/java \
+${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \
     -Xmx${max_ram} \
@@ -18,7 +18,7 @@ time ${JAVA_HOME_BIN}/java \
 rm "${tmp_file}"
 
 # Generate cv.test.sentences.all.lemma.tags
-time ${JAVA_HOME_BIN}/java \
+${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \
     -Xmx${max_ram} \
