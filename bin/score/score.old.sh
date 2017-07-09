@@ -16,7 +16,7 @@ scala \
     "${testing_frame_splits}" \
     "${testing_sentence_splits_with_dependencies}" \
     "${RESULTS_DIR}/test.goldframe.predicted.old.xml" \
-    true # use gold frames
+    false # use gold frames
 
 #***************** Create a gold XML file with the same tokenization that SEMAFOR used ***********************#
 
