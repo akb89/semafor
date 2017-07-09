@@ -344,11 +344,11 @@ public class Semafor {
 
 					final DependencyParse parse = parses.get(
 							candidateSpanAndParseIdx.parseIdx);
-					System.out.println("datapoint = " + dataPoint.getTargetTokenIdxs().toString());
+					System.out.println("datapoint = " + dataPoint.getTargetTokenIdxs());
 					System.out.println("frame = " + frame.toString());
 					System.out.println("frameElement = " + frameElement.toString());
 					System.out.println("span = " + span.toString());
-					System.out.println("parse = " + parse.getIndexSortedListOfNodes().toString());
+					System.out.println("parse = " + parse.getIndexSortedListOfNodes());
 					final Set<String> featureSet = featureExtractor
 							.extractFeatures(dataPoint, frame, frameElement,
 											 span, parse).elementSet();

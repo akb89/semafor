@@ -11,6 +11,8 @@ import edu.cmu.cs.lti.ark.fn.parsing.FEDict;
 import edu.cmu.cs.lti.ark.util.XmlUtils;
 import edu.cmu.cs.lti.ark.util.ds.Range;
 import edu.cmu.cs.lti.ark.util.ds.Range0Based;
+import edu.cmu.cs.lti.ark.util.nlp.Lemmatizer;
+import edu.cmu.cs.lti.ark.util.nlp.MorphaLemmatizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -48,7 +50,8 @@ public class ScoreWithGoldFrames {
 		logger.info("Initializing parser for scoring with gold frames...");
 		logger.info("Extracting dependency-parsed testing sentences...");
 		logger.info("	from: " + depParsedSplitsPath);
-		List<Sentence> sentences = score.getSentences(depParsedSplitsPath);
+		List<Sentence> unLemmatizedSentences = score.getSentences(
+				depParsedSplitsPath);
 		logger.info("Done extracting dependency-parsed testing sentences");
 		logger.info("Extracting gold frame testing splits...");
 		logger.info("	from: " + frameSplitsPath);
@@ -71,10 +74,15 @@ public class ScoreWithGoldFrames {
 		final Decoding decoder = Decoding.fromFile(argModelFilename,
 												   alphabetFilename);
 		logger.info("Done initializing decoder");
-		List<String> tokenizedSplits = score.getTokenizedSplits(sentences);
-		List<String> depParsedSplits = score.getDepParsedSplits(sentences);
-		Range0Based range = new Range0Based(0, sentences.size(), false);
-
+		List<String> tokenizedSplits = score.getTokenizedSplits(
+				unLemmatizedSentences);
+		List<String> depParsedSplits = score.getDepParsedSplits(
+				unLemmatizedSentences);
+		Range0Based range = new Range0Based(0, unLemmatizedSentences.size(),
+											false);
+		Lemmatizer lemmatizer = new MorphaLemmatizer();
+		List<Sentence> sentences = score.getLemmatizedSentences(
+				unLemmatizedSentences, lemmatizer);
 		logger.info("Done initializing parser");
 
 		score.runWithGoldFrames(sentences, frameSplitsMap, argIdFeatureIndex,
@@ -112,20 +120,22 @@ public class ScoreWithGoldFrames {
 		return Lists.newArrayList(sentenceIterator);
 	}
 
-	private List<String> getTokenizedSplits(List<Sentence> sentences) {
-		return sentences.stream().map(sentence -> String.join(" ",
-															  sentence.getTokens()
-																	  .stream()
-																	  .map(token -> token
-																			  .getForm())
-																	  .collect(
-																			  Collectors
-																					  .toList())))
-						.collect(Collectors.toList());
+	private List<String> getTokenizedSplits(
+			List<Sentence> unLemmatizedSentences) {
+		return unLemmatizedSentences.stream().map(sentence -> String.join(" ",
+																		  sentence.getTokens()
+																				  .stream()
+																				  .map(token -> token
+																						  .getForm())
+																				  .collect(
+																						  Collectors
+																								  .toList())))
+									.collect(Collectors.toList());
 	}
 
-	private List<String> getDepParsedSplits(List<Sentence> sentences) {
-		return sentences.stream().map(sentence -> AllLemmaTags
+	private List<String> getDepParsedSplits(
+			List<Sentence> unLemmatizedSentences) {
+		return unLemmatizedSentences.stream().map(sentence -> AllLemmaTags
 				.makeLine(sentence.toAllLemmaTagsArray())).collect(
 				Collectors.toList());
 	}
@@ -141,5 +151,11 @@ public class ScoreWithGoldFrames {
 			throws IOException {
 		return Files.lines(Paths.get(frameSplitsPath)).collect(
 				Collectors.toList());
+	}
+
+	private List<Sentence> getLemmatizedSentences(
+			List<Sentence> unLemmatizedSentences, Lemmatizer lemmatizer) {
+		return unLemmatizedSentences.stream().map(lemmatizer::addLemmas)
+									.collect(Collectors.toList());
 	}
 }
