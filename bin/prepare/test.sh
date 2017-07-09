@@ -7,9 +7,9 @@ echo "Creating Required Data..."
 
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
 
-rm -rf ${MODEL_DIR}
+#rm -rf ${MODEL_DIR}
 mkdir -p "${MODEL_DIR}"
-rm -rf ${EXPERIMENT_DATA_DIR}
+#rm -rf ${EXPERIMENT_DATA_DIR}
 mkdir -p ${EXPERIMENT_DATA_DIR}
 
 prepare_bin="$(dirname ${0})"
@@ -36,14 +36,14 @@ if [ "${dependency_parser}" = "MST" ]; then
     # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.mst.input.sh
     # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
-    bash ${prepare_bin}/prepare.splits.parse.mst.sh
+    bash ${prepare_bin}/prepare.splits.parse.mst.sh 2> ${LOGS_DIR}/mst.log # Redirect stderr to semafor/logs/mst.log
 fi
 
 if [ "${dependency_parser}" = "MALT" ]; then
     # Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.malt.input.sh
     # Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.malt.input.conll splits
-    bash ${prepare_bin}/prepare.splits.parse.malt.sh
+    bash ${prepare_bin}/prepare.splits.parse.malt.sh 2> ${LOGS_DIR}/malt.log # Redirect stderr to semafor/logs/mst.log
 fi
 
 if [ "${dependency_parser}" = "TURBO" ]; then
