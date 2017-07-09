@@ -14,7 +14,7 @@ ${JAVA_HOME_BIN}/java \
     -w ${RESOURCES_DIR} \
     -c ${malt_parser_model} \
     -i ${training_malt_conll_input_sentence_splits} \
-    -o ${training_sentence_splits_with_dependencies}
+    -o ${training_sentence_splits_with_dependencies} > ${LOGS_DIR}/malt.log # Redirect stderr to semafor/logs/malt.log
 echo "Finished Malt dependency parsing"
 echo
 echo "Running MaltParser on conll testing splits..."
@@ -25,6 +25,6 @@ ${JAVA_HOME_BIN}/java \
     -w ${RESOURCES_DIR} \
     -c ${malt_parser_model} \
     -i ${testing_malt_conll_input_sentence_splits} \
-    -o ${testing_sentence_splits_with_dependencies}
+    -o ${testing_sentence_splits_with_dependencies} > ${LOGS_DIR}/malt.log # Redirect stderr to semafor/logs/malt.log
 echo "Finished Malt dependency parsing"
 echo
