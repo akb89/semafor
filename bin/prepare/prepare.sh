@@ -36,14 +36,14 @@ if [ "${dependency_parser}" = "MST" ]; then
     # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.mst.input.sh
     # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
-    bash ${prepare_bin}/prepare.splits.parse.mst.sh 2> ${LOGS_DIR}/mst.log # Redirect stderr to semafor/logs/mst.log
+    bash ${prepare_bin}/prepare.splits.parse.mst.sh > ${LOGS_DIR}/mst.log # Redirect stderr to semafor/logs/mst.log
 fi
 
 if [ "${dependency_parser}" = "MALT" ]; then
     # Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.malt.input.sh
     # Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.malt.input.conll splits
-    bash ${prepare_bin}/prepare.splits.parse.malt.sh 2> ${LOGS_DIR}/malt.log # Redirect stderr to semafor/logs/mst.log
+    bash ${prepare_bin}/prepare.splits.parse.malt.sh > ${LOGS_DIR}/malt.log # Redirect stderr to semafor/logs/mst.log
 fi
 
 if [ "${dependency_parser}" = "TURBO" ]; then
