@@ -11,13 +11,13 @@ import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static edu.cmu.cs.lti.ark.fn.parsing.DataPrep.SpanAndParseIdx;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static edu.cmu.cs.lti.ark.fn.parsing.DataPrep.SpanAndParseIdx;
 
 /**
  * @author Alex Kabbach
@@ -47,11 +47,9 @@ public class StaticSemafor {
 													 Decoding decoder,
 													 int kBest)
 			throws IOException {
-		System.out.println("Processing sentence: " + sentence.getTokens().toString());
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
 		for (String feLine : idResults) {
-			System.out.println("feLine = " + feLine);
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
 			final String frame = dataPoint.getFrameName();
@@ -70,14 +68,8 @@ public class StaticSemafor {
 						.newArrayList();
 				for (SpanAndParseIdx candidateSpanAndParseIdx : spans) {
 					final Range0Based span = candidateSpanAndParseIdx.span;
-					System.out.println("span = " + span.toString());
 					final DependencyParse parse = parses.get(
 							candidateSpanAndParseIdx.parseIdx);
-					System.out.println("datapoint = " + dataPoint.getTargetTokenIdxs().toString());
-					System.out.println("frame = " + frame.toString());
-					System.out.println("frameElement = " + frameElement.toString());
-					System.out.println("span = " + span.toString());
-					System.out.println("parse = " + parse.getIndexSortedListOfNodes().toString());
 					final Set<String> featureSet = featureExtractor
 							.extractFeatures(dataPoint, frame, frameElement,
 											 span, parse).elementSet();
@@ -120,7 +112,6 @@ public class StaticSemafor {
 		logger.info("frameSplitsMap.size = " + frameSplitsMap.size());
 		int counter = 0;
 		for (int i = 0; i < sentences.size(); i++) {
-			System.out.println("Sentence at i = " + i);
 			Sentence sentence = sentences.get(i);
 			if (frameSplitsMap.containsKey(i)) {
 				List<String> frameSplits = frameSplitsMap.get(i);

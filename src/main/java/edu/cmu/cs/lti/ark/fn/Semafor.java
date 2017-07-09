@@ -318,11 +318,9 @@ public class Semafor {
 	public List<String> predictArgumentLines(Sentence sentence,
 											 List<String> idResult, int kBest)
 			throws IOException {
-		System.out.println("Processing sentence: " + sentence.getTokens().toString());
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
 		for (String feLine : idResult) {
-			System.out.println("feLine = " + feLine);
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
 			final String frame = dataPoint.getFrameName();
@@ -344,17 +342,10 @@ public class Semafor {
 
 					final DependencyParse parse = parses.get(
 							candidateSpanAndParseIdx.parseIdx);
-					System.out.println("datapoint = " + dataPoint.getTargetTokenIdxs());
-					System.out.println("frame = " + frame.toString());
-					System.out.println("frameElement = " + frameElement.toString());
-					System.out.println("span = " + span.toString());
-					System.out.println("parse = " + parse.getIndexSortedListOfNodes());
 					final Set<String> featureSet = featureExtractor
 							.extractFeatures(dataPoint, frame, frameElement,
 											 span, parse).elementSet();
-					//System.out.println("featureSet = " + featureSet.toString());
 					final int[] featArray = convertToIdxs(featureSet);
-					//System.out.println("featArray = " + featArray);
 					spansAndFeatures.add(new SpanAndCorrespondingFeatures(
 							new int[] { span.start, span.end }, featArray));
 				}
