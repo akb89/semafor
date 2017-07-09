@@ -333,7 +333,6 @@ public class Semafor {
 					dataPoint.getTargetTokenIdxs().length - 1];
 			final List<SpanAndParseIdx> spans = DataPrep.findSpans(dataPoint,
 																   1);
-			System.out.println("spans = " + spans.toString());
 			final List<String> frameElements = Lists.newArrayList(
 					frameElementsForFrame.lookupFrameElements(frame));
 			final List<SpanAndCorrespondingFeatures[]> featuresAndSpanByArgument = Lists
@@ -346,7 +345,6 @@ public class Semafor {
 					System.out.println("span = " + span.toString());
 					final DependencyParse parse = parses.get(
 							candidateSpanAndParseIdx.parseIdx);
-					System.out.println("parse = " + parse.toString());
 					final Set<String> featureSet = featureExtractor
 							.extractFeatures(dataPoint, frame, frameElement,
 											 span, parse).elementSet();
