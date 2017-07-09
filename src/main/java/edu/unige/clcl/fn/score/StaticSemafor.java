@@ -45,13 +45,14 @@ public class StaticSemafor {
 													 Decoding decoder,
 													 int kBest)
 			throws IOException {
-		System.out.println("idResult.size = " + idResults.size());
-		System.out.println("argIdFeatureIndex.size = " + argIdFeatureIndex.size());
+		System.out.println("Processing sentence: " + sentence.getTokens().toString());
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
 		for (String feLine : idResults) {
+			System.out.println("feLine = " + feLine);
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
+			System.out.println("dataPoint = " + dataPoint.getFrameElementsAndSpans().toString());
 			final String frame = dataPoint.getFrameName();
 			final DependencyParses parses = dataPoint.getParses();
 			final int targetStartTokenIdx = dataPoint.getTargetTokenIdxs()[0];

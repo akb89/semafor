@@ -319,13 +319,13 @@ public class Semafor {
 											 List<String> idResult, int kBest)
 			throws IOException {
 		System.out.println("Processing sentence: " + sentence.getTokens().toString());
-		System.out.println("idResult.size = " + idResult.size());
-		System.out.println("argIdFeatureIndex.size = " + argIdFeatureIndex.size());
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
 		final FeatureExtractor featureExtractor = new FeatureExtractor();
 		for (String feLine : idResult) {
+			System.out.println("feLine = " + feLine);
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
+			System.out.println("dataPoint = " + dataPoint.getFrameElementsAndSpans().toString());
 			final String frame = dataPoint.getFrameName();
 			final DependencyParses parses = dataPoint.getParses();
 			final int targetStartTokenIdx = dataPoint.getTargetTokenIdxs()[0];
