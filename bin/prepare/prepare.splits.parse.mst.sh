@@ -5,6 +5,8 @@ if ps -o stat= -p $PPID | grep -q "s"; then
     source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
 fi
 
+mkdir -p ${MST_PARSER_HOME}/tmp
+
 # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
 echo "Running MSTParser on conll training splits..."
 pushd ${MST_PARSER_HOME}
