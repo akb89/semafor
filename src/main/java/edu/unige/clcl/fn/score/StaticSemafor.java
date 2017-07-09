@@ -54,9 +54,7 @@ public class StaticSemafor {
 			System.out.println("feLine = " + feLine);
 			final DataPointWithFrameElements dataPoint = new DataPointWithFrameElements(
 					sentence, feLine);
-			System.out.println("dataPoint = " + dataPoint.getFrameElementsAndSpans().toString());
 			final String frame = dataPoint.getFrameName();
-			System.out.println("frame = " + frame);
 			final DependencyParses parses = dataPoint.getParses();
 			final int targetStartTokenIdx = dataPoint.getTargetTokenIdxs()[0];
 			final int targetEndTokenIdx = dataPoint.getTargetTokenIdxs()[
@@ -75,13 +73,16 @@ public class StaticSemafor {
 					System.out.println("span = " + span.toString());
 					final DependencyParse parse = parses.get(
 							candidateSpanAndParseIdx.parseIdx);
+					System.out.println("datapoint = " + dataPoint.getTargetTokenIdxs().toString());
+					System.out.println("frame = " + frame.toString());
+					System.out.println("frameElement = " + frameElement.toString());
+					System.out.println("span = " + span.toString());
+					System.out.println("parse = " + parse.getIndexSortedListOfNodes().toString());
 					final Set<String> featureSet = featureExtractor
 							.extractFeatures(dataPoint, frame, frameElement,
 											 span, parse).elementSet();
-					System.out.println("featureSet = " + featureSet.toString());
 					final int[] featArray = convertToIdxs(argIdFeatureIndex,
 														  featureSet);
-					System.out.println("featArray = " + featArray);
 					spansAndFeatures.add(new SpanAndCorrespondingFeatures(
 							new int[] { span.start, span.end }, featArray));
 				}
