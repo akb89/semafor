@@ -11,6 +11,8 @@ import edu.cmu.cs.lti.ark.util.nlp.parse.DependencyParses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static edu.cmu.cs.lti.ark.fn.parsing.DataPrep.SpanAndParseIdx;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +56,15 @@ public class StaticSemafor {
 					sentence, feLine);
 			System.out.println("dataPoint = " + dataPoint.getFrameElementsAndSpans().toString());
 			final String frame = dataPoint.getFrameName();
+			System.out.println("frame = " + frame);
 			final DependencyParses parses = dataPoint.getParses();
+			System.out.println("parses = " + parses);
 			final int targetStartTokenIdx = dataPoint.getTargetTokenIdxs()[0];
 			final int targetEndTokenIdx = dataPoint.getTargetTokenIdxs()[
 					dataPoint.getTargetTokenIdxs().length - 1];
-			final List<DataPrep.SpanAndParseIdx> spans = DataPrep.findSpans(
-					dataPoint, 1);
+			final List<SpanAndParseIdx> spans = DataPrep.findSpans(dataPoint,
+																   1);
+			System.out.println("spans = " + spans.toString());
 			final List<String> frameElements = Lists.newArrayList(
 					feDict.lookupFrameElements(frame));
 			final List<SpanAndCorrespondingFeatures[]> featuresAndSpanByArgument = Lists
@@ -67,15 +72,19 @@ public class StaticSemafor {
 			for (String frameElement : frameElements) {
 				final List<SpanAndCorrespondingFeatures> spansAndFeatures = Lists
 						.newArrayList();
-				for (DataPrep.SpanAndParseIdx candidateSpanAndParseIdx : spans) {
+				for (SpanAndParseIdx candidateSpanAndParseIdx : spans) {
 					final Range0Based span = candidateSpanAndParseIdx.span;
+					System.out.println("span = " + span.toString());
 					final DependencyParse parse = parses.get(
 							candidateSpanAndParseIdx.parseIdx);
+					System.out.println("parse = " + parse.toString());
 					final Set<String> featureSet = featureExtractor
 							.extractFeatures(dataPoint, frame, frameElement,
 											 span, parse).elementSet();
+					System.out.println("featureSet = " + featureSet.toString());
 					final int[] featArray = convertToIdxs(argIdFeatureIndex,
 														  featureSet);
+					System.out.println("featArray = " + featArray);
 					spansAndFeatures.add(new SpanAndCorrespondingFeatures(
 							new int[] { span.start, span.end }, featArray));
 				}
