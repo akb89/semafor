@@ -328,7 +328,6 @@ public class Semafor {
 			final String frame = dataPoint.getFrameName();
 			System.out.println("frame = " + frame);
 			final DependencyParses parses = dataPoint.getParses();
-			System.out.println("parses = " + parses);
 			final int targetStartTokenIdx = dataPoint.getTargetTokenIdxs()[0];
 			final int targetEndTokenIdx = dataPoint.getTargetTokenIdxs()[
 					dataPoint.getTargetTokenIdxs().length - 1];
