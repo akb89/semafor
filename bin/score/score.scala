@@ -74,7 +74,6 @@ def predictAllArgs(frames: Seq[String],
   val sentences = unLemmatized.map(sem.addLemmas)
   val sentencesAndFrames: Seq[(Sentence, Seq[String])] = sentences.zipWithIndex.map({case (s, i) => (s, framesBySentence.getOrElse(i, Nil))})
   sentencesAndFrames.zipWithIndex.map({ case ((sentence, frame), i) =>
-      System.out.println("Sentence at i = " + i)
       predictArgsForSentence(sentence, frame.toList, sem, useGoldFrames).asScala.map(line => setSentenceId(line, i.toString))
   })
 }

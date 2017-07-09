@@ -318,6 +318,7 @@ public class Semafor {
 	public List<String> predictArgumentLines(Sentence sentence,
 											 List<String> idResult, int kBest)
 			throws IOException {
+		System.out.println("Processing sentence: " + sentence.getTokens().toString());
 		System.out.println("idResult.size = " + idResult.size());
 		System.out.println("argIdFeatureIndex.size = " + argIdFeatureIndex.size());
 		final List<FrameFeatures> frameFeaturesList = Lists.newArrayList();
