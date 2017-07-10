@@ -36,10 +36,6 @@ import static edu.cmu.cs.lti.ark.fn.parsing.CandidateFrameElementFilters.isEmpty
 import static edu.cmu.cs.lti.ark.fn.parsing.FeatureExtractor.ConjoinLevel.*;
 import static java.lang.Math.max;
 
-import edu.cmu.cs.lti.ark.fn.parsing.FrameAndRoleAncestors;
-import java.util.HashSet;
-import java.io.IOException;
-
 /**
  * Extract features for the parsing model. Based on FeatureExtractor for the
  * frame identification model.
@@ -51,25 +47,6 @@ import java.io.IOException;
  */
 public class FeatureExtractor {
 	private static final Joiner UNDERSCORE = Joiner.on("_");
-	private static FrameAndRoleAncestors ancestors; // mk: ancestors
-	private static HashSet<String> iAmAncestor; // mk: ancestors
-	private static boolean loaded;
-
-    public FeatureExtractor() {
-		if(!loaded) {
-			loadAncestorsInfo();
-		}
-	}
-
-	private static void loadAncestorsInfo() {
-      try{
-			ancestors = FrameAndRoleAncestors.loadAncestorsAndRoles(FrameAndRoleAncestors.PARENT);
-			iAmAncestor = new HashSet<String>();
-			iAmAncestor.addAll(ancestors.getAllParents());
-			loaded = true;
-
-         } catch (IOException e) { e.printStackTrace(); throw new RuntimeException(e); }
-    }
 
 	protected enum ConjoinLevel {
 		FRAME_AND_ROLE_NAME,
@@ -113,16 +90,6 @@ public class FeatureExtractor {
 				featureMap.add(featureName);
 			default:
 				break;
-		}
-
-		// mk: ancestor features
-		String frameName = frameAndRoleName.split("\\.")[0];
-		for(String ancFrameRol : ancestors.getAncestorRoles(frameAndRoleName)) {
-			featureMap.add(UNDERSCORE.join("PARENT", ancFrameRol, featureName));
-			//featureMap.add(UNDERSCORE.join(featureName, ancFrameRol));
-		}
-		if(iAmAncestor.contains(frameName)) {
-			featureMap.add(UNDERSCORE.join("PARENT", frameAndRoleName, featureName));
 		}
 
 	}
