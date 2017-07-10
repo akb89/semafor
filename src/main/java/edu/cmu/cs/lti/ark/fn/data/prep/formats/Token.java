@@ -245,6 +245,7 @@ public class Token {
 		System.err.println("feats = " + parseConllField(fields[5], parseStr));
 		System.err.println("head = " + parseConllField(fields[6], parseInt));
 		System.err.println("deprel = " + parseConllField(fields[7], parseStr));
+		System.err.println("phead_str = " + parseConllField(fields[8], parseStr));
 		System.err.println("phead = " + parseConllField(fields[8], parseInt));
 		System.err.println("pdeprel = " + parseConllField(fields[9], parseStr));
 		return new Token(
