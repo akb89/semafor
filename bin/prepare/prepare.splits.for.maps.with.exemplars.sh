@@ -7,6 +7,7 @@ fi
 
 prepare_bin="$(dirname ${0})"
 
+echo "Preparing data for framenet.original.map and framenet.frame.element.map. NOTE: ALL FRAMENET DATA ARE USED, INCLUDING EXEMPLARS..."
 bash ${prepare_bin}/prepare.splits.raw.sentences.with.exemplars.sh
 bash ${prepare_bin}/prepare.splits.tokenize.with.exemplars.sh
 bash ${prepare_bin}/prepare.splits.postag.with.exemplars.sh

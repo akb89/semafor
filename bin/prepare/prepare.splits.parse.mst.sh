@@ -22,7 +22,7 @@ ${JAVA_HOME_BIN}/java \
 	order:2 \
 	test-file:${training_mst_conll_input_sentence_splits} \
 	output-file:${training_sentence_splits_with_dependencies} \
-	format:CONLL > ${LOGS_DIR}/mst.log # Redirect stderr to semafor/logs/mst.log
+	format:CONLL > ${LOGS_DIR}/mst.log # Redirect stdout to semafor/logs/mst.log
 echo "Finished MST dependency parsing"
 echo
 echo "Running MSTParser on conll testing splits..."
@@ -39,6 +39,6 @@ ${JAVA_HOME_BIN}/java \
 	order:2 \
 	test-file:${testing_mst_conll_input_sentence_splits} \
 	output-file:${testing_sentence_splits_with_dependencies} \
-	format:CONLL >> ${LOGS_DIR}/mst.log # Redirect stderr to semafor/logs/mst.log
+	format:CONLL >> ${LOGS_DIR}/mst.log # Redirect (and append) stdout to semafor/logs/mst.log
 echo "Finished MST dependency parsing"
 echo
