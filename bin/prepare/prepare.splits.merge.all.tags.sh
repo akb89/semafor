@@ -6,6 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Generate cv.train.sentences.all.lemma.tags
+echo "Merging POS tags, dependency parses, and lemmatized version of each training sentence into one line..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \
@@ -16,8 +17,10 @@ ${JAVA_HOME_BIN}/java \
     ${tmp_file} \
     ${training_all_lemma_tags_sentence_splits}
 rm "${tmp_file}"
+echo "Done merging POS tags, dependency parses, and lemmatized version of each training sentence into one line"
 
 # Generate cv.test.sentences.all.lemma.tags
+echo "Merging POS tags, dependency parses, and lemmatized version of each testing sentence into one line..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xms${min_ram} \
@@ -28,3 +31,4 @@ ${JAVA_HOME_BIN}/java \
     ${tmp_file} \
     ${testing_all_lemma_tags_sentence_splits}
 rm "${tmp_file}"
+echo "Done merging POS tags, dependency parses, and lemmatized version of each testing sentence into one line"

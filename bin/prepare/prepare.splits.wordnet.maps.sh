@@ -6,6 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Create the file reqData.jobj under the MODEL_DIR directory
+echo "Creating reqData.jobj with hvlemmas.ser and allrelatedwords.ser..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
@@ -22,3 +23,4 @@ ${JAVA_HOME_BIN}/java \
     revised_map_file:${revised_map_file} \
     lemma_cache_file:${lemma_cache_file} \
     fn_id_req_data_file:${fn_id_req_data_file}
+echo "Done creating reqData.jobj with hvlemmas.ser and allrelatedwords.ser"

@@ -6,6 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Generate cv.***.sentences splits from FrameNet XML data under the EXPERIMENT_DATA_DIR directory
+echo "Generating training and testing sentences splits from FrameNet XML data..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
@@ -15,3 +16,4 @@ ${JAVA_HOME_BIN}/java \
     "${testing_sentence_splits}" \
     "${test_set_documents_names}" \
     "${with_exemplars}"
+echo "Done generating training and testing sentences splits from FrameNet XML data"

@@ -6,6 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Generate cv.***.sentences.frames from cv.***.sentences splits
+echo "Generating training and testing frame splits from sentences splits with exemplars ${with_exemplars^^}..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
@@ -20,3 +21,4 @@ ${JAVA_HOME_BIN}/java \
     "${testing_frame_splits}" \
     "false" \
     "${with_exemplars}"
+echo "Done generating training and testing frame splits from sentences splits"

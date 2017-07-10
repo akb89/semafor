@@ -6,9 +6,11 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Create files frames.xml and feRelations.xml for use with perl score script under the EXPERIMENT_DATA_DIR directory
+echo "Creating frames.xml and feRelations.xml files..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.ScoringRequiredDataCreation \
     "${FRAMENET_DATA_DIR}" \
     "${EXPERIMENT_DATA_DIR}"
+echo "Done creating frames.xml and feRelations.xml files..."

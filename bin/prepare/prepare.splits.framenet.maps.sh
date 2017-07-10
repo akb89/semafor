@@ -6,6 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Create files framenet.original.map and framenet.frame.element.map under the MODEL_DIR directory
+echo "Creating framenet.original.map and framenet.frame.element.map..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     -Xmx${max_ram} \
@@ -16,3 +17,4 @@ ${JAVA_HOME_BIN}/java \
     "${old_framenet_lu_map_file}" \
     "${framenet_fe_map_file}" \
     "${old_framenet_fe_map_file}"
+echo "Done creating framenet.original.map and framenet.frame.element.map"

@@ -6,6 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
+echo "Converting postagged training splits to MATL conll input..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
@@ -13,7 +14,9 @@ ${JAVA_HOME_BIN}/java \
     --inputFormat pos \
     --output ${training_malt_conll_input_sentence_splits} \
     --outputFormat conll
+echo "Done converting postagged training splits to MALT conll input"
 
+echo "Converting postagged testing splits to MALT conll input..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
     edu.cmu.cs.lti.ark.fn.data.prep.formats.ConvertFormat \
@@ -21,3 +24,4 @@ ${JAVA_HOME_BIN}/java \
     --inputFormat pos \
     --output ${testing_malt_conll_input_sentence_splits} \
     --outputFormat conll
+echo "Done converting postagged testing splits to MALT conll input"

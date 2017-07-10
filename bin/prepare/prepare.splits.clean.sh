@@ -6,6 +6,7 @@ if ps -o stat= -p $PPID | grep -q "s"; then
 fi
 
 # Removing unnecessary temporary files
+echo "Cleaning up directories by removing unnecessary tmp files..."
 rm "${training_sentence_splits}"
 rm "${testing_sentence_splits}"
 rm "${training_frame_splits}"
@@ -46,3 +47,4 @@ rm "${wn_related_words_for_words_file}"
 rm "${wn_map_file}"
 rm "${revised_map_file}"
 rm "${lemma_cache_file}"
+echo "Done cleaning up directories"
