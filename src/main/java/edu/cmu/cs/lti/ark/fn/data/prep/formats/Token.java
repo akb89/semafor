@@ -240,7 +240,7 @@ public class Token {
 		checkArgument(fields.length == 10, "ConllToken must have 10 \"\\t\"-separated fields");
 		return new Token(
 				parseConllField(fields[0], parseInt),  // id
-				fields[1],  // form
+				/*fields[1],  // form
 				parseConllField(fields[2], parseStr),  // lemma
 				parseConllField(fields[3], parseStr),  // cpostag
 				parseConllField(fields[4], parseStr),  // postag
@@ -248,7 +248,7 @@ public class Token {
 				parseConllField(fields[6], parseInt),  // head
 				parseConllField(fields[7], parseStr),  // deprel
 				parseConllField(fields[8], parseInt),  // phead
-				parseConllField(fields[9], parseStr)); // pdeprel
+				parseConllField(fields[9], parseStr)); // pdeprel*/
 	}
 
 	public static PosToken fromPosTagged(String tokenStr) {

@@ -105,6 +105,9 @@ public abstract class SentenceCodec {
 		System.err.println("tokenStrs");
 		System.err.println(tokenStrs);
 		for (int i : xrange(tokenStrs.length)) {
+			System.err.println("test_token_i = " + tokenStrs[i]);
+		}
+		for (int i : xrange(tokenStrs.length)) {
 			try {
 				final Token token = decodeToken(tokenStrs[i]);
 				System.err.println("Token = " + token.toString());
