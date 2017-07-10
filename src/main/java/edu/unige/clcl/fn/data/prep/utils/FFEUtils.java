@@ -115,7 +115,7 @@ public class FFEUtils {
 		TokenIndex tokenIndex = toTokenIndex(text, targetStartChar,
 											 targetEndChar);
 		if (tokenIndex == null) {
-			logger.warn(
+			logger.debug(
 					"Could not find TokenIndex (" + tokenIndex.getStart() + ", "
 					+ tokenIndex.getEnd() + ") for target: " + targetWithIndex
 					+ " in sentence: " + text);
@@ -126,7 +126,7 @@ public class FFEUtils {
 																   .getStart(),
 														   tokenIndex.getEnd());
 		if (tokenizedIndex == null) {
-			logger.warn("Could not find tokenized TokenIndex (" + tokenIndex
+			logger.debug("Could not find tokenized TokenIndex (" + tokenIndex
 					.getStart() + ", " + tokenIndex.getEnd() + ") for target: "
 						+ targetWithIndex + " in sentence: " + text);
 			return "";
@@ -183,7 +183,7 @@ public class FFEUtils {
 						int end = Integer.parseInt(label.getAttribute("end"));
 						TokenIndex tokenIndex = toTokenIndex(text, start, end);
 						if (tokenIndex == null) {
-							logger.warn(
+							logger.debug(
 									"Could not find TokenIndex (" + start + ", "
 									+ end + ") for FE in sentence: " + text);
 							return "";
@@ -194,7 +194,7 @@ public class FFEUtils {
 								tokenIndexMap, tokenIndex.getStart(),
 								tokenIndex.getEnd());
 						if (tokenizedIndex == null) {
-							logger.warn("Could not find tokenized TokenIndex ("
+							logger.debug("Could not find tokenized TokenIndex ("
 										+ tokenIndex.getStart() + ", "
 										+ tokenIndex.getEnd()
 										+ ") for FE in sentence: " + text);
