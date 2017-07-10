@@ -22,5 +22,5 @@ ${JAVA_HOME_BIN}/java \
     wn_map_file:${wn_map_file} \
     revised_map_file:${revised_map_file} \
     lemma_cache_file:${lemma_cache_file} \
-    fn_id_req_data_file:${fn_id_req_data_file}
+    fn_id_req_data_file:${fn_id_req_data_file} >> ${LOGS_DIR}/prepare.log # Redirect stout to log file
 echo "Done creating reqData.jobj with hvlemmas.ser and allrelatedwords.ser"

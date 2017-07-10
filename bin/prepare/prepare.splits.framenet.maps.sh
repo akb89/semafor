@@ -16,6 +16,6 @@ ${JAVA_HOME_BIN}/java \
     "${framenet_lu_map_file}" \
     "${old_framenet_lu_map_file}" \
     "${framenet_fe_map_file}" \
-    "${old_framenet_fe_map_file}"
+    "${old_framenet_fe_map_file}" >> ${LOGS_DIR}/prepare.log # Redirect stout to log file
 echo "Done creating framenet.original.map and framenet.frame.element.map"
 echo

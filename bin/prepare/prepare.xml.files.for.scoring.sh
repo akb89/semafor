@@ -12,6 +12,6 @@ ${JAVA_HOME_BIN}/java \
     -Xmx${max_ram} \
     edu.unige.clcl.fn.data.prep.ScoringRequiredDataCreation \
     "${FRAMENET_DATA_DIR}" \
-    "${EXPERIMENT_DATA_DIR}"
+    "${EXPERIMENT_DATA_DIR}" >> ${LOGS_DIR}/prepare.log # Redirect stout to log file
 echo "Done creating frames.xml and feRelations.xml files..."
 echo

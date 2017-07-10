@@ -20,4 +20,4 @@ ${JAVA_HOME_BIN}/java \
     ${spans_file} \
     true \
     1 \
-    null
+    null > ${LOGS_DIR}/train.arg.id.create.alphabet.log # Redirect stout to log file

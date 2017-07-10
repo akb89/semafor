@@ -20,4 +20,4 @@ ${JAVA_HOME_BIN}/java \
     num_threads:${num_threads} \
     batch_size:${batch_size} \
     save_every_k_batches:${save_every_k_batches} \
-    num_models_to_save:${num_models_to_save}
+    num_models_to_save:${num_models_to_save} > ${LOGS_DIR}/train.arg.id.train.model.log # Redirect stout to log file

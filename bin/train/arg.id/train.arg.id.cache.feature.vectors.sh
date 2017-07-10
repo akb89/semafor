@@ -16,4 +16,4 @@ ${JAVA_HOME_BIN}/java \
     events_file:${train_events} \
     spans_file:${spans_file} \
     train_frame_file:${training_fe_splits} \
-    local_features_cache:${feature_cache} > ${LOGS_DIR}/train.arg.id.cache.feature.vectors.log # Redirect stout to semafor/logs
+    local_features_cache:${feature_cache} > ${LOGS_DIR}/train.arg.id.cache.feature.vectors.log # Redirect stout to log file

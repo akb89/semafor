@@ -20,6 +20,6 @@ ${JAVA_HOME_BIN}/java \
     "${training_fe_splits_with_exemplars}"\
     "${testing_fe_splits_with_exemplars}" \
     "true" \
-    "true"
+    "true" >> ${LOGS_DIR}/prepare.log # Redirect stout to log file
 echo "Done generating training and testing frame elements splits"
 echo

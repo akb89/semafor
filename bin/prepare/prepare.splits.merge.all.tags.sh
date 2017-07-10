@@ -15,7 +15,7 @@ ${JAVA_HOME_BIN}/java \
     ${training_tokenized_sentence_splits} \
     ${training_sentence_splits_with_dependencies} \
     ${tmp_file} \
-    ${training_all_lemma_tags_sentence_splits}
+    ${training_all_lemma_tags_sentence_splits} >> ${LOGS_DIR}/prepare.log # Redirect stout to log file
 rm "${tmp_file}"
 echo "Done merging POS tags, dependency parses, and lemmatized version of each training sentence into one line"
 echo
@@ -29,7 +29,7 @@ ${JAVA_HOME_BIN}/java \
     ${testing_tokenized_sentence_splits} \
     ${testing_sentence_splits_with_dependencies} \
     ${tmp_file} \
-    ${testing_all_lemma_tags_sentence_splits}
+    ${testing_all_lemma_tags_sentence_splits} >> ${LOGS_DIR}/prepare.log # Redirect stout to log file
 rm "${tmp_file}"
 echo "Done merging POS tags, dependency parses, and lemmatized version of each testing sentence"
 echo

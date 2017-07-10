@@ -15,6 +15,6 @@ ${JAVA_HOME_BIN}/java \
     "${training_sentence_splits}" \
     "${testing_sentence_splits}" \
     "${test_set_documents_names}" \
-    "${with_exemplars}"
+    "${with_exemplars}" > ${LOGS_DIR}/prepare.log # Redirect stout to log file
 echo "Done generating training and testing sentences splits"
 echo
