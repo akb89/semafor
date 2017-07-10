@@ -20,7 +20,7 @@ export save_every_k_batches=400 # for argument identification
 export num_models_to_save=60 # for argument identification
 
 #export model_name="acl2015_baseline_with_old_semafor_data"
-export model_name="acl2015_baseline_with_exemplars_${with_exemplars}_dep_parser_${dependency_parser}_lambda_${lambda}"
+export model_name="acl2015_baseline_with_exemplars_${with_exemplars^^}_dep_parser_${dependency_parser}_lambda_${lambda}"
 
 export num_threads=55 # should set to roughly the number of cores available (minus one)
 export gc_threads=37 # (3+5N/8) with N number of cores (remove one core on total number of cores just in case. Ex: count 55 cores for 56 cores total)
