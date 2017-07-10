@@ -5,6 +5,9 @@ import com.google.common.base.*;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.google.common.base.Preconditions.checkArgument;
 
 
@@ -29,6 +32,10 @@ public class Token {
 	private final @Nullable String pdeprel;
 
 	private static final String MISSING_INDICATOR = "_";
+	private static final Set<String> MISSING_INDICATORS  = new HashSet<String>() {{
+		add("_");
+		add("-");
+	}};
 
 	private static final Function<String, String> parseStr = Functions.identity();
 	private static final Function<String, Integer> parseInt = new Function<String, Integer>() {
@@ -232,22 +239,13 @@ public class Token {
 
 	@Nullable
 	private static <A> A parseConllField(String field, Function<String, A> fromStr) {
-		return field.equals(MISSING_INDICATOR) ? null : fromStr.apply(field);
+		return MISSING_INDICATORS.contains(field) ? null : fromStr.apply(field);
+		//return field.equals(MISSING_INDICATOR) ? null : fromStr.apply(field);
 	}
 
 	public static Token fromConll(String line) {
 		final String[] fields = line.trim().split("\t");
 		checkArgument(fields.length == 10, "ConllToken must have 10 \"\\t\"-separated fields");
-		System.err.println("id = " + parseConllField(fields[0], parseInt));
-		System.err.println("form = " + fields[1]);
-		System.err.println("lemma = " + parseConllField(fields[2], parseStr));
-		System.err.println("cpostag = " + parseConllField(fields[3], parseStr));
-		System.err.println("feats = " + parseConllField(fields[5], parseStr));
-		System.err.println("head = " + parseConllField(fields[6], parseInt));
-		System.err.println("deprel = " + parseConllField(fields[7], parseStr));
-		System.err.println("phead_str = " + parseConllField(fields[8], parseStr));
-		System.err.println("phead = " + parseConllField(fields[8], parseInt));
-		System.err.println("pdeprel = " + parseConllField(fields[9], parseStr));
 		return new Token(
 				parseConllField(fields[0], parseInt),  // id
 				fields[1],  // form
