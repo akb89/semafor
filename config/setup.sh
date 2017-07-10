@@ -8,7 +8,7 @@ export JAVA_HOME_BIN="/usr/bin"
 #export JAVA_HOME_BIN="/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin"
 
 export with_exemplars=false # set to true to include exemplar sentences in addition to fulltext
-export dependency_parser=MST # set to MST, MALT or TURBO according to the dependency parser you want to use
+export dependency_parser=MALT # set to MST, MALT or TURBO according to the dependency parser you want to use
 
 export clean_after_preprocessing=true # remove unnecessary temporary files used for preprocessing. Set to false if you need to debug preprocessing
 export clean_after_training=true # remove unnecessary temporary files used for training. Set to false if you need to debug training
