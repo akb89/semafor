@@ -14,3 +14,4 @@ ${JAVA_HOME_BIN}/java \
     "${FRAMENET_DATA_DIR}" \
     "${EXPERIMENT_DATA_DIR}"
 echo "Done creating frames.xml and feRelations.xml files..."
+echo
