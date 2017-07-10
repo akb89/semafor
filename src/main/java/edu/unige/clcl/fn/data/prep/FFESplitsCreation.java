@@ -116,7 +116,7 @@ public class FFESplitsCreation {
 		String targetIndex = FFEUtils.getTargetIndex(text, target, startChar,
 													 tokenIndexMap);
 		if (targetIndex.isEmpty()) {
-			logger.warn("Could not retrieve target index for "
+			logger.debug("Could not retrieve target index for "
 						+ targetWithStartCharIndex + " in sentence: " + text);
 			return;
 		}
