@@ -246,18 +246,17 @@ public class Token {
 	public static Token fromConll(String line) {
 		final String[] fields = line.trim().split("\t");
 		checkArgument(fields.length == 10, "ConllToken must have 10 \"\\t\"-separated fields");
+		System.err.println("id = " + parseConllField(fields[0], parseInt));
+		System.err.println("form = " + fields[1]);
+		System.err.println("lemma = " + parseConllField(fields[2], parseStr));
+		System.err.println("cpostag = " + parseConllField(fields[3], parseStr));
+		System.err.println("feats = " + parseConllField(fields[5], parseStr));
+		System.err.println("head = " + parseConllField(fields[6], parseInt));
+		System.err.println("deprel = " + parseConllField(fields[7], parseStr));
+		System.err.println("phead_str = " + parseConllField(fields[8], parseStr));
+		System.err.println("phead = " + parseConllField(fields[8], parseInt));
+		System.err.println("pdeprel = " + parseConllField(fields[9], parseStr));
 		return new Token(
-				System.err.println("id = " + parseConllField(fields[0], parseInt));
-				System.err.println("form = " + fields[1]);
-				System.err.println("lemma = " + parseConllField(fields[2], parseStr));
-				System.err.println("cpostag = " + parseConllField(fields[3], parseStr));
-				System.err.println("feats = " + parseConllField(fields[5], parseStr));
-				System.err.println("head = " + parseConllField(fields[6], parseInt));
-				System.err.println("deprel = " + parseConllField(fields[7], parseStr));
-				System.err.println("phead_str = " + parseConllField(fields[8], parseStr));
-				System.err.println("phead = " + parseConllField(fields[8], parseInt));
-				System.err.println("pdeprel = " + parseConllField(fields[9], parseStr));
-
 				parseConllField(fields[0], parseInt),  // id
 				fields[1],  // form
 				parseConllField(fields[2], parseStr),  // lemma
