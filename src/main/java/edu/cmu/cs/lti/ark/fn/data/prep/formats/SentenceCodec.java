@@ -98,11 +98,16 @@ public abstract class SentenceCodec {
 	 * @return a new Sentence
 	 */
 	public Sentence decode(String sentenceStr) {
+		System.err.println("sentence string");
+		System.err.println(sentenceStr);
 		ArrayList<Token> tokens = Lists.newArrayList();
 		final String[] tokenStrs = sentenceStr.split(tokenDelimiter);
+		System.err.println("tokenStrs");
+		System.err.println(tokenStrs);
 		for (int i : xrange(tokenStrs.length)) {
 			try {
 				final Token token = decodeToken(tokenStrs[i]);
+				System.err.println("Token = " + token.toString());
 				//indexed starting at 1!
 				tokens.add(token.withId(i + 1));
 			} catch (IllegalArgumentException e) {
