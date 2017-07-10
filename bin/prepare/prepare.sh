@@ -32,8 +32,6 @@ bash ${prepare_bin}/prepare.splits.frame.elements.sh
 # Generate cv.***.sentences.pos.tagged splits from cv.***.sentences splits
 bash ${prepare_bin}/prepare.splits.postag.sh
 
-echo "${dependency_parser}"
-
 if [ "${dependency_parser}" = "MST" ]; then
     # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.mst.input.sh
