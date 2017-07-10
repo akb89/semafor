@@ -26,7 +26,7 @@ ${JAVA_HOME_BIN}/java \
     "${framenet_fe_map_file}" \
     "${arg_id_model}" \
     1 \
-    "${scoring_predicted_goldframe_xml_file}"
+    "${scoring_predicted_goldframe_xml_file}" > ${LOGS_DIR}/score.log # Redirect stout to log file
 
 #***************** Create a gold XML file with the same tokenization that SEMAFOR used ***********************#
 
@@ -39,7 +39,7 @@ ${JAVA_HOME_BIN}/java \
     endIndex:${end_index_prepare_fullanno_xml} \
     testParseFile:"${testing_all_lemma_tags_sentence_splits}" \
     testTokenizedFile:"${testing_tokenized_sentence_splits}" \
-    outputFile:"${scoring_gold_xml_file}"
+    outputFile:"${scoring_gold_xml_file}" >> ${LOGS_DIR}/score.log # Redirect stout to log file
 
 
 #********************************** Evaluation ********************************************#
@@ -54,7 +54,7 @@ ${SEMAFOR_HOME}/bin/score/score.pl \
     "${frames_single_file}" \
     "${relation_modified_file}" \
     "${scoring_gold_xml_file}" \
-    "${scoring_predicted_goldframe_xml_file}" > "${scoring_output_text_file}"
+    "${scoring_predicted_goldframe_xml_file}" > "${scoring_output_text_file}" 2>> ${LOGS_DIR}/score.log # Redirect stout to log file
 
 echo "Scoring completed"
 
@@ -63,4 +63,6 @@ echo "Scoring completed"
 # Removing unnecessary temporary files
 if [ "${clean_after_scoring}" = true ]; then
     echo "cleaning score tmp"
+    rm "${scoring_gold_xml_file}"
+    rm "${scoring_predicted_goldframe_xml_file}"
 fi
