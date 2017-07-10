@@ -105,8 +105,10 @@ public class ParsePreparation {
 		for(int i = 0; i < size; i ++) {
 			String line = "";
 			line+=(i+1)+"\t";
-			line+=words.get(i).toLowerCase()+"\t";
-			line+=words.get(i).toLowerCase()+"\t";
+			line+=words.get(i)+"\t";
+			line+=words.get(i)+"\t";
+			//line+=words.get(i).toLowerCase()+"\t";
+			//line+=words.get(i).toLowerCase()+"\t";
 			line+=pos.get(i)+"\t";
 			line+=pos.get(i)+"\t";
 			line+="_\t";
