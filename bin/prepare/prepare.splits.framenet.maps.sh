@@ -18,3 +18,4 @@ ${JAVA_HOME_BIN}/java \
     "${framenet_fe_map_file}" \
     "${old_framenet_fe_map_file}"
 echo "Done creating framenet.original.map and framenet.frame.element.map"
+echo

@@ -12,10 +12,11 @@ ${JAVA_HOME_BIN}/java \
 	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
 	${training_postagged_sentence_splits} ${training_mst_conll_input_sentence_splits}
 echo "Done converting postagged training splits to MST conll input"
-
+echo
 echo "Converting postagged training splits to MST conll input..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
 	edu.cmu.cs.lti.ark.fn.data.prep.CoNLLInputPreparation \
 	${testing_postagged_sentence_splits} ${testing_mst_conll_input_sentence_splits}
 echo "Done converting postagged testing splits to MST conll input"
+echo

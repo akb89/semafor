@@ -15,7 +15,7 @@ ${JAVA_HOME_BIN}/java \
     --output ${training_malt_conll_input_sentence_splits} \
     --outputFormat conll
 echo "Done converting postagged training splits to MALT conll input"
-
+echo
 echo "Converting postagged testing splits to MALT conll input..."
 ${JAVA_HOME_BIN}/java \
     -classpath ${CLASSPATH} \
@@ -25,3 +25,4 @@ ${JAVA_HOME_BIN}/java \
     --output ${testing_malt_conll_input_sentence_splits} \
     --outputFormat conll
 echo "Done converting postagged testing splits to MALT conll input"
+echo

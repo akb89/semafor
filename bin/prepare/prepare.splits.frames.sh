@@ -21,4 +21,5 @@ ${JAVA_HOME_BIN}/java \
     "${testing_frame_splits}" \
     "false" \
     "${with_exemplars}"
-echo "Done generating training and testing frame splits from sentences splits"
+echo "Done generating training and testing frame splits"
+echo
