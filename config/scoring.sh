@@ -14,3 +14,4 @@ export end_index_prepare_fullanno_xml=`wc -l < "${testing_tokenized_sentence_spl
 export scoring_predicted_goldframe_xml_file="${RESULTS_DIR}/test.predicted.goldframe.xml"
 export scoring_gold_xml_file="${RESULTS_DIR}/test.gold.xml"
 export scoring_output_text_file="${RESULTS_DIR}/arg_test_exact_verbose_${lambda}"
+export scoring_output_text_file_acl_2015="${RESULTS_DIR}/arg_test_exact_verbose_${lambda}_acl_2015"
