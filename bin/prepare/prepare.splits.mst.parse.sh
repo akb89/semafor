@@ -21,7 +21,7 @@ ${JAVA_HOME_BIN}/java \
 	decode-type:proj \
 	order:2 \
 	test-file:${training_mst_conll_input_sentence_splits} \
-	output-file:${training_sentence_splits_with_dependencies} \
+	output-file:${training_sentence_splits_with_dependencies_before_postprocessing} \
 	format:CONLL > ${LOGS_DIR}/mst.log # Redirect stdout to semafor/logs/mst.log
 echo "Finished MST dependency parsing"
 echo
@@ -38,7 +38,7 @@ ${JAVA_HOME_BIN}/java \
 	decode-type:proj \
 	order:2 \
 	test-file:${testing_mst_conll_input_sentence_splits} \
-	output-file:${testing_sentence_splits_with_dependencies} \
+	output-file:${testing_sentence_splits_with_dependencies_before_postprocessing} \
 	format:CONLL >> ${LOGS_DIR}/mst.log # Redirect (and append) stdout to semafor/logs/mst.log
 echo "Finished MST dependency parsing"
 echo

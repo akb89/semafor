@@ -52,6 +52,15 @@ export testing_malt_conll_input_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.
 export training_mst_conll_input_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.train.sentences.mst.input.conll"
 export testing_mst_conll_input_sentence_splits="${EXPERIMENT_DATA_DIR}/cv.test.sentences.mst.input.conll"
 
+export training_sentence_splits_with_dependencies_before_postprocessing="${EXPERIMENT_DATA_DIR}/cv.train.sentences.with.dependencies.before.postprocessing.conll"
+export testing_sentence_splits_with_dependencies_before_postprocessing="${EXPERIMENT_DATA_DIR}/cv.test.sentences.with.dependencies.before.postprocessing.conll"
+
+export training_mst_conll_postprocessed_words="${EXPERIMENT_DATA_DIR}/words.train.conll"
+export testing_mst_conll_postprocessed_words="${EXPERIMENT_DATA_DIR}/words.test.conll"
+
+export training_mst_conll_postprocessed_rest="${EXPERIMENT_DATA_DIR}/rest.train.conll"
+export testing_mst_conll_postprocessed_rest="${EXPERIMENT_DATA_DIR}/rest.test.conll"
+
 export training_sentence_splits_with_dependencies="${EXPERIMENT_DATA_DIR}/cv.train.sentences.with.dependencies.conll"
 export testing_sentence_splits_with_dependencies="${EXPERIMENT_DATA_DIR}/cv.test.sentences.with.dependencies.conll"
 

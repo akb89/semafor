@@ -33,24 +33,26 @@ bash ${prepare_bin}/prepare.splits.frame.elements.sh
 bash ${prepare_bin}/prepare.splits.postag.sh
 
 if [ "${dependency_parser}" = "MST" ]; then
-    # Generate cv.***.sentences.mst.input.conll splits from cv.***.sentences.pos.tagged splits
+    # Generate cv.***.sentences.mst.input.conll.before.postprocessing splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.mst.input.sh
-    # Generate cv.***.sentences.mstparsed.conll splits from cv.***.sentences.mst.input.conll splits
-    bash ${prepare_bin}/prepare.splits.parse.mst.sh
+    # Generate cv.***.sentences.with.dependencies.conll.before.postprocessing splits from cv.***.sentences.mst.input.conll splits
+    bash ${prepare_bin}/prepare.splits.mst.parse.sh
+    # Generate cv.***.sentences.with.dependencies.conll splits from cv.***.sentences.with.dependencies.conll.before.postprocessing
+    bash ${prepare_bin}/prepare.splits.mst.postprocess.sh
 fi
 
 if [ "${dependency_parser}" = "MALT" ]; then
     # Generate cv.***.sentences.malt.input.conll splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.malt.input.sh
-    # Generate cv.***.sentences.maltparsed.conll splits from cv.***.sentences.malt.input.conll splits
-    bash ${prepare_bin}/prepare.splits.parse.malt.sh
+    # Generate cv.***.sentences.with.dependencies.conll splits from cv.***.sentences.malt.input.conll splits
+    bash ${prepare_bin}/prepare.splits.malt.parse.sh
 fi
 
 if [ "${dependency_parser}" = "TURBO" ]; then
     # Generate cv.***.sentences.turbo.input.conll splits from cv.***.sentences.pos.tagged splits
     bash ${prepare_bin}/prepare.splits.turbo.input.sh
-    # Generate cv.***.sentences.turboparsed.conll splits from cv.***.sentences.turbo.input.conll splits
-    bash ${prepare_bin}/prepare.splits.parse.turbo.sh
+    # Generate cv.***.sentences.with.dependencies.conll splits from cv.***.sentences.turbo.input.conll splits
+    bash ${prepare_bin}/prepare.splits.turbo.parse.sh
 fi
 
 # Generate cv.train.sentences.all.lemma.tags

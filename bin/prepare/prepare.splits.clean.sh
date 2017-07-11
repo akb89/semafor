@@ -28,6 +28,12 @@ fi
 if [ "${dependency_parser}" = "MST" ]; then
     rm "${training_mst_conll_input_sentence_splits}"
     rm "${testing_mst_conll_input_sentence_splits}"
+    rm "${training_mst_conll_postprocessed_words}"
+    rm "${testing_mst_conll_postprocessed_words}"
+    rm "${training_mst_conll_postprocessed_rest}"
+    rm "${testing_mst_conll_postprocessed_rest}"
+    rm ${training_sentence_splits_with_dependencies_before_postprocessing}
+    rm ${testing_sentence_splits_with_dependencies_before_postprocessing}
 fi
 
 if [ "${dependency_parser}" = "MALT" ]; then
