@@ -50,6 +50,7 @@ ${SEMAFOR_HOME}/bin/score/score_acl_2015.pl \
     -l \
     -n \
     -e \
+    -a \
     -v \
     "${frames_single_file}" \
     "${relation_modified_file}" \
