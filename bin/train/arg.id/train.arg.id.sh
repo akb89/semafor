@@ -26,7 +26,7 @@ echo
 cp ${model_file} ${arg_id_model}
 
 # Removing unnecessary temporary files
-if [ "${clean_after_training}" = true ]; then
+if [ "${clean_after_training}" = TRUE ]; then
     rm ${arg_id_model}_*
     rm ${train_events}
     rm ${spans_file}

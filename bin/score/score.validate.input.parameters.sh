@@ -10,12 +10,12 @@ echo "Validating clean_after_scoring parameter..."
 echo
 
 case "${clean_after_scoring}" in
-    true )
+    TRUE )
         ;;   #fallthru
-    false )
+    FALSE )
         ;;   #fallthru
     * )
-        echo "Invalid clean_after_scoring parameter: ${clean_after_scoring}. Should be true or false"
+        echo "Invalid clean_after_scoring parameter: ${clean_after_scoring}. Should be TRUE or FALSE"
         exit 1
 esac
 echo "  clean_after_scoring = ${clean_after_scoring}"

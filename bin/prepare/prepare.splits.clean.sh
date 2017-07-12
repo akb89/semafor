@@ -15,7 +15,7 @@ rm "${training_postagged_sentence_splits}"
 rm "${testing_postagged_sentence_splits}"
 rm "${training_sentence_splits_with_dependencies}"
 
-if [ "${with_exemplars}" = false ]; then
+if [ "${with_exemplars}" = FALSE ]; then
     rm "${training_sentence_splits_with_exemplars}"
     rm "${testing_sentence_splits_with_exemplars}"
     rm "${training_fe_splits_with_exemplars}"

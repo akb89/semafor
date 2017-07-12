@@ -24,7 +24,7 @@ bash ${train_frame_id_bin}/train.frame.id.train.model.sh
 bash ${train_frame_id_bin}/train.frame.id.combine.params.sh
 
 # Removing unnecessary temporary files
-if [ "${clean_after_training}" = true ]; then
+if [ "${clean_after_training}" = TRUE ]; then
     rm ${idmodel.dat}_*
     rm -R "${EVENT_DIR}"
     rm "${frame_id_alphabet}"

@@ -62,7 +62,7 @@ echo "Scoring completed"
 #********************************** End of Evaluation ********************************************#
 
 # Removing unnecessary temporary files
-if [ "${clean_after_scoring}" = true ]; then
+if [ "${clean_after_scoring}" = TRUE ]; then
     echo "cleaning score tmp"
     rm "${scoring_gold_xml_file}"
     rm "${scoring_predicted_goldframe_xml_file}"
