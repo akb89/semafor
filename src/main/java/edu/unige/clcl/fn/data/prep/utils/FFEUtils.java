@@ -289,16 +289,27 @@ public class FFEUtils {
 		List<String> targetTokens = splitByWhiteSpace(target);
 		List<Integer> whiteSpaces = getWhiteSpaceList(text);
 		int charIndex = 0;
+		int newCharIndex = 0;
 		int start = -1;
 		int end = -1;
+		//System.err.println("startChar = " + startChar);
 		for (int i = 0; i < tokens.size(); i++) {
+			//System.err.println("charIndex = " + charIndex);
 			if (startChar == charIndex) {
 				start = i;
 				end = i + targetTokens.size() - 1;
 				break;
-			} else {
-				charIndex += tokens.get(i).length() + whiteSpaces.get(i);
 			}
+			newCharIndex += tokens.get(i).length() + whiteSpaces.get(i);
+			// This typically happens in hyphenized tokens when the second item
+			// is annotated as the target. Ex: 'stree-side' where 'side'
+			// is annotated as the target in sentence #4105981 in fn-1.7
+			if (newCharIndex > startChar) {
+				start = i;
+				end = i + targetTokens.size() - 1;
+				break;
+			}
+			charIndex = newCharIndex;
 		}
 		TokenIndex tokenIndex = getTokenizedTokenIndex(tokenIndexMap, start,
 													   end);
