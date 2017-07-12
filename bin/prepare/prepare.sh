@@ -2,9 +2,6 @@
 
 set -e # fail fast
 
-echo
-echo "Creating Required Data..."
-
 source "$(dirname "${BASH_SOURCE[0]}")/../../config/preprocessing.sh"
 
 #rm -rf ${MODEL_DIR}
@@ -13,6 +10,9 @@ mkdir -p "${MODEL_DIR}"
 mkdir -p ${EXPERIMENT_DATA_DIR}
 
 prepare_bin="$(dirname ${0})"
+
+echo
+echo "Creating Required Data from $(basename ${FRAMENET_DATA_DIR})..."
 
 # Validate input parameters
 bash ${prepare_bin}/prepare.validate.input.parameters.sh
@@ -60,11 +60,11 @@ bash ${prepare_bin}/prepare.splits.merge.all.tags.sh
 
 # framenet.original.map and framenet.frame.element.map are based on fulltext AND exemplar data
 # When processing fulltext data only, it is necessary to add exemplar data for generating the maps
-if [ "${with_exemplars}" = false ]; then
+if [ "${with_exemplars}" = FALSE ]; then
     bash ${prepare_bin}/prepare.splits.for.maps.with.exemplars.sh
 fi
 
-if [ "${with_exemplars}" = true ]; then
+if [ "${with_exemplars}" = TRUE ]; then
     training_fe_splits_with_exemplars=${training_fe_splits}
     training_postagged_sentence_splits_with_exemplars=${training_postagged_sentence_splits}
 fi
